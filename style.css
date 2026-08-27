@@ -325,3 +325,615 @@ button:active,
     padding-right: 40px;
   }
 }
+/* =====================================================
+   LEXORA v0.2 — MOBILE ADAPTATION
+   ===================================================== */
+
+/* Планшет */
+@media (max-width: 900px) {
+
+  body {
+    min-width: 0;
+    overflow-x: hidden;
+  }
+
+  /* Сайдбар превращается в верхнее/выезжающее меню */
+  .sidebar {
+    width: 250px;
+    min-width: 250px;
+
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+
+    box-shadow: 10px 0 40px rgba(0,0,0,.5);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* Основная область */
+  .main,
+  .main-content,
+  .content,
+  .app-content {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .container,
+  .page-container,
+  .dashboard,
+  .workspace {
+    width: 100%;
+    padding: 16px;
+  }
+
+  /* Верхняя панель */
+  .header,
+  .topbar,
+  .navbar {
+    padding: 10px 16px;
+  }
+
+  .search,
+  .search-box,
+  .search-container {
+    min-width: 0;
+    width: 100%;
+  }
+
+  /* Hero */
+  .hero,
+  .hero-card,
+  .defense-hero {
+    min-height: auto;
+  }
+
+  .hero-content,
+  .defense-hero-content {
+    width: 100%;
+    padding: 28px;
+    box-sizing: border-box;
+  }
+
+  .hero-logo,
+  .defense-logo {
+    position: relative;
+
+    display: block;
+
+    width: 220px;
+    height: 220px;
+
+    right: auto;
+    top: auto;
+
+    transform: none;
+
+    margin: 10px auto 20px;
+  }
+
+  /* 4 шага */
+  .steps,
+  .progress-steps,
+  .workflow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Нижние карточки */
+  .content-grid,
+  .dashboard-grid,
+  .defense-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* =====================================================
+   ТЕЛЕФОН
+   ===================================================== */
+
+@media (max-width: 600px) {
+
+  body {
+    font-size: 14px;
+    min-width: 0;
+  }
+
+  /* -----------------------------
+     MOBILE HEADER
+     ----------------------------- */
+
+  .header,
+  .topbar,
+  .navbar {
+    height: auto;
+    min-height: 64px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 10px 14px;
+
+    gap: 10px;
+  }
+
+  /* Кнопка меню */
+  .mobile-menu-button {
+    display: flex;
+
+    width: 42px;
+    height: 42px;
+
+    flex: 0 0 42px;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: rgba(91, 32, 180, .18);
+
+    border: 1px solid rgba(143, 69, 255, .35);
+
+    color: #fff;
+
+    cursor: pointer;
+  }
+
+  /* Если кнопки в HTML ещё нет — можно добавить */
+  .mobile-menu-button span {
+    font-size: 22px;
+  }
+
+  /* Поиск */
+  .search,
+  .search-box,
+  .search-container {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .search input,
+  .search-box input,
+  .search-container input {
+    width: 100%;
+    box-sizing: border-box;
+
+    height: 42px;
+
+    font-size: 13px;
+  }
+
+  /* Профиль */
+  .profile-name,
+  .user-name,
+  .user-role {
+    display: none;
+  }
+
+
+  /* -----------------------------
+     SIDEBAR
+     ----------------------------- */
+
+  .sidebar {
+    width: 280px;
+    min-width: 280px;
+
+    transform: translateX(-105%);
+
+    z-index: 1000;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+
+  /* Затемнение страницы */
+  .sidebar-overlay {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,.65);
+
+    backdrop-filter: blur(3px);
+
+    z-index: 999;
+  }
+
+  .sidebar-overlay.active {
+    display: block;
+  }
+
+
+  /* -----------------------------
+     MAIN
+     ----------------------------- */
+
+  .main,
+  .main-content,
+  .content,
+  .app-content {
+    margin-left: 0;
+
+    width: 100%;
+
+    overflow: hidden;
+  }
+
+  .container,
+  .page-container,
+  .dashboard,
+  .workspace {
+    padding: 12px;
+  }
+
+
+  /* -----------------------------
+     BREADCRUMBS
+     ----------------------------- */
+
+  .breadcrumbs,
+  .breadcrumb {
+    display: flex;
+
+    gap: 7px;
+
+    overflow-x: auto;
+
+    white-space: nowrap;
+
+    padding: 5px 0 12px;
+
+    font-size: 12px;
+  }
+
+
+  /* -----------------------------
+     HERO
+     ----------------------------- */
+
+  .hero,
+  .hero-card,
+  .defense-hero {
+
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 18px;
+
+    padding: 0;
+
+    min-height: auto;
+  }
+
+  .hero-content,
+  .defense-hero-content {
+
+    width: 100%;
+
+    padding: 24px 20px 10px;
+  }
+
+  .hero-content h1,
+  .defense-hero-content h1 {
+
+    font-size: 32px;
+
+    line-height: 1.05;
+
+    margin-bottom: 14px;
+  }
+
+  .hero-content p,
+  .defense-hero-content p {
+
+    font-size: 15px;
+
+    line-height: 1.6;
+  }
+
+  /* Логотип */
+  .hero-logo,
+  .defense-logo {
+
+    order: 2;
+
+    width: 210px;
+    height: 210px;
+
+    margin: 0 auto 5px;
+
+    position: relative;
+
+    transform: none;
+
+    right: auto;
+    top: auto;
+  }
+
+  /* Список преимуществ */
+  .hero ul,
+  .hero-content ul,
+  .defense-hero ul {
+
+    padding-left: 0;
+
+    list-style: none;
+  }
+
+  .hero li,
+  .hero-content li,
+  .defense-hero li {
+
+    margin-bottom: 9px;
+
+    font-size: 14px;
+  }
+
+
+  /* -----------------------------
+     ГЛАВНАЯ КНОПКА
+     ----------------------------- */
+
+  .generate-button,
+  .launch-button,
+  .primary-button {
+
+    width: 100%;
+
+    min-height: 50px;
+
+    font-size: 15px;
+
+    margin-top: 12px;
+  }
+
+
+  /* -----------------------------
+     4 ШАГА
+     ----------------------------- */
+
+  .steps,
+  .progress-steps,
+  .workflow {
+
+    grid-template-columns: 1fr 1fr;
+
+    margin-top: 12px;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+  }
+
+  .step {
+
+    min-height: 100px;
+
+    padding: 14px;
+
+    box-sizing: border-box;
+  }
+
+  .step-number {
+
+    width: 30px;
+    height: 30px;
+
+    font-size: 13px;
+  }
+
+  .step-title {
+
+    font-size: 13px;
+  }
+
+  .step-description {
+
+    font-size: 11px;
+
+    line-height: 1.4;
+  }
+
+
+  /* -----------------------------
+     НИЖНИЕ КАРТОЧКИ
+     ----------------------------- */
+
+  .content-grid,
+  .dashboard-grid,
+  .defense-grid {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    margin-top: 12px;
+  }
+
+
+  /* -----------------------------
+     ПАРАМЕТРЫ ЗАЩИТЫ
+     ----------------------------- */
+
+  .card,
+  .panel,
+  .defense-card {
+
+    width: 100%;
+
+    border-radius: 16px;
+
+    box-sizing: border-box;
+  }
+
+  .card-header,
+  .panel-header {
+
+    padding: 16px;
+  }
+
+  .card-body,
+  .panel-body {
+
+    padding: 16px;
+  }
+
+
+  /* Два select → один под другим */
+  .form-row {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .form-group {
+
+    width: 100%;
+  }
+
+  select,
+  input,
+  textarea {
+
+    width: 100%;
+
+    box-sizing: border-box;
+  }
+
+
+  /* -----------------------------
+     CHECKBOX
+     ----------------------------- */
+
+  .checkbox-row,
+  .check-row {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 10px;
+
+    margin-bottom: 10px;
+
+    line-height: 1.4;
+  }
+
+
+  /* -----------------------------
+     TEXTAREA
+     ----------------------------- */
+
+  textarea {
+
+    min-height: 100px;
+
+    resize: vertical;
+
+    font-size: 13px;
+  }
+
+
+  /* -----------------------------
+     ЧТО БУДЕТ СОЗДАНО
+     ----------------------------- */
+
+  .output-panel,
+  .created-panel,
+  .results-panel {
+
+    width: 100%;
+  }
+
+  .output-item {
+
+    padding: 12px 0;
+  }
+
+
+  /* -----------------------------
+     СОВЕТ
+     ----------------------------- */
+
+  .tip,
+  .ai-tip,
+  .advice {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    padding: 16px;
+
+    border-radius: 16px;
+  }
+
+  .tip button,
+  .ai-tip button,
+  .advice button {
+
+    width: 100%;
+  }
+}
+
+
+/* =====================================================
+   МАЛЕНЬКИЕ ТЕЛЕФОНЫ
+   ===================================================== */
+
+@media (max-width: 400px) {
+
+  .container,
+  .page-container,
+  .dashboard,
+  .workspace {
+    padding: 9px;
+  }
+
+  .hero-content,
+  .defense-hero-content {
+    padding: 20px 16px 8px;
+  }
+
+  .hero-content h1,
+  .defense-hero-content h1 {
+    font-size: 28px;
+  }
+
+  .hero-logo,
+  .defense-logo {
+    width: 180px;
+    height: 180px;
+  }
+
+  .steps,
+  .progress-steps,
+  .workflow {
+    grid-template-columns: 1fr;
+  }
+
+  .step {
+    min-height: auto;
+  }
+
+  .generate-button,
+  .launch-button,
+  .primary-button {
+    font-size: 14px;
+  }
+}
