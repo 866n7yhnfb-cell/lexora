@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>LexAI — v0.5</title>
+<title>LexAI — v0.5.1</title>
 
 <style>
 *{
@@ -16,102 +15,118 @@
 :root{
     --bg:#080a0f;
     --panel:#10131a;
-    --panel2:#151923;
-    --panel3:#1b202c;
-    --border:#252b38;
-    --text:#f4f5f7;
-    --muted:#8c94a4;
+    --panel2:#141821;
+    --panel3:#1a1f2b;
+    --border:#282e3a;
+    --text:#f5f6f8;
+    --muted:#8d95a5;
     --accent:#8b7cff;
-    --accent2:#6c5ce7;
-    --green:#42d392;
+    --accent2:#6554e8;
+    --green:#45d69a;
     --red:#ff6577;
-    --yellow:#f4c95d;
-    --shadow:0 20px 60px rgba(0,0,0,.35);
+    --yellow:#f2c85c;
+    --blue:#62a8ff;
+}
+
+html,body{
+    min-height:100%;
 }
 
 body{
-    font-family:Inter,Arial,Helvetica,sans-serif;
     background:
-        radial-gradient(circle at 80% 0%,rgba(103,88,255,.12),transparent 30%),
+        radial-gradient(circle at 75% 0%,rgba(105,86,255,.13),transparent 30%),
         var(--bg);
     color:var(--text);
-    min-height:100vh;
+    font-family:Inter,Arial,Helvetica,sans-serif;
 }
 
-/* ================= AUTH ================= */
+button,
+input,
+textarea,
+select{
+    font-family:inherit;
+}
+
+button{
+    -webkit-tap-highlight-color:transparent;
+}
+
+/* =========================================================
+                        AUTH
+========================================================= */
 
 #authScreen{
     min-height:100vh;
     display:flex;
-    align-items:center;
     justify-content:center;
-    padding:25px;
+    align-items:center;
+    padding:24px;
 }
 
 .auth-box{
     width:100%;
     max-width:460px;
-    background:rgba(16,19,26,.94);
+    background:rgba(16,19,26,.95);
     border:1px solid var(--border);
     border-radius:28px;
     padding:38px;
-    box-shadow:var(--shadow);
+    box-shadow:0 30px 90px rgba(0,0,0,.45);
     backdrop-filter:blur(20px);
 }
 
-.logo-wrap{
+.auth-logo{
     display:flex;
-    align-items:center;
     justify-content:center;
-    margin-bottom:25px;
+    margin-bottom:23px;
 }
 
 .logo{
     width:64px;
     height:64px;
-    border-radius:18px;
-    background:linear-gradient(135deg,#9184ff,#5948dc);
+    border-radius:19px;
+    background:linear-gradient(135deg,#988cff,#5949dc);
     display:flex;
-    align-items:center;
     justify-content:center;
+    align-items:center;
     font-size:31px;
     font-weight:900;
-    box-shadow:0 15px 35px rgba(111,91,255,.3);
+    box-shadow:0 18px 40px rgba(101,84,232,.32);
 }
 
 .auth-title{
     text-align:center;
     font-size:29px;
-    font-weight:800;
-    margin-bottom:8px;
+    font-weight:850;
+    margin-bottom:7px;
 }
 
 .auth-subtitle{
     text-align:center;
     color:var(--muted);
-    margin-bottom:28px;
-    line-height:1.5;
+    font-size:13px;
+    line-height:1.6;
+    margin-bottom:26px;
 }
 
 .auth-tabs{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:8px;
-    padding:5px;
     background:#0b0e14;
+    padding:5px;
+    gap:5px;
     border-radius:14px;
     margin-bottom:22px;
 }
 
 .auth-tab{
     border:0;
-    padding:12px;
-    border-radius:10px;
     background:transparent;
     color:var(--muted);
+    padding:12px;
+    border-radius:10px;
     cursor:pointer;
-    font-size:14px;
-    font-weight:700;
+    font-size:13px;
+    font-weight:750;
 }
 
 .auth-tab.active{
@@ -120,30 +135,38 @@ body{
 }
 
 .form-group{
-    margin-bottom:16px;
+    margin-bottom:15px;
 }
 
 .form-group label{
     display:block;
+    color:#b8bfcb;
+    font-size:12px;
+    font-weight:700;
     margin-bottom:8px;
-    color:#b6bdca;
-    font-size:13px;
-    font-weight:600;
 }
 
-.form-group input{
+.form-group input,
+.form-group textarea,
+.form-group select{
     width:100%;
-    border:1px solid var(--border);
     background:#0b0e14;
     color:white;
-    padding:14px 15px;
-    border-radius:12px;
+    border:1px solid var(--border);
     outline:none;
-    font-size:15px;
-    transition:.2s;
+    border-radius:12px;
+    padding:13px 14px;
+    font-size:14px;
 }
 
-.form-group input:focus{
+.form-group textarea{
+    min-height:120px;
+    resize:vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
     border-color:var(--accent);
     box-shadow:0 0 0 3px rgba(139,124,255,.1);
 }
@@ -151,13 +174,13 @@ body{
 .primary-btn{
     width:100%;
     border:0;
-    padding:15px;
     border-radius:13px;
+    padding:14px;
     background:linear-gradient(135deg,var(--accent),var(--accent2));
     color:white;
-    font-weight:800;
     cursor:pointer;
-    font-size:15px;
+    font-weight:800;
+    font-size:14px;
     transition:.2s;
 }
 
@@ -168,76 +191,76 @@ body{
 
 .auth-message{
     min-height:20px;
-    margin-top:14px;
     text-align:center;
     color:var(--red);
-    font-size:13px;
+    font-size:12px;
+    margin-top:12px;
 }
 
-/* ================= APP ================= */
+/* =========================================================
+                        APP
+========================================================= */
 
 #app{
     display:none;
-    min-height:100vh;
 }
 
 .layout{
-    display:flex;
     min-height:100vh;
+    display:flex;
 }
 
-/* ================= SIDEBAR ================= */
+/* =========================================================
+                       SIDEBAR
+========================================================= */
 
 .sidebar{
-    width:270px;
+    width:275px;
     flex-shrink:0;
-    background:rgba(12,15,21,.96);
-    border-right:1px solid var(--border);
-    padding:22px 15px;
     position:fixed;
     left:0;
     top:0;
     bottom:0;
-    z-index:20;
+    z-index:50;
+    background:rgba(11,14,20,.97);
+    border-right:1px solid var(--border);
+    padding:19px 14px;
+    overflow-y:auto;
 }
 
 .sidebar-logo{
     display:flex;
     align-items:center;
-    gap:12px;
-    padding:6px 10px 25px;
+    gap:11px;
+    padding:5px 10px 24px;
 }
 
 .sidebar-logo .logo{
-    width:42px;
-    height:42px;
+    width:43px;
+    height:43px;
     border-radius:13px;
     font-size:20px;
 }
 
 .logo-text{
     font-size:20px;
-    font-weight:850;
+    font-weight:900;
 }
 
 .logo-version{
-    color:var(--muted);
-    font-size:10px;
-    margin-top:2px;
-}
-
-.nav-section{
-    margin-top:12px;
+    font-size:9px;
+    color:#687183;
+    margin-top:3px;
+    letter-spacing:1px;
 }
 
 .nav-label{
-    color:#646d7d;
-    font-size:10px;
-    font-weight:800;
+    color:#626b7b;
+    font-size:9px;
+    font-weight:900;
     text-transform:uppercase;
-    letter-spacing:1px;
-    padding:0 12px;
-    margin:18px 0 8px;
+    letter-spacing:1.1px;
+    margin:17px 11px 8px;
 }
 
 .nav-item{
@@ -245,17 +268,17 @@ body{
     display:flex;
     align-items:center;
     gap:12px;
-    border:0;
     background:transparent;
-    color:#939baa;
-    padding:12px;
+    color:#929aaa;
+    border:1px solid transparent;
     border-radius:12px;
+    padding:11px;
     cursor:pointer;
+    margin-bottom:3px;
     text-align:left;
-    margin-bottom:4px;
+    font-size:13px;
+    font-weight:680;
     transition:.18s;
-    font-size:14px;
-    font-weight:650;
 }
 
 .nav-item:hover{
@@ -265,129 +288,158 @@ body{
 
 .nav-item.active{
     color:white;
-    background:linear-gradient(90deg,rgba(139,124,255,.18),rgba(139,124,255,.05));
-    border:1px solid rgba(139,124,255,.12);
+    background:linear-gradient(
+        90deg,
+        rgba(139,124,255,.18),
+        rgba(139,124,255,.04)
+    );
+    border-color:rgba(139,124,255,.13);
 }
 
 .nav-icon{
-    width:21px;
-    height:21px;
+    width:22px;
+    height:22px;
+    flex-shrink:0;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:18px;
+}
+
+.nav-icon svg{
+    width:19px;
+    height:19px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:1.7;
+    stroke-linecap:round;
+    stroke-linejoin:round;
 }
 
 .sidebar-bottom{
-    position:absolute;
-    bottom:15px;
-    left:15px;
-    right:15px;
+    margin-top:22px;
+    padding-top:12px;
+    border-top:1px solid var(--border);
 }
 
 .user-mini{
-    border-top:1px solid var(--border);
-    padding:15px 10px 0;
     display:flex;
     align-items:center;
     gap:10px;
+    padding:12px 9px 5px;
 }
 
 .avatar{
     width:37px;
     height:37px;
+    flex-shrink:0;
     border-radius:50%;
-    background:linear-gradient(135deg,#8b7cff,#4b3dc3);
     display:flex;
     align-items:center;
     justify-content:center;
-    font-weight:800;
+    background:linear-gradient(135deg,#8b7cff,#5141ca);
+    font-weight:850;
 }
 
 .user-info{
     min-width:0;
-    flex:1;
 }
 
 .user-name{
-    font-size:13px;
-    font-weight:750;
+    font-size:12px;
+    font-weight:800;
     white-space:nowrap;
     overflow:hidden;
     text-overflow:ellipsis;
 }
 
 .user-status{
-    color:var(--muted);
-    font-size:11px;
+    color:#727b8b;
+    font-size:10px;
     margin-top:3px;
 }
 
-/* ================= MAIN ================= */
+/* =========================================================
+                         MAIN
+========================================================= */
 
 .main{
-    margin-left:270px;
-    width:calc(100% - 270px);
+    width:calc(100% - 275px);
+    margin-left:275px;
     min-height:100vh;
 }
 
 .topbar{
-    height:75px;
-    border-bottom:1px solid var(--border);
+    height:73px;
+    position:sticky;
+    top:0;
+    z-index:20;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 35px;
-    background:rgba(8,10,15,.75);
-    backdrop-filter:blur(20px);
-    position:sticky;
-    top:0;
-    z-index:10;
+    padding:0 31px;
+    background:rgba(8,10,15,.8);
+    border-bottom:1px solid var(--border);
+    backdrop-filter:blur(18px);
+}
+
+.topbar-left{
+    display:flex;
+    align-items:center;
 }
 
 .page-title{
-    font-size:19px;
-    font-weight:800;
+    font-size:18px;
+    font-weight:850;
 }
 
 .top-actions{
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:8px;
 }
 
-.icon-button{
+.icon-button,
+.mobile-menu{
     width:39px;
     height:39px;
-    border:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:center;
     border-radius:11px;
     background:var(--panel);
-    color:#b9bfcb;
+    color:#b8bfca;
+    border:1px solid var(--border);
     cursor:pointer;
-    font-size:17px;
+}
+
+.mobile-menu{
+    display:none;
+    margin-right:9px;
 }
 
 .content{
-    padding:32px;
-    max-width:1500px;
+    max-width:1550px;
+    padding:30px;
     margin:auto;
 }
 
-/* ================= COMMON ================= */
+/* =========================================================
+                     SCREENS / COMMON
+========================================================= */
 
 .screen{
     display:none;
-    animation:fade .25s ease;
+    animation:screenIn .23s ease;
 }
 
 .screen.active{
     display:block;
 }
 
-@keyframes fade{
+@keyframes screenIn{
     from{
         opacity:0;
-        transform:translateY(4px);
+        transform:translateY(5px);
     }
     to{
         opacity:1;
@@ -396,134 +448,194 @@ body{
 }
 
 .hero{
-    background:
-        radial-gradient(circle at 90% 10%,rgba(139,124,255,.2),transparent 35%),
-        var(--panel);
     border:1px solid var(--border);
-    border-radius:22px;
-    padding:30px;
-    margin-bottom:22px;
+    border-radius:21px;
+    padding:29px;
+    margin-bottom:20px;
+    background:
+        radial-gradient(
+            circle at 90% 0%,
+            rgba(139,124,255,.2),
+            transparent 34%
+        ),
+        var(--panel);
 }
 
 .hero h1{
-    font-size:31px;
+    font-size:29px;
     margin-bottom:8px;
+    font-weight:900;
 }
 
 .hero p{
     color:var(--muted);
+    font-size:13px;
     line-height:1.6;
-    max-width:700px;
+    max-width:800px;
 }
 
 .cards{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:15px;
+    gap:14px;
 }
 
 .card{
     background:var(--panel);
     border:1px solid var(--border);
     border-radius:17px;
-    padding:21px;
+    padding:20px;
 }
 
 .card-icon{
-    font-size:24px;
-    margin-bottom:17px;
+    width:43px;
+    height:43px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:13px;
+    background:#191d28;
+    color:#a99fff;
+    margin-bottom:15px;
+}
+
+.card-icon svg{
+    width:22px;
+    height:22px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:1.7;
 }
 
 .card-title{
     color:var(--muted);
-    font-size:12px;
-    margin-bottom:7px;
+    font-size:11px;
+    margin-bottom:6px;
 }
 
 .card-number{
-    font-size:28px;
-    font-weight:850;
+    font-size:27px;
+    font-weight:900;
 }
 
 .section-title{
-    font-size:20px;
-    font-weight:800;
-    margin:28px 0 15px;
+    margin:28px 0 14px;
+    font-size:19px;
+    font-weight:850;
 }
 
 .grid{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:15px;
+    gap:14px;
 }
 
 .item{
     background:var(--panel);
     border:1px solid var(--border);
     border-radius:16px;
-    padding:20px;
+    padding:19px;
 }
 
 .item h3{
-    font-size:15px;
+    font-size:14px;
     margin-bottom:8px;
 }
 
 .item p{
     color:var(--muted);
-    font-size:13px;
-    line-height:1.5;
+    font-size:12px;
+    line-height:1.6;
 }
 
 .badge{
     display:inline-flex;
-    padding:5px 9px;
-    border-radius:8px;
-    background:rgba(139,124,255,.12);
-    color:#afa5ff;
-    font-size:10px;
-    font-weight:800;
-    margin-bottom:13px;
+    padding:5px 8px;
+    border-radius:7px;
+    background:rgba(139,124,255,.11);
+    color:#aaa1ff;
+    font-size:9px;
+    font-weight:850;
+    margin-bottom:11px;
 }
 
-/* ================= AI ================= */
+/* =========================================================
+                          TABLE
+========================================================= */
+
+.table-wrap{
+    overflow:auto;
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:16px;
+}
+
+table{
+    width:100%;
+    min-width:700px;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:15px;
+    border-bottom:1px solid var(--border);
+    text-align:left;
+    font-size:12px;
+}
+
+th{
+    color:#737c8d;
+    text-transform:uppercase;
+    font-size:9px;
+}
+
+td{
+    color:#d7dbe2;
+}
+
+tr:last-child td{
+    border-bottom:0;
+}
+
+/* =========================================================
+                          AI CHAT
+========================================================= */
 
 .ai-layout{
     display:grid;
-    grid-template-columns:1fr 290px;
-    gap:18px;
-    min-height:calc(100vh - 140px);
+    grid-template-columns:minmax(0,1fr) 285px;
+    gap:17px;
 }
 
 .chat{
+    min-height:690px;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
     background:var(--panel);
     border:1px solid var(--border);
     border-radius:20px;
-    display:flex;
-    flex-direction:column;
-    min-height:650px;
-    overflow:hidden;
 }
 
 .chat-header{
-    padding:18px 22px;
-    border-bottom:1px solid var(--border);
     display:flex;
     align-items:center;
     justify-content:space-between;
+    padding:17px 20px;
+    border-bottom:1px solid var(--border);
 }
 
 .ai-title{
     display:flex;
     align-items:center;
-    gap:12px;
+    gap:11px;
 }
 
 .ai-avatar{
     width:42px;
     height:42px;
     border-radius:13px;
-    background:linear-gradient(135deg,#8b7cff,#5c4de0);
+    background:linear-gradient(135deg,#8b7cff,#5848d9);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -531,26 +643,27 @@ body{
 }
 
 .ai-name{
-    font-weight:800;
+    font-size:14px;
+    font-weight:850;
 }
 
 .ai-online{
     color:var(--green);
-    font-size:11px;
-    margin-top:3px;
+    font-size:9px;
+    margin-top:4px;
 }
 
 .chat-messages{
     flex:1;
     overflow-y:auto;
-    padding:25px;
+    padding:23px;
 }
 
 .message{
     display:flex;
-    gap:11px;
-    margin-bottom:20px;
+    gap:10px;
     max-width:850px;
+    margin-bottom:18px;
 }
 
 .message.user{
@@ -559,61 +672,60 @@ body{
 }
 
 .message-avatar{
-    width:34px;
-    height:34px;
+    width:33px;
+    height:33px;
     flex-shrink:0;
-    border-radius:10px;
     display:flex;
-    align-items:center;
     justify-content:center;
+    align-items:center;
     background:#202532;
-    font-size:14px;
+    border-radius:10px;
+    font-size:12px;
 }
 
 .message.user .message-avatar{
-    background:#6254dc;
+    background:#5f50d8;
 }
 
 .message-content{
-    background:#171c26;
     border:1px solid var(--border);
-    padding:13px 15px;
-    border-radius:14px;
-    line-height:1.55;
-    font-size:14px;
-    color:#dfe2e8;
+    background:#171c25;
+    color:#dfe3e9;
+    padding:12px 14px;
+    border-radius:13px;
+    line-height:1.6;
     white-space:pre-wrap;
+    font-size:13px;
 }
 
 .message.user .message-content{
     background:#29234e;
-    border-color:#443a80;
+    border-color:#453b82;
 }
 
 .chat-input-area{
     border-top:1px solid var(--border);
-    padding:15px;
+    padding:14px;
 }
 
 .chat-input{
     display:flex;
     align-items:flex-end;
-    gap:9px;
+    gap:8px;
 }
 
 .chat-input textarea{
     flex:1;
-    resize:none;
     min-height:48px;
     max-height:150px;
-    border:1px solid var(--border);
+    resize:none;
+    padding:13px;
+    border-radius:12px;
     background:#0b0e14;
+    border:1px solid var(--border);
     color:white;
-    border-radius:13px;
-    padding:14px;
     outline:none;
-    font-family:inherit;
-    font-size:14px;
+    font-size:13px;
 }
 
 .chat-input textarea:focus{
@@ -624,136 +736,402 @@ body{
     width:50px;
     height:48px;
     border:0;
-    border-radius:13px;
+    border-radius:12px;
     background:linear-gradient(135deg,var(--accent),var(--accent2));
     color:white;
     cursor:pointer;
-    font-size:19px;
+    font-size:18px;
 }
 
 .quick-panel{
+    height:max-content;
     background:var(--panel);
     border:1px solid var(--border);
     border-radius:20px;
-    padding:18px;
-    height:max-content;
+    padding:17px;
 }
 
 .quick-title{
-    font-size:14px;
-    font-weight:800;
-    margin-bottom:15px;
+    font-size:13px;
+    font-weight:850;
+    margin-bottom:14px;
 }
 
 .quick-btn{
     width:100%;
-    padding:12px;
-    margin-bottom:8px;
-    border:1px solid var(--border);
-    background:#141821;
-    color:#bfc5d0;
-    border-radius:11px;
-    cursor:pointer;
+    padding:11px;
+    margin-bottom:7px;
     text-align:left;
-    font-size:12px;
+    background:#141821;
+    border:1px solid var(--border);
+    color:#b9c0cc;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:11px;
 }
 
 .quick-btn:hover{
-    background:#1c2230;
+    background:#1b202b;
     color:white;
-    border-color:#363d4d;
 }
 
 .ai-warning{
-    margin-top:15px;
-    padding:12px;
-    border-radius:12px;
-    background:rgba(244,201,93,.06);
-    border:1px solid rgba(244,201,93,.15);
-    color:#aaa18b;
-    font-size:10px;
+    margin-top:13px;
+    padding:11px;
+    border-radius:11px;
+    background:rgba(242,200,92,.05);
+    border:1px solid rgba(242,200,92,.14);
+    color:#aaa38d;
+    font-size:9px;
     line-height:1.5;
 }
 
-/* ================= TABLE ================= */
+/* =========================================================
+                  LAWYER AI WORKSPACE
+========================================================= */
 
-.table-wrap{
+.lawyer-layout{
+    display:grid;
+    grid-template-columns:360px minmax(0,1fr);
+    gap:17px;
+}
+
+.lawyer-form{
     background:var(--panel);
     border:1px solid var(--border);
-    border-radius:17px;
+    border-radius:20px;
+    padding:20px;
+    height:max-content;
+}
+
+.lawyer-form-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+}
+
+.lawyer-form-title-icon{
+    width:40px;
+    height:40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:12px;
+    background:rgba(139,124,255,.12);
+    color:#a69dff;
+}
+
+.lawyer-form-title h2{
+    font-size:15px;
+}
+
+.lawyer-form-title p{
+    color:var(--muted);
+    font-size:9px;
+    margin-top:3px;
+}
+
+.lawyer-field{
+    margin-bottom:13px;
+}
+
+.lawyer-field label{
+    display:block;
+    color:#aeb5c1;
+    font-size:10px;
+    font-weight:750;
+    margin-bottom:7px;
+}
+
+.lawyer-field input,
+.lawyer-field textarea,
+.lawyer-field select{
+    width:100%;
+    border:1px solid var(--border);
+    background:#0b0e14;
+    color:white;
+    outline:none;
+    border-radius:10px;
+    padding:11px;
+    font-size:11px;
+}
+
+.lawyer-field textarea{
+    min-height:82px;
+    resize:vertical;
+}
+
+.lawyer-field input:focus,
+.lawyer-field textarea:focus,
+.lawyer-field select:focus{
+    border-color:var(--accent);
+}
+
+.generate-btn{
+    width:100%;
+    border:0;
+    padding:13px;
+    border-radius:11px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:white;
+    font-weight:850;
+    cursor:pointer;
+    font-size:12px;
+    margin-top:4px;
+}
+
+.workspace{
+    min-width:0;
+}
+
+.workspace-tabs{
+    display:flex;
+    gap:6px;
+    overflow-x:auto;
+    margin-bottom:12px;
+}
+
+.workspace-tab{
+    white-space:nowrap;
+    border:1px solid var(--border);
+    background:var(--panel);
+    color:#858e9d;
+    border-radius:10px;
+    padding:9px 12px;
+    font-size:10px;
+    cursor:pointer;
+    font-weight:750;
+}
+
+.workspace-tab.active{
+    color:white;
+    border-color:rgba(139,124,255,.35);
+    background:rgba(139,124,255,.11);
+}
+
+.workspace-card{
+    display:none;
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:22px;
+    min-height:570px;
+}
+
+.workspace-card.active{
+    display:block;
+}
+
+.workspace-heading{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:15px;
+    margin-bottom:18px;
+}
+
+.workspace-heading h2{
+    font-size:18px;
+}
+
+.workspace-heading p{
+    color:var(--muted);
+    font-size:10px;
+    margin-top:5px;
+    line-height:1.5;
+}
+
+.small-btn{
+    border:1px solid var(--border);
+    background:#171b24;
+    color:#b8bfcb;
+    border-radius:9px;
+    padding:9px 11px;
+    cursor:pointer;
+    font-size:10px;
+}
+
+.document-preview{
+    background:#0b0e14;
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:23px;
+    min-height:420px;
+    color:#dce0e7;
+    line-height:1.75;
+    font-size:12px;
+    white-space:pre-wrap;
     overflow:auto;
 }
 
-table{
-    width:100%;
-    border-collapse:collapse;
-    min-width:700px;
+.analysis-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
 }
 
-th,td{
-    padding:16px;
-    border-bottom:1px solid var(--border);
-    text-align:left;
-    font-size:13px;
+.analysis-box{
+    background:#0d1016;
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:17px;
 }
 
-th{
-    color:#777f90;
+.analysis-box h3{
+    font-size:12px;
+    margin-bottom:10px;
+}
+
+.analysis-box ul{
+    list-style:none;
+}
+
+.analysis-box li{
+    color:#aeb5c1;
+    font-size:10px;
+    line-height:1.6;
+    margin-bottom:8px;
+}
+
+.good{
+    color:var(--green)!important;
+}
+
+.warning{
+    color:var(--yellow)!important;
+}
+
+.bad{
+    color:var(--red)!important;
+}
+
+.question-card{
+    background:#0d1016;
+    border:1px solid var(--border);
+    padding:15px;
+    border-radius:13px;
+    margin-bottom:9px;
+}
+
+.question-number{
+    color:#9387ff;
+    font-size:9px;
+    font-weight:850;
+    margin-bottom:5px;
+}
+
+.question-text{
+    color:#d8dce3;
     font-size:11px;
-    text-transform:uppercase;
+    line-height:1.5;
 }
 
-td{
-    color:#d8dce4;
+/* =========================================================
+                       REHEARSAL
+========================================================= */
+
+.rehearsal{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
 }
 
-tr:last-child td{
-    border-bottom:0;
+.rehearsal-box{
+    background:#0d1016;
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:17px;
 }
 
-/* ================= SETTINGS ================= */
+.rehearsal-box h3{
+    font-size:12px;
+    margin-bottom:12px;
+}
+
+.rehearsal-question{
+    color:#dfe2e8;
+    line-height:1.6;
+    font-size:12px;
+    margin-bottom:13px;
+}
+
+.rehearsal-box textarea{
+    width:100%;
+    min-height:160px;
+    resize:vertical;
+    background:#080b10;
+    border:1px solid var(--border);
+    color:white;
+    outline:none;
+    border-radius:11px;
+    padding:12px;
+    font-size:11px;
+}
+
+.evaluate-btn{
+    margin-top:9px;
+    border:0;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:white;
+    border-radius:10px;
+    padding:10px 13px;
+    cursor:pointer;
+    font-weight:800;
+    font-size:10px;
+}
+
+.evaluation{
+    margin-top:13px;
+    color:#aeb5c1;
+    font-size:10px;
+    line-height:1.6;
+}
+
+/* =========================================================
+                        SETTINGS
+========================================================= */
 
 .settings-grid{
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:16px;
+    gap:14px;
 }
 
 .setting{
     background:var(--panel);
     border:1px solid var(--border);
-    border-radius:17px;
-    padding:21px;
+    border-radius:16px;
+    padding:20px;
 }
 
 .setting h3{
-    font-size:15px;
-    margin-bottom:8px;
+    font-size:13px;
+    margin-bottom:7px;
 }
 
 .setting p{
     color:var(--muted);
-    font-size:12px;
-    line-height:1.5;
+    font-size:11px;
+    line-height:1.6;
 }
 
 .danger{
     border-color:rgba(255,101,119,.2);
 }
 
-/* ================= MOBILE ================= */
+/* =========================================================
+                       MOBILE
+========================================================= */
 
-.mobile-menu{
-    display:none;
-}
+@media(max-width:1150px){
 
-@media(max-width:1050px){
     .cards{
         grid-template-columns:repeat(2,1fr);
     }
 
-    .grid{
-        grid-template-columns:repeat(2,1fr);
+    .lawyer-layout{
+        grid-template-columns:1fr;
     }
 
     .ai-layout{
@@ -765,13 +1143,13 @@ tr:last-child td{
     }
 }
 
-@media(max-width:760px){
+@media(max-width:800px){
 
     .sidebar{
         transform:translateX(-100%);
         transition:.25s;
         width:280px;
-        box-shadow:20px 0 60px rgba(0,0,0,.5);
+        box-shadow:25px 0 70px rgba(0,0,0,.55);
     }
 
     .sidebar.open{
@@ -779,31 +1157,16 @@ tr:last-child td{
     }
 
     .main{
-        margin-left:0;
         width:100%;
-    }
-
-    .topbar{
-        padding:0 17px;
+        margin-left:0;
     }
 
     .mobile-menu{
         display:flex;
-        width:38px;
-        height:38px;
-        align-items:center;
-        justify-content:center;
-        border:1px solid var(--border);
-        background:var(--panel);
-        color:white;
-        border-radius:10px;
-        cursor:pointer;
-        margin-right:10px;
     }
 
-    .topbar-left{
-        display:flex;
-        align-items:center;
+    .topbar{
+        padding:0 16px;
     }
 
     .content{
@@ -811,15 +1174,11 @@ tr:last-child td{
     }
 
     .hero{
-        padding:22px;
+        padding:21px;
     }
 
     .hero h1{
-        font-size:25px;
-    }
-
-    .cards{
-        grid-template-columns:1fr 1fr;
+        font-size:24px;
     }
 
     .grid{
@@ -830,27 +1189,36 @@ tr:last-child td{
         grid-template-columns:1fr;
     }
 
+    .analysis-grid,
+    .rehearsal{
+        grid-template-columns:1fr;
+    }
+
     .chat{
         min-height:calc(100vh - 120px);
     }
 
-    .chat-messages{
-        padding:17px;
-    }
-
-    .auth-box{
-        padding:27px 20px;
-        border-radius:20px;
+    .workspace-card{
+        padding:15px;
     }
 }
 
-@media(max-width:430px){
+@media(max-width:480px){
+
     .cards{
         grid-template-columns:1fr;
     }
 
+    .auth-box{
+        padding:27px 19px;
+    }
+
     .page-title{
-        font-size:16px;
+        font-size:15px;
+    }
+
+    .top-actions .icon-button:last-child{
+        display:none;
     }
 }
 </style>
@@ -859,85 +1227,92 @@ tr:last-child td{
 <body>
 
 <!-- =========================================================
-                         AUTH
+                       AUTH SCREEN
 ========================================================= -->
 
 <section id="authScreen">
 
-    <div class="auth-box">
+<div class="auth-box">
 
-        <div class="logo-wrap">
-            <div class="logo">L</div>
-        </div>
+    <div class="auth-logo">
+        <div class="logo">L</div>
+    </div>
 
-        <div class="auth-title">Добро пожаловать</div>
+    <div class="auth-title">
+        Добро пожаловать
+    </div>
 
-        <div class="auth-subtitle">
-            LexAI — цифровая рабочая среда<br>
-            для юридической работы
-        </div>
+    <div class="auth-subtitle">
+        LexAI — интеллектуальная рабочая среда<br>
+        для юридической работы и подготовки адвоката
+    </div>
 
-        <div class="auth-tabs">
+    <div class="auth-tabs">
 
-            <button
-                class="auth-tab active"
-                id="loginTab"
-                onclick="switchAuth('login')">
-                Войти
-            </button>
+        <button
+            class="auth-tab active"
+            id="loginTab"
+            onclick="switchAuth('login')">
+            Войти
+        </button>
 
-            <button
-                class="auth-tab"
-                id="registerTab"
-                onclick="switchAuth('register')">
-                Регистрация
-            </button>
+        <button
+            class="auth-tab"
+            id="registerTab"
+            onclick="switchAuth('register')">
+            Регистрация
+        </button>
 
-        </div>
+    </div>
 
-        <form id="authForm">
+    <form id="authForm">
 
-            <div id="registerFields">
+        <div id="registerFields">
 
-                <div class="form-group">
-                    <label>Имя</label>
-                    <input
-                        id="firstName"
-                        type="text"
-                        placeholder="Введите имя">
-                </div>
-
-                <div class="form-group">
-                    <label>Фамилия</label>
-                    <input
-                        id="lastName"
-                        type="text"
-                        placeholder="Введите фамилию">
-                </div>
-
+            <div class="form-group">
+                <label>Имя</label>
+                <input
+                    id="firstName"
+                    type="text"
+                    placeholder="Введите имя">
             </div>
 
             <div class="form-group">
-                <label>Пароль</label>
-
+                <label>Фамилия</label>
                 <input
-                    id="password"
-                    type="password"
-                    placeholder="Введите пароль">
+                    id="lastName"
+                    type="text"
+                    placeholder="Введите фамилию">
             </div>
 
-            <button class="primary-btn" type="submit" id="authButton">
-                Войти в аккаунт
-            </button>
+        </div>
 
-            <div
-                class="auth-message"
-                id="authMessage">
-            </div>
+        <div class="form-group">
 
-        </form>
+            <label>Пароль</label>
 
-    </div>
+            <input
+                id="password"
+                type="password"
+                placeholder="Введите пароль">
+
+        </div>
+
+        <button
+            class="primary-btn"
+            id="authButton"
+            type="submit">
+            Войти в аккаунт
+        </button>
+
+        <div
+            class="auth-message"
+            id="authMessage">
+        </div>
+
+    </form>
+
+</div>
 
 </section>
 
@@ -950,110 +1325,274 @@ tr:last-child td{
 
 <div class="layout">
 
-<!-- ================= SIDEBAR ================= -->
+<!-- =========================================================
+                         SIDEBAR
+========================================================= -->
 
-<aside class="sidebar" id="sidebar">
+<aside
+    class="sidebar"
+    id="sidebar">
 
     <div class="sidebar-logo">
 
-        <div class="logo">L</div>
+        <div class="logo">
+            L
+        </div>
 
         <div>
-            <div class="logo-text">LexAI</div>
-            <div class="logo-version">VERSION 0.5</div>
+
+            <div class="logo-text">
+                LexAI
+            </div>
+
+            <div class="logo-version">
+                VERSION 0.5.1
+            </div>
+
         </div>
 
     </div>
 
 
-    <div class="nav-section">
-
-        <div class="nav-label">
-            Рабочая область
-        </div>
-
-        <button
-            class="nav-item active"
-            data-screen="dashboard"
-            onclick="openScreen('dashboard')">
-
-            <span class="nav-icon">⌂</span>
-            Главная
-
-        </button>
-
-
-        <button
-            class="nav-item"
-            data-screen="cases"
-            onclick="openScreen('cases')">
-
-            <span class="nav-icon">▣</span>
-            Мои дела
-
-        </button>
-
-
-        <button
-            class="nav-item"
-            data-screen="documents"
-            onclick="openScreen('documents')">
-
-            <span class="nav-icon">▤</span>
-            Документы
-
-        </button>
-
-
-        <button
-            class="nav-item"
-            data-screen="ai"
-            onclick="openScreen('ai')">
-
-            <span class="nav-icon">✦</span>
-            AI-помощник
-
-        </button>
-
-
-        <button
-            class="nav-item"
-            data-screen="court"
-            onclick="openScreen('court')">
-
-            <span class="nav-icon">⚖</span>
-            Судебные дела
-
-        </button>
-
-
-        <div class="nav-label">
-            Система
-        </div>
-
-
-        <button
-            class="nav-item"
-            data-screen="notifications"
-            onclick="openScreen('notifications')">
-
-            <span class="nav-icon">♢</span>
-            Уведомления
-
-        </button>
-
-
-        <button
-            class="nav-item"
-            data-screen="settings"
-            onclick="openScreen('settings')">
-
-            <span class="nav-icon">⚙</span>
-            Настройки
-
-        </button>
-
+    <div class="nav-label">
+        Рабочая область
     </div>
+
+
+    <!-- HOME -->
+
+    <button
+        class="nav-item active"
+        data-screen="dashboard"
+        onclick="openScreen('dashboard')">
+
+        <span class="nav-icon">
+
+            <svg viewBox="0 0 24 24">
+
+                <path d="M3 10.5 12 3l9 7.5"/>
+
+                <path d="M5 9.5V21h14V9.5"/>
+
+                <path d="M9 21v-6h6v6"/>
+
+            </svg>
+
+        </span>
+
+        Главная
+
+    </button>
+
+
+    <!-- CASES -->
+
+    <button
+        class="nav-item"
+        data-screen="cases"
+        onclick="openScreen('cases')">
+
+        <span class="nav-icon">
+
+            <svg viewBox="0 0 24 24">
+
+                <rect
+                    x="4"
+                    y="3"
+                    width="16"
+                    height="18"
+                    rx="2"/>
+
+                <path d="M8 8h8"/>
+                <path d="M8 12h8"/>
+                <path d="M8 16h5"/>
+
+            </svg>
+
+        </span>
+
+        Мои дела
+
+    </button>
+
+
+    <!-- DOCUMENTS -->
+
+    <button
+        class="nav-item"
+        data-screen="documents"
+        onclick="openScreen('documents')">
+
+        <span class="nav-icon">
+
+            <svg viewBox="0 0 24 24">
+
+                <path d="M6 3h9l4 4v14H6z"/>
+
+                <path d="M15 3v5h5"/>
+
+                <path d="M9 13h6"/>
+                <path d="M9 17h6"/>
+
+            </svg>
+
+        </span>
+
+        Документы
+
+    </button>
+
+
+    <!-- GENERAL AI -->
+
+    <button
+        class="nav-item"
+        data-screen="ai"
+        onclick="openScreen('ai')">
+
+        <span class="nav-icon">
+
+            <svg viewBox="0 0 24 24">
+
+                <path d="M12 3v3"/>
+                <path d="M12 18v3"/>
+                <path d="M3 12h3"/>
+                <path d="M18 12h3"/>
+
+                <path d="m5.6 5.6 2.1 2.1"/>
+                <path d="m16.3 16.3 2.1 2.1"/>
+                <path d="m18.4 5.6-2.1 2.1"/>
+                <path d="m7.7 16.3-2.1 2.1"/>
+
+                <circle
+                    cx="12"
+                    cy="12"
+                    r="4"/>
+
+            </svg>
+
+        </span>
+
+        AI-помощник
+
+    </button>
+
+
+    <!-- LAWYER AI -->
+
+    <button
+        class="nav-item"
+        data-screen="lawyer-ai"
+        onclick="openScreen('lawyer-ai')">
+
+        <span class="nav-icon">
+
+            <svg viewBox="0 0 24 24">
+
+                <path d="M12 3v18"/>
+
+                <path d="M5 7h14"/>
+
+                <path d="M5 7 2.5 13h5L5 7z"/>
+
+                <path d="m19 7 2.5 6h-5l2.5-6z"/>
+
+                <path d="M8 21h8"/>
+
+            </svg>
+
+        </span>
+
+        AI для адвоката
+
+    </button>
+
+
+    <!-- COURT -->
+
+    <button
+        class="nav-item"
+        data-screen="court"
+        onclick="openScreen('court')">
+
+        <span class="nav-icon">
+
+            <svg viewBox="0 0 24 24">
+
+                <path d="M12 3v18"/>
+
+                <path d="M4 7h16"/>
+
+                <path d="M5 7 2 14h6L5 7z"/>
+
+                <path d="m19 7 3 7h-6l3-7z"/>
+
+                <path d="M7 21h10"/>
+
+            </svg>
+
+        </span>
+
+        Судебные дела
+
+    </button>
+
+
+    <div class="nav-label">
+        Система
+    </div>
+
+
+    <!-- NOTIFICATIONS -->
+
+    <button
+        class="nav-item"
+        data-screen="notifications"
+        onclick="openScreen('notifications')">
+
+        <span class="nav-icon">
+
+            <svg viewBox="0 0 24 24">
+
+                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+
+                <path d="M10 21h4"/>
+
+            </svg>
+
+        </span>
+
+        Уведомления
+
+    </button>
+
+
+    <!-- SETTINGS -->
+
+    <button
+        class="nav-item"
+        data-screen="settings"
+        onclick="openScreen('settings')">
+
+        <span class="nav-icon">
+
+            <svg viewBox="0 0 24 24">
+
+                <circle
+                    cx="12"
+                    cy="12"
+                    r="3"/>
+
+                <path
+                    d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.8 1.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21h-2.5v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-1.8-1.8.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H5.5v-2.5h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1 1.8-1.8.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6V4h2.5v.1a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.8 1.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.1v2.5h-.1a1.7 1.7 0 0 0-1.6 1.4z"/>
+
+            </svg>
+
+        </span>
+
+        Настройки
+
+    </button>
 
 
     <div class="sidebar-bottom">
@@ -1062,7 +1601,20 @@ tr:last-child td{
             class="nav-item"
             onclick="logout()">
 
-            <span class="nav-icon">↪</span>
+            <span class="nav-icon">
+
+                <svg viewBox="0 0 24 24">
+
+                    <path d="M10 17l5-5-5-5"/>
+
+                    <path d="M15 12H3"/>
+
+                    <path d="M20 4v16"/>
+
+                </svg>
+
+            </span>
+
             Выйти
 
         </button>
@@ -1070,7 +1622,9 @@ tr:last-child td{
 
         <div class="user-mini">
 
-            <div class="avatar" id="avatar">
+            <div
+                class="avatar"
+                id="avatar">
                 U
             </div>
 
@@ -1095,7 +1649,9 @@ tr:last-child td{
 </aside>
 
 
-<!-- ================= MAIN ================= -->
+<!-- =========================================================
+                           MAIN
+========================================================= -->
 
 <main class="main">
 
@@ -1123,7 +1679,13 @@ tr:last-child td{
         <button
             class="icon-button"
             onclick="openScreen('notifications')">
-            ♢
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7">
+
+                <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+
+                <path d="M10 21h4"/>
+
+            </svg>
         </button>
 
         <button
@@ -1156,9 +1718,9 @@ tr:last-child td{
 
         <p>
             Ваша юридическая рабочая среда.
-            Управляйте делами, документами и
-            используйте AI-помощника для анализа
-            юридических задач.
+            Управляйте делами и документами,
+            анализируйте ситуации и готовьтесь
+            к судебным выступлениям вместе с AI.
         </p>
 
     </div>
@@ -1168,7 +1730,21 @@ tr:last-child td{
 
         <div class="card">
 
-            <div class="card-icon">▣</div>
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24">
+
+                    <rect
+                        x="4"
+                        y="3"
+                        width="16"
+                        height="18"
+                        rx="2"/>
+
+                    <path d="M8 8h8"/>
+                    <path d="M8 12h8"/>
+
+                </svg>
+            </div>
 
             <div class="card-title">
                 Активные дела
@@ -1183,7 +1759,16 @@ tr:last-child td{
 
         <div class="card">
 
-            <div class="card-icon">▤</div>
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24">
+
+                    <path d="M6 3h9l4 4v14H6z"/>
+                    <path d="M15 3v5h5"/>
+                    <path d="M9 13h6"/>
+                    <path d="M9 17h6"/>
+
+                </svg>
+            </div>
 
             <div class="card-title">
                 Документы
@@ -1198,7 +1783,9 @@ tr:last-child td{
 
         <div class="card">
 
-            <div class="card-icon">⚖</div>
+            <div class="card-icon">
+                ⚖
+            </div>
 
             <div class="card-title">
                 Судебные дела
@@ -1213,7 +1800,17 @@ tr:last-child td{
 
         <div class="card">
 
-            <div class="card-icon">✦</div>
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24">
+
+                    <path d="M12 3v3"/>
+                    <path d="M12 18v3"/>
+                    <path d="M3 12h3"/>
+                    <path d="M18 12h3"/>
+                    <circle cx="12" cy="12" r="4"/>
+
+                </svg>
+            </div>
 
             <div class="card-title">
                 AI-запросы
@@ -1238,7 +1835,7 @@ tr:last-child td{
         <div class="item">
 
             <span class="badge">
-                В работе
+                В РАБОТЕ
             </span>
 
             <h3>
@@ -1246,8 +1843,8 @@ tr:last-child td{
             </h3>
 
             <p>
-                Анализ условий договора и подготовка
-                замечаний.
+                Анализ условий договора
+                и подготовка замечаний.
             </p>
 
         </div>
@@ -1256,7 +1853,7 @@ tr:last-child td{
         <div class="item">
 
             <span class="badge">
-                Суд
+                СУД
             </span>
 
             <h3>
@@ -1274,7 +1871,7 @@ tr:last-child td{
         <div class="item">
 
             <span class="badge">
-                Новое
+                НОВОЕ
             </span>
 
             <h3>
@@ -1293,7 +1890,7 @@ tr:last-child td{
 
 
 <!-- =========================================================
-                           CASES
+                          CASES
 ========================================================= -->
 
 <section
@@ -1302,7 +1899,9 @@ tr:last-child td{
 
     <div class="hero">
 
-        <h1>Мои дела</h1>
+        <h1>
+            Мои дела
+        </h1>
 
         <p>
             Все текущие юридические дела
@@ -1376,11 +1975,13 @@ tr:last-child td{
 
     <div class="hero">
 
-        <h1>Документы</h1>
+        <h1>
+            Документы
+        </h1>
 
         <p>
-            Управление юридическими документами
-            и подготовленными материалами.
+            Юридические документы и материалы
+            по вашим делам.
         </p>
 
     </div>
@@ -1444,7 +2045,7 @@ tr:last-child td{
 
 
 <!-- =========================================================
-                           AI CHAT
+                          AI CHAT
 ========================================================= -->
 
 <section
@@ -1452,7 +2053,6 @@ tr:last-child td{
     id="ai">
 
     <div class="ai-layout">
-
 
         <div class="chat">
 
@@ -1471,7 +2071,7 @@ tr:last-child td{
                         </div>
 
                         <div class="ai-online">
-                            ● AI-помощник
+                            ● AI-ПОМОЩНИК
                         </div>
 
                     </div>
@@ -1492,11 +2092,11 @@ tr:last-child td{
                     </div>
 
                     <div class="message-content">
-                        Здравствуйте! Я AI-помощник LexAI.
+Здравствуйте! Я AI-помощник LexAI.
 
-                        Я могу помочь вам структурировать юридическую задачу, разобрать обстоятельства дела, подготовить список вопросов, предложить структуру документа или объяснить правовой вопрос.
+Я могу помочь структурировать юридическую задачу, разобрать обстоятельства дела, подготовить вопросы, предложить структуру документа или помочь подготовиться к судебному выступлению.
 
-                        Опишите вашу ситуацию или воспользуйтесь одним из быстрых запросов справа.
+Опишите вашу ситуацию или воспользуйтесь быстрым действием справа.
                     </div>
 
                 </div>
@@ -1533,13 +2133,11 @@ tr:last-child td{
                 Быстрые действия
             </div>
 
-
             <button
                 class="quick-btn"
                 onclick="quickPrompt('Проанализируй моё юридическое дело и выдели основные риски.')">
                 ⚖ Разобрать дело
             </button>
-
 
             <button
                 class="quick-btn"
@@ -1547,27 +2145,23 @@ tr:last-child td{
                 ▤ Составить документ
             </button>
 
-
             <button
                 class="quick-btn"
                 onclick="quickPrompt('Проанализируй описанную ситуацию и выдели возможные правовые проблемы.')">
                 ◈ Анализ ситуации
             </button>
 
-
             <button
                 class="quick-btn"
-                onclick="quickPrompt('Составь список вопросов, которые нужно задать клиенту по этому делу.')">
+                onclick="quickPrompt('Составь список вопросов, которые нужно задать клиенту.')">
                 ? Вопросы клиенту
             </button>
 
-
             <button
                 class="quick-btn"
-                onclick="quickPrompt('Помоги подготовиться к судебному заседанию: составь чек-лист подготовки.')">
+                onclick="quickPrompt('Помоги подготовиться к судебному заседанию.')">
                 ⚖ Подготовка к суду
             </button>
-
 
             <button
                 class="quick-btn"
@@ -1575,12 +2169,11 @@ tr:last-child td{
                 ✦ Объяснить термин
             </button>
 
-
             <div class="ai-warning">
-                AI-помощник предоставляет информационную
-                и аналитическую поддержку. Ответы необходимо
-                проверять по действующему законодательству
-                и конкретным материалам дела.
+                AI является инструментом информационной
+                и аналитической поддержки. Ответы требуют
+                проверки по действующему законодательству
+                и материалам конкретного дела.
             </div>
 
         </aside>
@@ -1591,7 +2184,688 @@ tr:last-child td{
 
 
 <!-- =========================================================
-                       COURT
+                      AI LAWYER
+========================================================= -->
+
+<section
+    class="screen"
+    id="lawyer-ai">
+
+    <div class="hero">
+
+        <h1>
+            ⚖ AI для адвоката
+        </h1>
+
+        <p>
+            Подготовка адвокатской позиции,
+            судебной речи, вопросов суда,
+            контраргументов и репетиция выступления.
+        </p>
+
+    </div>
+
+
+    <div class="lawyer-layout">
+
+
+        <!-- ================= FORM ================= -->
+
+        <div class="lawyer-form">
+
+            <div class="lawyer-form-title">
+
+                <div class="lawyer-form-title-icon">
+                    ⚖
+                </div>
+
+                <div>
+
+                    <h2>
+                        Данные дела
+                    </h2>
+
+                    <p>
+                        Заполните основные сведения
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="lawyer-field">
+
+                <label>
+                    РОЛЬ АДВОКАТА
+                </label>
+
+                <select id="lawyerRole">
+
+                    <option>
+                        Защитник
+                    </option>
+
+                    <option>
+                        Представитель истца
+                    </option>
+
+                    <option>
+                        Представитель ответчика
+                    </option>
+
+                    <option>
+                        Представитель потерпевшего
+                    </option>
+
+                    <option>
+                        Представитель доверителя
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="lawyer-field">
+
+                <label>
+                    ТИП ПРОЦЕССА
+                </label>
+
+                <select id="processType">
+
+                    <option>
+                        Гражданский
+                    </option>
+
+                    <option>
+                        Уголовный
+                    </option>
+
+                    <option>
+                        Административный
+                    </option>
+
+                    <option>
+                        Арбитражный
+                    </option>
+
+                    <option>
+                        Иной
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="lawyer-field">
+
+                <label>
+                    СТАДИЯ
+                </label>
+
+                <select id="caseStage">
+
+                    <option>
+                        Подготовка к делу
+                    </option>
+
+                    <option>
+                        Судебное заседание
+                    </option>
+
+                    <option>
+                        Судебные прения
+                    </option>
+
+                    <option>
+                        Апелляция
+                    </option>
+
+                    <option>
+                        Кассация
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="lawyer-field">
+
+                <label>
+                    ПОЗИЦИЯ ДОВЕРИТЕЛЯ
+                </label>
+
+                <textarea
+                    id="clientPosition"
+                    placeholder="Опишите позицию клиента..."></textarea>
+
+            </div>
+
+
+            <div class="lawyer-field">
+
+                <label>
+                    ОБСТОЯТЕЛЬСТВА ДЕЛА
+                </label>
+
+                <textarea
+                    id="caseFacts"
+                    placeholder="Что произошло? Укажите основные факты..."></textarea>
+
+            </div>
+
+
+            <div class="lawyer-field">
+
+                <label>
+                    ДОКАЗАТЕЛЬСТВА
+                </label>
+
+                <textarea
+                    id="evidence"
+                    placeholder="Какие документы, показания и другие доказательства имеются?"></textarea>
+
+            </div>
+
+
+            <div class="lawyer-field">
+
+                <label>
+                    ПОЗИЦИЯ ОППОНЕНТА
+                </label>
+
+                <textarea
+                    id="opponentPosition"
+                    placeholder="Что утверждает другая сторона?"></textarea>
+
+            </div>
+
+
+            <button
+                class="generate-btn"
+                onclick="generateLawyerCase()">
+
+                ✦ СФОРМИРОВАТЬ АДВОКАТСКУЮ ПОЗИЦИЮ
+
+            </button>
+
+        </div>
+
+
+        <!-- ================= WORKSPACE ================= -->
+
+        <div class="workspace">
+
+            <div class="workspace-tabs">
+
+                <button
+                    class="workspace-tab active"
+                    onclick="openWorkspace('speech',this)">
+                    🎙 Речь
+                </button>
+
+                <button
+                    class="workspace-tab"
+                    onclick="openWorkspace('position',this)">
+                    🛡 Позиция
+                </button>
+
+                <button
+                    class="workspace-tab"
+                    onclick="openWorkspace('questions',this)">
+                    ❓ Вопросы суда
+                </button>
+
+                <button
+                    class="workspace-tab"
+                    onclick="openWorkspace('opponent',this)">
+                    ⚔ Оппонент
+                </button>
+
+                <button
+                    class="workspace-tab"
+                    onclick="openWorkspace('risks',this)">
+                    🔎 Риски
+                </button>
+
+                <button
+                    class="workspace-tab"
+                    onclick="openWorkspace('rehearsal',this)">
+                    🎤 Репетиция
+                </button>
+
+            </div>
+
+
+            <!-- ================= SPEECH ================= -->
+
+            <div
+                class="workspace-card active"
+                id="workspace-speech">
+
+                <div class="workspace-heading">
+
+                    <div>
+
+                        <h2>
+                            Судебная речь
+                        </h2>
+
+                        <p>
+                            Предварительный черновик выступления
+                            адвоката на основе введённых данных.
+                        </p>
+
+                    </div>
+
+                    <button
+                        class="small-btn"
+                        onclick="copyElementText('speechOutput')">
+                        Копировать
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="document-preview"
+                    id="speechOutput">
+
+Нажмите «Сформировать адвокатскую позицию», чтобы AI подготовил черновик судебной речи.
+
+Структура будет включать:
+
+• вступление;
+• обстоятельства дела;
+• позицию доверителя;
+• анализ доказательств;
+• аргументы;
+• ответы на возможные возражения;
+• заключение;
+• просительную часть.
+
+Важно: перед реальным использованием необходимо проверить текст, факты, нормы права и процессуальные требования.
+                </div>
+
+            </div>
+
+
+            <!-- ================= POSITION ================= -->
+
+            <div
+                class="workspace-card"
+                id="workspace-position">
+
+                <div class="workspace-heading">
+
+                    <div>
+
+                        <h2>
+                            Адвокатская позиция
+                        </h2>
+
+                        <p>
+                            Структура аргументации по делу.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="analysis-grid">
+
+                    <div class="analysis-box">
+
+                        <h3 class="good">
+                            ✓ Сильные стороны
+                        </h3>
+
+                        <ul id="strengths">
+
+                            <li>
+                                Заполните данные дела.
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+
+                    <div class="analysis-box">
+
+                        <h3 class="warning">
+                            ⚠ Что необходимо проверить
+                        </h3>
+
+                        <ul id="checks">
+
+                            <li>
+                                Необходимо проверить доказательства.
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+
+                    <div class="analysis-box">
+
+                        <h3>
+                            🛡 Основная линия защиты
+                        </h3>
+
+                        <ul id="defenseLine">
+
+                            <li>
+                                AI сформирует предварительную
+                                линию аргументации.
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+
+                    <div class="analysis-box">
+
+                        <h3 class="bad">
+                            ⚠ Потенциальные слабые места
+                        </h3>
+
+                        <ul id="weaknesses">
+
+                            <li>
+                                AI определит возможные риски
+                                после заполнения данных.
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= QUESTIONS ================= -->
+
+            <div
+                class="workspace-card"
+                id="workspace-questions">
+
+                <div class="workspace-heading">
+
+                    <div>
+
+                        <h2>
+                            Возможные вопросы суда
+                        </h2>
+
+                        <p>
+                            Вопросы для подготовки адвоката
+                            к заседанию.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div id="questionsOutput">
+
+                    <div class="question-card">
+
+                        <div class="question-number">
+                            ВОПРОС 01
+                        </div>
+
+                        <div class="question-text">
+                            Заполните сведения о деле,
+                            чтобы сформировать вопросы.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= OPPONENT ================= -->
+
+            <div
+                class="workspace-card"
+                id="workspace-opponent">
+
+                <div class="workspace-heading">
+
+                    <div>
+
+                        <h2>
+                            Аргументы оппонента
+                        </h2>
+
+                        <p>
+                            Подготовка к возможным доводам
+                            противоположной стороны.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="document-preview"
+                    id="opponentOutput">
+
+Заполните позицию оппонента и данные дела.
+
+AI сможет сформировать:
+
+• возможные контраргументы;
+• вопросы к аргументам оппонента;
+• слабые места противоположной позиции;
+• варианты ответа адвоката.
+                </div>
+
+            </div>
+
+
+            <!-- ================= RISKS ================= -->
+
+            <div
+                class="workspace-card"
+                id="workspace-risks">
+
+                <div class="workspace-heading">
+
+                    <div>
+
+                        <h2>
+                            Анализ рисков
+                        </h2>
+
+                        <p>
+                            Предварительный список обстоятельств,
+                            которые требуют внимания.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="analysis-grid">
+
+                    <div class="analysis-box">
+
+                        <h3 class="bad">
+                            🔴 Высокое внимание
+                        </h3>
+
+                        <ul id="highRisks">
+
+                            <li>
+                                Пока нет данных для анализа.
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+
+                    <div class="analysis-box">
+
+                        <h3 class="warning">
+                            🟡 Требует проверки
+                        </h3>
+
+                        <ul id="mediumRisks">
+
+                            <li>
+                                Проверьте полноту доказательств.
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+
+                    <div class="analysis-box">
+
+                        <h3 class="good">
+                            🟢 Что работает в пользу позиции
+                        </h3>
+
+                        <ul id="positiveFactors">
+
+                            <li>
+                                Заполните данные дела.
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+
+                    <div class="analysis-box">
+
+                        <h3>
+                            📂 Что дополнительно собрать
+                        </h3>
+
+                        <ul id="missingEvidence">
+
+                            <li>
+                                AI сформирует предварительный список.
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= REHEARSAL ================= -->
+
+            <div
+                class="workspace-card"
+                id="workspace-rehearsal">
+
+                <div class="workspace-heading">
+
+                    <div>
+
+                        <h2>
+                            🎤 Репетиция выступления
+                        </h2>
+
+                        <p>
+                            Тренировка ответов на вопросы суда.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="rehearsal">
+
+                    <div class="rehearsal-box">
+
+                        <h3>
+                            Вопрос судьи
+                        </h3>
+
+                        <div
+                            class="rehearsal-question"
+                            id="rehearsalQuestion">
+
+                            Почему суд должен принять
+                            позицию вашего доверителя?
+
+                        </div>
+
+                        <textarea
+                            id="rehearsalAnswer"
+                            placeholder="Введите свой ответ..."></textarea>
+
+                        <button
+                            class="evaluate-btn"
+                            onclick="evaluateAnswer()">
+
+                            Проверить ответ
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="rehearsal-box">
+
+                        <h3>
+                            Анализ AI
+                        </h3>
+
+                        <div
+                            class="evaluation"
+                            id="evaluation">
+
+                            После ответа AI оценит:
+
+                            • логичность;
+                            • убедительность;
+                            • полноту;
+                            • возможные слабые места;
+                            • что можно улучшить.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+                         COURT
 ========================================================= -->
 
 <section
@@ -1600,7 +2874,9 @@ tr:last-child td{
 
     <div class="hero">
 
-        <h1>Судебные дела</h1>
+        <h1>
+            Судебные дела
+        </h1>
 
         <p>
             Контроль судебных процессов,
@@ -1615,7 +2891,7 @@ tr:last-child td{
         <div class="item">
 
             <span class="badge">
-                Ближайшее
+                БЛИЖАЙШЕЕ
             </span>
 
             <h3>
@@ -1633,7 +2909,7 @@ tr:last-child td{
         <div class="item">
 
             <span class="badge">
-                Подготовка
+                ПОДГОТОВКА
             </span>
 
             <h3>
@@ -1651,7 +2927,7 @@ tr:last-child td{
         <div class="item">
 
             <span class="badge">
-                Завершение
+                ЗАВЕРШЕНИЕ
             </span>
 
             <h3>
@@ -1670,7 +2946,7 @@ tr:last-child td{
 
 
 <!-- =========================================================
-                    NOTIFICATIONS
+                     NOTIFICATIONS
 ========================================================= -->
 
 <section
@@ -1679,11 +2955,13 @@ tr:last-child td{
 
     <div class="hero">
 
-        <h1>Уведомления</h1>
+        <h1>
+            Уведомления
+        </h1>
 
         <p>
-            Здесь будут отображаться важные
-            события по вашим делам.
+            Важные события по вашим делам
+            и документам.
         </p>
 
     </div>
@@ -1694,16 +2972,15 @@ tr:last-child td{
         <div class="item">
 
             <span class="badge">
-                Сегодня
+                СЕГОДНЯ
             </span>
 
             <h3>
-                Новое уведомление
+                Приближается заседание
             </h3>
 
             <p>
-                Приближается судебное заседание
-                по делу №2281.
+                Дело №2281 требует подготовки.
             </p>
 
         </div>
@@ -1712,7 +2989,7 @@ tr:last-child td{
         <div class="item">
 
             <span class="badge">
-                Документы
+                ДОКУМЕНТ
             </span>
 
             <h3>
@@ -1737,7 +3014,7 @@ tr:last-child td{
             </h3>
 
             <p>
-                AI завершил предварительный анализ.
+                Предварительный анализ дела готов.
             </p>
 
         </div>
@@ -1757,7 +3034,9 @@ tr:last-child td{
 
     <div class="hero">
 
-        <h1>Настройки</h1>
+        <h1>
+            Настройки
+        </h1>
 
         <p>
             Управление вашим профилем
@@ -1789,7 +3068,7 @@ tr:last-child td{
             </h3>
 
             <p>
-                LexAI v0.5
+                LexAI v0.5.1
             </p>
 
         </div>
@@ -1798,13 +3077,13 @@ tr:last-child td{
         <div class="setting">
 
             <h3>
-                AI-помощник
+                AI для адвоката
             </h3>
 
             <p>
-                Аналитическая помощь,
-                подготовка структуры документов
-                и работа с юридическими задачами.
+                Подготовка черновиков судебных речей,
+                анализ позиции, вопросы суда,
+                возможные контраргументы и репетиция.
             </p>
 
         </div>
@@ -1817,9 +3096,10 @@ tr:last-child td{
             </h3>
 
             <p>
-                Никогда не вводите в демонстрационную
-                версию реальные конфиденциальные
-                данные клиентов.
+                Эта версия является прототипом.
+                Не вводите реальные конфиденциальные
+                сведения клиентов до подключения
+                защищённого серверного хранения.
             </p>
 
         </div>
@@ -1841,42 +3121,34 @@ tr:last-child td{
 <script>
 
 /* =========================================================
-                     AUTH SYSTEM
+                         AUTH
 ========================================================= */
 
 let authMode = "login";
-
-
-const authScreen =
-    document.getElementById("authScreen");
-
-const app =
-    document.getElementById("app");
-
-const authForm =
-    document.getElementById("authForm");
-
-const registerFields =
-    document.getElementById("registerFields");
-
-const authButton =
-    document.getElementById("authButton");
-
-const authMessage =
-    document.getElementById("authMessage");
 
 
 function switchAuth(mode){
 
     authMode = mode;
 
-    authMessage.textContent = "";
-
     const loginTab =
         document.getElementById("loginTab");
 
     const registerTab =
         document.getElementById("registerTab");
+
+    const registerFields =
+        document.getElementById("registerFields");
+
+    const authButton =
+        document.getElementById("authButton");
+
+    const authMessage =
+        document.getElementById("authMessage");
+
+
+    authMessage.textContent = "";
+
 
     if(mode === "login"){
 
@@ -1897,17 +3169,28 @@ function switchAuth(mode){
 
         authButton.textContent =
             "Создать аккаунт";
+
     }
 
 }
 
 
-authForm.addEventListener("submit",function(event){
+document
+.getElementById("authForm")
+.addEventListener("submit",function(event){
 
     event.preventDefault();
 
+
     const password =
-        document.getElementById("password").value.trim();
+        document
+        .getElementById("password")
+        .value
+        .trim();
+
+
+    const authMessage =
+        document.getElementById("authMessage");
 
 
     if(!password){
@@ -1916,6 +3199,7 @@ authForm.addEventListener("submit",function(event){
             "Введите пароль.";
 
         return;
+
     }
 
 
@@ -1925,16 +3209,23 @@ authForm.addEventListener("submit",function(event){
             "Пароль должен содержать минимум 4 символа.";
 
         return;
+
     }
 
 
     if(authMode === "register"){
 
         const firstName =
-            document.getElementById("firstName").value.trim();
+            document
+            .getElementById("firstName")
+            .value
+            .trim();
 
         const lastName =
-            document.getElementById("lastName").value.trim();
+            document
+            .getElementById("lastName")
+            .value
+            .trim();
 
 
         if(!firstName || !lastName){
@@ -1943,6 +3234,7 @@ authForm.addEventListener("submit",function(event){
                 "Введите имя и фамилию.";
 
             return;
+
         }
 
 
@@ -1972,15 +3264,18 @@ authForm.addEventListener("submit",function(event){
     }else{
 
         const saved =
-            localStorage.getItem("lexai_account");
+            localStorage.getItem(
+                "lexai_account"
+            );
 
 
         if(!saved){
 
             authMessage.textContent =
-                "Аккаунт не найден. Сначала зарегистрируйтесь.";
+                "Аккаунт не найден. Зарегистрируйтесь.";
 
             return;
+
         }
 
 
@@ -1994,6 +3289,7 @@ authForm.addEventListener("submit",function(event){
                 "Неверный пароль.";
 
             return;
+
         }
 
 
@@ -2012,9 +3308,14 @@ authForm.addEventListener("submit",function(event){
 
 function showApp(account){
 
-    authScreen.style.display = "none";
+    document.getElementById(
+        "authScreen"
+    ).style.display = "none";
 
-    app.style.display = "block";
+
+    document.getElementById(
+        "app"
+    ).style.display = "block";
 
 
     const fullName =
@@ -2030,8 +3331,7 @@ function showApp(account){
 
     document.getElementById(
         "settingsUser"
-    ).textContent =
-        fullName;
+    ).textContent = fullName;
 
 
     document.getElementById(
@@ -2045,8 +3345,8 @@ function showApp(account){
         "avatar"
     ).textContent =
         account.firstName
-            .charAt(0)
-            .toUpperCase();
+        .charAt(0)
+        .toUpperCase();
 
 }
 
@@ -2057,28 +3357,39 @@ function logout(){
         "lexai_logged"
     );
 
-    app.style.display = "none";
 
-    authScreen.style.display = "flex";
+    document.getElementById(
+        "app"
+    ).style.display = "none";
 
-    document.getElementById("password").value = "";
+
+    document.getElementById(
+        "authScreen"
+    ).style.display = "flex";
+
+
+    document.getElementById(
+        "password"
+    ).value = "";
+
 
     switchAuth("login");
 
 }
 
 
-/* =========================================================
-                    AUTO LOGIN
-========================================================= */
-
 window.addEventListener("load",function(){
 
     const logged =
-        localStorage.getItem("lexai_logged");
+        localStorage.getItem(
+            "lexai_logged"
+        );
+
 
     const saved =
-        localStorage.getItem("lexai_account");
+        localStorage.getItem(
+            "lexai_account"
+        );
 
 
     if(logged === "true" && saved){
@@ -2108,7 +3419,7 @@ window.addEventListener("load",function(){
 
 
 /* =========================================================
-                    NAVIGATION
+                       NAVIGATION
 ========================================================= */
 
 const screenTitles = {
@@ -2117,6 +3428,7 @@ const screenTitles = {
     cases:"Мои дела",
     documents:"Документы",
     ai:"AI-помощник",
+    "lawyer-ai":"AI для адвоката",
     court:"Судебные дела",
     notifications:"Уведомления",
     settings:"Настройки"
@@ -2127,12 +3439,12 @@ const screenTitles = {
 function openScreen(screenName){
 
     document
-        .querySelectorAll(".screen")
-        .forEach(function(screen){
+    .querySelectorAll(".screen")
+    .forEach(function(screen){
 
-            screen.classList.remove("active");
+        screen.classList.remove("active");
 
-        });
+    });
 
 
     const target =
@@ -2147,15 +3459,15 @@ function openScreen(screenName){
 
 
     document
-        .querySelectorAll(".nav-item")
-        .forEach(function(item){
+    .querySelectorAll(".nav-item")
+    .forEach(function(item){
 
-            item.classList.remove("active");
+        item.classList.remove("active");
 
-        });
+    });
 
 
-    const activeNav =
+    const active =
         document.querySelector(
             '[data-screen="' +
             screenName +
@@ -2163,9 +3475,9 @@ function openScreen(screenName){
         );
 
 
-    if(activeNav){
+    if(active){
 
-        activeNav.classList.add("active");
+        active.classList.add("active");
 
     }
 
@@ -2173,25 +3485,22 @@ function openScreen(screenName){
     document.getElementById(
         "pageTitle"
     ).textContent =
-        screenTitles[screenName] || "LexAI";
+        screenTitles[screenName] ||
+        "LexAI";
 
 
     document
-        .getElementById("sidebar")
-        .classList.remove("open");
+    .getElementById("sidebar")
+    .classList.remove("open");
 
 }
 
 
-/* =========================================================
-                     MOBILE SIDEBAR
-========================================================= */
-
 function toggleSidebar(){
 
     document
-        .getElementById("sidebar")
-        .classList.toggle("open");
+    .getElementById("sidebar")
+    .classList.toggle("open");
 
 }
 
@@ -2201,10 +3510,14 @@ function toggleSidebar(){
 ========================================================= */
 
 const chatInput =
-    document.getElementById("chatInput");
+    document.getElementById(
+        "chatInput"
+    );
 
 const chatMessages =
-    document.getElementById("chatMessages");
+    document.getElementById(
+        "chatMessages"
+    );
 
 
 let chatHistory = [];
@@ -2226,7 +3539,9 @@ function addMessage(text,type){
         "message-avatar";
 
     avatar.textContent =
-        type === "user" ? "Я" : "✦";
+        type === "user"
+        ? "Я"
+        : "✦";
 
 
     const content =
@@ -2265,7 +3580,10 @@ function sendMessage(){
     }
 
 
-    addMessage(text,"user");
+    addMessage(
+        text,
+        "user"
+    );
 
 
     chatHistory.push({
@@ -2281,12 +3599,12 @@ function sendMessage(){
 
     setTimeout(function(){
 
-        const response =
+        const answer =
             generateAIResponse(text);
 
 
         addMessage(
-            response,
+            answer,
             "assistant"
         );
 
@@ -2294,14 +3612,14 @@ function sendMessage(){
         chatHistory.push({
 
             role:"assistant",
-            content:response
+            content:answer
 
         });
 
 
         saveChat();
 
-    },650);
+    },600);
 
 }
 
@@ -2319,7 +3637,10 @@ function quickPrompt(text){
 
 function handleChatKey(event){
 
-    if(event.key === "Enter" && !event.shiftKey){
+    if(
+        event.key === "Enter" &&
+        !event.shiftKey
+    ){
 
         event.preventDefault();
 
@@ -2329,10 +3650,6 @@ function handleChatKey(event){
 
 }
 
-
-/* =========================================================
-                DEMO AI RESPONSE ENGINE
-========================================================= */
 
 function generateAIResponse(text){
 
@@ -2345,21 +3662,18 @@ function generateAIResponse(text){
         lower.includes("контракт")
     ){
 
-        return `
-Предварительный анализ договорной ситуации:
+        return `Предварительный анализ договорной ситуации:
 
-1. Определить стороны договора.
-2. Проверить предмет и существенные условия.
-3. Проверить сроки исполнения обязательств.
-4. Отдельно проверить ответственность сторон.
-5. Проверить порядок расторжения договора.
-6. Обратить внимание на штрафы, неустойки и ограничения ответственности.
-7. Проверить порядок разрешения споров.
+1. Определить стороны и их обязательства.
+2. Проверить предмет договора.
+3. Проверить сроки исполнения.
+4. Проверить ответственность сторон.
+5. Проверить основания расторжения.
+6. Проверить порядок разрешения споров.
+7. Выделить положения, создающие повышенный риск.
 
-Для полноценного анализа необходимо изучить сам текст договора и применимое законодательство.
+Для конкретного правового вывода необходимо проверить полный текст договора и применимое законодательство.`;
 
-Если пришлёте содержание договора, я могу структурировать его по пунктам и выделить потенциально спорные положения.
-`;
 
     }
 
@@ -2369,21 +3683,18 @@ function generateAIResponse(text){
         lower.includes("судеб")
     ){
 
-        return `
-Для подготовки к судебному делу предлагаю такой порядок:
+        return `Для подготовки к судебному заседанию предлагаю:
 
-1. Определить требования и правовую позицию.
-2. Зафиксировать ключевые факты и доказательства.
+1. Сформировать чёткую правовую позицию.
+2. Разделить факты и доказательства.
 3. Определить спорные обстоятельства.
-4. Проверить процессуальные сроки.
-5. Подготовить документы и приложения.
-6. Сформировать вопросы для другой стороны.
-7. Подготовить краткий план выступления.
+4. Подготовить ответы на возможные вопросы суда.
+5. Проанализировать позицию оппонента.
+6. Подготовить основную и альтернативную аргументацию.
+7. Подготовить заключительную речь.
 
-Я также могу помочь составить чек-лист документов и вопросов для подготовки к заседанию.
+Конкретные процессуальные действия необходимо сверять с законодательством и материалами дела.`;
 
-Важно: конкретные процессуальные действия необходимо проверять по законодательству вашей юрисдикции и материалам дела.
-`;
 
     }
 
@@ -2393,91 +3704,40 @@ function generateAIResponse(text){
         lower.includes("заявлен")
     ){
 
-        return `
-Для подготовки искового заявления обычно необходимо структурировать:
+        return `Структура искового заявления обычно включает:
 
-• суд и участников дела;
+• сведения о суде и участниках;
 • обстоятельства дела;
-• требования заявителя;
+• требования;
 • правовое обоснование;
 • доказательства;
-• расчёт заявленных требований;
+• расчёт требований;
 • приложения;
-• сведения о соблюдении обязательного досудебного порядка, если он применяется.
+• необходимые процессуальные сведения.
 
-Я могу помочь подготовить черновую структуру заявления на основе фактов вашего дела.
-`;
+Я могу помочь превратить ваши факты в структурированный черновик.`;
+
 
     }
 
 
-    if(
-        lower.includes("клиент") ||
-        lower.includes("вопрос")
-    ){
+    return `Я помогу структурировать юридическую задачу.
 
-        return `
-Для первичного интервью с клиентом полезно выяснить:
+Для начала укажите:
 
-1. Что произошло и когда?
-2. Кто участвовал в ситуации?
-3. Какие документы существуют?
-4. Какие действия уже предпринимались?
-5. Были ли обращения в суд или государственные органы?
-6. Какие сроки имеют значение?
-7. Какие требования клиент хочет получить?
-8. Какие доказательства уже имеются?
+• что произошло;
+• кто является участниками;
+• требования вашего клиента;
+• какие доказательства есть;
+• что утверждает противоположная сторона;
+• на какой стадии находится дело.
 
-После получения ответов можно сформировать карту дела и определить следующие шаги.
-`;
+После этого можно подготовить предварительную правовую позицию и план дальнейшей работы.
 
-    }
-
-
-    if(
-        lower.includes("анализ") ||
-        lower.includes("проанализ")
-    ){
-
-        return `
-Предлагаю провести анализ в пяти блоках:
-
-1. Факты — что произошло.
-2. Участники — кто является сторонами.
-3. Документы — какие доказательства имеются.
-4. Правовые вопросы — какие нормы могут иметь значение.
-5. Риски — какие обстоятельства могут повлиять на результат.
-
-Опишите ситуацию максимально подробно, и я помогу разложить её по этой структуре.
-`;
-
-    }
-
-
-    return `
-Я понял вашу задачу.
-
-Для юридического анализа предлагаю сначала определить:
-
-1. Фактические обстоятельства.
-2. Участников и их роли.
-3. Документы и доказательства.
-4. Требования вашей стороны.
-5. Возможные правовые вопросы.
-6. Процессуальные сроки.
-7. Основные риски.
-
-Опишите подробнее ситуацию, документы или вопрос — я помогу структурировать информацию и подготовить следующий шаг.
-
-Важно: мой ответ является информационной поддержкой и не заменяет проверку квалифицированным юристом по конкретному делу.
-`;
+Важно: AI не гарантирует исход судебного дела и не заменяет профессиональную юридическую проверку.`;
 
 }
 
-
-/* =========================================================
-                       CHAT STORAGE
-========================================================= */
 
 function saveChat(){
 
@@ -2492,7 +3752,9 @@ function saveChat(){
 function loadChat(){
 
     const saved =
-        localStorage.getItem("lexai_chat");
+        localStorage.getItem(
+            "lexai_chat"
+        );
 
 
     if(!saved){
@@ -2508,25 +3770,25 @@ function loadChat(){
             JSON.parse(saved);
 
 
+        chatHistory =
+            history;
+
+
         history.forEach(function(item){
 
             addMessage(
                 item.content,
                 item.role === "user"
-                    ? "user"
-                    : "assistant"
+                ? "user"
+                : "assistant"
             );
 
         });
 
-
-        chatHistory =
-            history;
-
     }catch(error){
 
         console.log(
-            "История чата не загружена"
+            "История не загружена"
         );
 
     }
@@ -2535,6 +3797,628 @@ function loadChat(){
 
 
 loadChat();
+
+
+/* =========================================================
+                    LAWYER AI WORKSPACE
+========================================================= */
+
+function openWorkspace(name,button){
+
+    document
+    .querySelectorAll(".workspace-card")
+    .forEach(function(card){
+
+        card.classList.remove("active");
+
+    });
+
+
+    document
+    .querySelectorAll(".workspace-tab")
+    .forEach(function(tab){
+
+        tab.classList.remove("active");
+
+    });
+
+
+    const target =
+        document.getElementById(
+            "workspace-" + name
+        );
+
+
+    if(target){
+
+        target.classList.add("active");
+
+    }
+
+
+    if(button){
+
+        button.classList.add("active");
+
+    }
+
+}
+
+
+function getLawyerData(){
+
+    return {
+
+        role:
+            document
+            .getElementById("lawyerRole")
+            .value,
+
+        process:
+            document
+            .getElementById("processType")
+            .value,
+
+        stage:
+            document
+            .getElementById("caseStage")
+            .value,
+
+        client:
+            document
+            .getElementById("clientPosition")
+            .value.trim(),
+
+        facts:
+            document
+            .getElementById("caseFacts")
+            .value.trim(),
+
+        evidence:
+            document
+            .getElementById("evidence")
+            .value.trim(),
+
+        opponent:
+            document
+            .getElementById("opponentPosition")
+            .value.trim()
+
+    };
+
+}
+
+
+function generateLawyerCase(){
+
+    const data =
+        getLawyerData();
+
+
+    if(
+        !data.client &&
+        !data.facts &&
+        !data.evidence
+    ){
+
+        alert(
+            "Заполните хотя бы позицию доверителя, обстоятельства или доказательства."
+        );
+
+        return;
+
+    }
+
+
+    generateSpeech(data);
+
+    generatePosition(data);
+
+    generateQuestions(data);
+
+    generateOpponent(data);
+
+    generateRisks(data);
+
+    openWorkspace(
+        "speech",
+        document.querySelector(
+            '.workspace-tab'
+        )
+    );
+
+}
+
+
+function generateSpeech(data){
+
+    const client =
+        data.client ||
+        "позиция доверителя не указана";
+
+    const facts =
+        data.facts ||
+        "обстоятельства дела требуют дополнительного уточнения";
+
+    const evidence =
+        data.evidence ||
+        "перечень доказательств пока не указан";
+
+    const opponent =
+        data.opponent ||
+        "позиция противоположной стороны не указана";
+
+
+    const speech =
+
+`СУДЕБНАЯ РЕЧЬ
+АДВОКАТА
+
+Роль: ${data.role}
+Тип процесса: ${data.process}
+Стадия: ${data.stage}
+
+УВАЖАЕМЫЙ СУД!
+
+I. ВСТУПЛЕНИЕ
+
+Я выступаю в качестве ${data.role.toLowerCase()} и представляю интересы доверителя по настоящему делу.
+
+Прошу суд рассмотреть обстоятельства дела в их совокупности, оценить представленные доказательства и учесть изложенную правовую позицию.
+
+II. ОБСТОЯТЕЛЬСТВА ДЕЛА
+
+${facts}
+
+III. ПОЗИЦИЯ ДОВЕРИТЕЛЯ
+
+${client}
+
+IV. ДОКАЗАТЕЛЬСТВА
+
+${evidence}
+
+Каждое доказательство необходимо оценивать с учётом его относимости, допустимости, достоверности и взаимосвязи с другими материалами дела.
+
+V. ПОЗИЦИЯ ПРОТИВОПОЛОЖНОЙ СТОРОНЫ
+
+${opponent}
+
+VI. АРГУМЕНТАЦИЯ
+
+Основная задача защиты заключается в последовательном сопоставлении фактических обстоятельств, доказательств и применимых норм права.
+
+Необходимо отдельно показать суду:
+
+1. Какие обстоятельства подтверждены.
+2. Какие обстоятельства оспариваются.
+3. Какие доказательства подтверждают позицию доверителя.
+4. Какие доводы противоположной стороны требуют критической оценки.
+
+VII. ЗАКЛЮЧЕНИЕ
+
+Прошу суд дать оценку всем представленным доказательствам в их совокупности и учесть изложенную позицию доверителя.
+
+VIII. ПРОСИТЕЛЬНАЯ ЧАСТЬ
+
+В зависимости от требований и применимого процессуального законодательства необходимо сформулировать конкретную просьбу к суду.
+
+ВАЖНО:
+Это предварительный AI-черновик. Перед использованием в реальном процессе необходимо проверить факты, нормы права, судебную практику, процессуальные требования и соответствие документа конкретному делу.`;
+
+
+    document.getElementById(
+        "speechOutput"
+    ).textContent = speech;
+
+}
+
+
+function generatePosition(data){
+
+    const strengths =
+        document.getElementById("strengths");
+
+    const checks =
+        document.getElementById("checks");
+
+    const defenseLine =
+        document.getElementById("defenseLine");
+
+    const weaknesses =
+        document.getElementById("weaknesses");
+
+
+    strengths.innerHTML = "";
+
+    checks.innerHTML = "";
+
+    defenseLine.innerHTML = "";
+
+    weaknesses.innerHTML = "";
+
+
+    const strengthItems = [
+
+        data.client
+        ? "Позиция доверителя сформулирована."
+        : "Позиция доверителя требует уточнения.",
+
+        data.evidence
+        ? "Указаны потенциальные доказательства."
+        : "Необходимо определить доказательственную базу.",
+
+        data.facts
+        ? "Определён основной фактический блок."
+        : "Фактическая часть требует дополнения."
+
+    ];
+
+
+    const checkItems = [
+
+        "Проверить применимые нормы права.",
+        "Проверить процессуальные сроки.",
+        "Проверить допустимость и достаточность доказательств.",
+        "Проверить актуальность судебной практики."
+
+    ];
+
+
+    const defenseItems = [
+
+        "Связать каждый ключевой факт с конкретным доказательством.",
+        "Отделить подтверждённые обстоятельства от предположений.",
+        "Последовательно отвечать на основные доводы оппонента."
+
+    ];
+
+
+    const weaknessItems = [
+
+        data.opponent
+        ? "Необходимо проверить аргументы противоположной стороны."
+        : "Позиция оппонента пока не заполнена.",
+
+        "AI-анализ не заменяет правовую проверку адвокатом.",
+
+        "Недостающие доказательства могут изменить оценку позиции."
+
+    ];
+
+
+    fillList(strengths,strengthItems);
+
+    fillList(checks,checkItems);
+
+    fillList(defenseLine,defenseItems);
+
+    fillList(weaknesses,weaknessItems);
+
+}
+
+
+function fillList(element,items){
+
+    items.forEach(function(text){
+
+        const li =
+            document.createElement("li");
+
+        li.textContent =
+            "• " + text;
+
+        element.appendChild(li);
+
+    });
+
+}
+
+
+function generateQuestions(data){
+
+    const container =
+        document.getElementById(
+            "questionsOutput"
+        );
+
+
+    container.innerHTML = "";
+
+
+    const questions = [
+
+        "Какими доказательствами подтверждается ключевое обстоятельство дела?",
+
+        "Почему позиция вашего доверителя соответствует установленным обстоятельствам?",
+
+        "Как вы отвечаете на основной довод противоположной стороны?",
+
+        "Какие обстоятельства вы считаете бесспорными?",
+
+        "Какие доказательства, по вашему мнению, имеют решающее значение?",
+
+        "Какие правовые основания вы считаете применимыми к спорной ситуации?"
+
+    ];
+
+
+    questions.forEach(function(question,index){
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "question-card";
+
+
+        card.innerHTML = `
+
+            <div class="question-number">
+                ВОПРОС ${String(index+1).padStart(2,"0")}
+            </div>
+
+            <div class="question-text">
+                ${question}
+            </div>
+
+        `;
+
+
+        container.appendChild(card);
+
+    });
+
+
+    document.getElementById(
+        "rehearsalQuestion"
+    ).textContent =
+        questions[0];
+
+}
+
+
+function generateOpponent(data){
+
+    const output =
+        document.getElementById(
+            "opponentOutput"
+        );
+
+
+    output.textContent =
+
+`АНАЛИЗ ПОЗИЦИИ ОППОНЕНТА
+
+Заявленная позиция:
+
+${data.opponent || "Не указана."}
+
+
+ВОЗМОЖНАЯ ТАКТИКА
+
+1. Выделить основные утверждения противоположной стороны.
+2. Для каждого утверждения определить доказательства.
+3. Проверить логическую связь между фактами и выводами.
+4. Сопоставить аргументы с материалами дела.
+5. Подготовить короткий и понятный ответ на каждый ключевой довод.
+
+
+ВОПРОСЫ К ПОЗИЦИИ ОППОНЕНТА
+
+• Какое доказательство подтверждает этот довод?
+• Каким образом данный факт связан с заявленным требованием?
+• Есть ли документы, подтверждающие утверждение?
+• Не противоречит ли этот довод другим материалам дела?
+
+
+ОТВЕТ АДВОКАТА
+
+Ответ необходимо формировать только после проверки конкретных материалов дела и применимого права.`;
+
+}
+
+
+function generateRisks(data){
+
+    const high =
+        document.getElementById(
+            "highRisks"
+        );
+
+    const medium =
+        document.getElementById(
+            "mediumRisks"
+        );
+
+    const positive =
+        document.getElementById(
+            "positiveFactors"
+        );
+
+    const missing =
+        document.getElementById(
+            "missingEvidence"
+        );
+
+
+    high.innerHTML = "";
+
+    medium.innerHTML = "";
+
+    positive.innerHTML = "";
+
+    missing.innerHTML = "";
+
+
+    fillList(
+        high,
+        [
+            "Нельзя делать вывод о результате дела без анализа полного комплекта материалов.",
+            "Необходимо проверить применимое законодательство и процессуальные сроки."
+        ]
+    );
+
+
+    fillList(
+        medium,
+        [
+            "Проверить полноту доказательств.",
+            "Проверить позицию противоположной стороны.",
+            "Проверить противоречия в материалах дела."
+        ]
+    );
+
+
+    fillList(
+        positive,
+        [
+            data.client
+            ? "Позиция доверителя сформулирована."
+            : "Позицию доверителя необходимо сформулировать.",
+
+            data.evidence
+            ? "Указана доказательственная база."
+            : "Доказательства пока не указаны.",
+
+            data.facts
+            ? "Основные обстоятельства введены."
+            : "Обстоятельства необходимо дополнить."
+        ]
+    );
+
+
+    fillList(
+        missing,
+        [
+            "Документы, подтверждающие ключевые факты.",
+            "Материалы, опровергающие доводы оппонента.",
+            "Актуальные нормативные и судебные источники."
+        ]
+    );
+
+}
+
+
+/* =========================================================
+                      REHEARSAL
+========================================================= */
+
+function evaluateAnswer(){
+
+    const answer =
+        document
+        .getElementById(
+            "rehearsalAnswer"
+        )
+        .value
+        .trim();
+
+
+    const evaluation =
+        document.getElementById(
+            "evaluation"
+        );
+
+
+    if(!answer){
+
+        evaluation.textContent =
+            "Сначала напишите ответ на вопрос судьи.";
+
+        return;
+
+    }
+
+
+    let score = 5;
+
+
+    if(answer.length > 100){
+        score += 1;
+    }
+
+    if(
+        answer.includes("доказ") ||
+        answer.includes("факт")
+    ){
+        score += 1;
+    }
+
+
+    if(score > 7){
+        score = 7;
+    }
+
+
+    evaluation.innerHTML = `
+
+        <strong>
+            Предварительная оценка: ${score}/10
+        </strong>
+
+        <br><br>
+
+        Хороший ответ должен быть:
+
+        <br>• коротким;
+        <br>• конкретным;
+        <br>• основанным на фактах;
+        <br>• связанным с доказательствами;
+        <br>• без лишних предположений.
+
+        <br><br>
+
+        <span class="warning">
+        Рекомендация: проверьте, отвечает ли ваш ответ
+        непосредственно на вопрос и можете ли вы
+        подтвердить ключевое утверждение доказательством.
+        </span>
+
+    `;
+
+}
+
+
+/* =========================================================
+                     UTILITIES
+========================================================= */
+
+function copyElementText(id){
+
+    const element =
+        document.getElementById(id);
+
+
+    if(!element){
+
+        return;
+
+    }
+
+
+    const text =
+        element.innerText;
+
+
+    navigator.clipboard
+    .writeText(text)
+    .then(function(){
+
+        alert(
+            "Текст скопирован."
+        );
+
+    })
+    .catch(function(){
+
+        alert(
+            "Не удалось автоматически скопировать текст."
+        );
+
+    });
+
+}
 
 </script>
 
