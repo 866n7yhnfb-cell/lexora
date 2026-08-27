@@ -1,78 +1,567 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lexora — AI for Legal Professionals</title>
+  <meta name="theme-color" content="#08080c">
+  <title>Lexora — AI Legal Workspace</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <header class="topbar">
-    <div class="brand"><span class="logo">⚖</span> Lexora</div>
-    <button class="avatar">JD</button>
-  </header>
 
-  <main class="container">
-    <section class="hero">
-      <div>
-        <p class="eyebrow">AI LEGAL WORKSPACE</p>
-        <h1>Работайте с делами<br>быстрее.</h1>
-        <p class="subtitle">Анализ документов, хронология, потенциальные проблемы и поиск по материалам дела — в одном рабочем пространстве.</p>
-        <button class="primary" id="newCaseBtn">＋ Новое дело</button>
-      </div>
-      <div class="hero-card">
-        <div class="scan-icon">✦</div>
-        <strong>AI Case Analysis</strong>
-        <span>Готов к работе</span>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-head">
-        <h2>Мои дела</h2>
-        <button class="ghost" id="demoBtn">Демо-анализ</button>
-      </div>
-      <div id="cases" class="cases">
-        <article class="case-card">
-          <div class="case-icon">⚖</div>
-          <div class="case-info">
-            <h3>Smith v. ABC Ltd</h3>
-            <p>24 документа · Гражданское дело</p>
-            <span class="status ready">Анализ готов</span>
-          </div>
-          <button class="open-btn">Открыть →</button>
-        </article>
-      </div>
-    </section>
-
-    <section class="section">
-      <h2>Что умеет Lexora</h2>
-      <div class="features">
-        <div class="feature"><b>📄</b><h3>Документы</h3><p>Загрузка и структурирование материалов дела.</p></div>
-        <div class="feature"><b>🔎</b><h3>Поиск проблем</h3><p>Выделение противоречий и вопросов для проверки.</p></div>
-        <div class="feature"><b>🧠</b><h3>AI Workspace</h3><p>Вопросы по делу с указанием источников.</p></div>
-      </div>
-    </section>
-
-    <p class="notice">Lexora — инструмент поддержки профессиональной работы. Выводы AI требуют проверки квалифицированным юристом.</p>
-  </main>
-
-  <div class="modal hidden" id="modal">
-    <div class="modal-box">
-      <button class="close" id="closeBtn">×</button>
-      <p class="eyebrow">NEW CASE</p>
-      <h2>Создать новое дело</h2>
-      <input id="caseName" placeholder="Название дела">
-      <select id="caseType">
-        <option>Гражданское дело</option>
-        <option>Уголовное дело</option>
-        <option>Коммерческий спор</option>
-        <option>Договорное право</option>
-      </select>
-      <button class="primary" id="createBtn">Создать дело</button>
+<header class="topbar">
+  <a class="brand" href="#">
+    <div class="brand-mark">⚖</div>
+    <div>
+      <strong>LEXORA</strong>
+      <small>AI LEGAL WORKSPACE</small>
     </div>
+  </a>
+
+  <div class="top-actions">
+    <button class="icon-btn" id="searchBtn">⌕</button>
+    <button class="avatar">JD</button>
+  </div>
+</header>
+
+
+<main class="container">
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div class="hero-copy">
+
+      <div class="eyebrow">
+        <span></span>
+        AI LEGAL WORKSPACE
+      </div>
+
+      <h1>
+        Работайте с делами
+        <em>быстрее.</em>
+      </h1>
+
+      <p class="subtitle">
+        Анализ документов, поиск рисков, хронология
+        и AI-помощник для юридической работы —
+        в одном рабочем пространстве.
+      </p>
+
+      <div class="hero-actions">
+
+        <button class="btn btn-primary" id="newCaseBtn">
+          ✦ Новое дело
+        </button>
+
+        <button class="btn btn-secondary" id="demoBtn">
+          Демо-анализ →
+        </button>
+
+      </div>
+
+      <div class="trust-line">
+        <span class="dot"></span>
+        Ваши материалы остаются в вашем рабочем пространстве
+      </div>
+
+    </div>
+
+
+    <div class="hero-panel">
+
+      <div class="panel-top">
+        <span class="mini-label">
+          CASE INTELLIGENCE
+        </span>
+
+        <span class="live">
+          ● READY
+        </span>
+      </div>
+
+      <div class="analysis-orb">
+        ✦
+      </div>
+
+      <h2>
+        AI Case Analysis
+      </h2>
+
+      <p>
+        Соберите ключевые факты, риски и вопросы
+        для проверки материалов дела.
+      </p>
+
+      <div class="analysis-grid">
+
+        <div>
+          <b>24</b>
+          <span>документа</span>
+        </div>
+
+        <div>
+          <b>08</b>
+          <span>связей</span>
+        </div>
+
+        <div>
+          <b>03</b>
+          <span>риска</span>
+        </div>
+
+      </div>
+
+      <button class="panel-action" id="heroAnalysisBtn">
+        Открыть анализ →
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- CASES -->
+
+  <section class="section">
+
+    <div class="section-head">
+
+      <div>
+        <div class="eyebrow muted">
+          WORKSPACE
+        </div>
+
+        <h2>
+          Мои дела
+        </h2>
+      </div>
+
+
+      <div class="section-actions">
+
+        <div class="search-wrap">
+          <span>⌕</span>
+
+          <input
+            id="caseSearch"
+            type="search"
+            placeholder="Поиск по делам"
+          >
+        </div>
+
+        <button
+          class="btn btn-small"
+          id="newCaseBtn2"
+        >
+          ＋ Новое
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="filters">
+
+      <button
+        class="filter active"
+        data-filter="all"
+      >
+        Все <span id="allCount">1</span>
+      </button>
+
+      <button
+        class="filter"
+        data-filter="active"
+      >
+        Активные
+      </button>
+
+      <button
+        class="filter"
+        data-filter="ready"
+      >
+        Анализ готов
+      </button>
+
+    </div>
+
+
+    <div id="cases" class="cases"></div>
+
+
+    <div id="emptyState" class="empty hidden">
+
+      <div class="empty-icon">
+        ⌁
+      </div>
+
+      <h3>
+        Дел пока нет
+      </h3>
+
+      <p>
+        Создайте первое дело, чтобы начать работу.
+      </p>
+
+      <button
+        class="btn btn-primary"
+        id="emptyNewBtn"
+      >
+        ✦ Создать дело
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- TOOLS -->
+
+  <section class="section">
+
+    <div class="eyebrow muted">
+      LEXORA TOOLS
+    </div>
+
+    <h2>
+      Инструменты
+    </h2>
+
+
+    <div class="features">
+
+      <button class="feature" data-tool="docs">
+
+        <span class="feature-icon">
+          ▱
+        </span>
+
+        <div>
+          <h3>
+            Документы
+          </h3>
+
+          <p>
+            Загрузка и структурирование материалов дела.
+          </p>
+        </div>
+
+        <span class="feature-arrow">
+          ↗
+        </span>
+
+      </button>
+
+
+      <button class="feature" data-tool="risks">
+
+        <span class="feature-icon">
+          ◇
+        </span>
+
+        <div>
+          <h3>
+            Поиск рисков
+          </h3>
+
+          <p>
+            Противоречия, пробелы и вопросы для проверки.
+          </p>
+        </div>
+
+        <span class="feature-arrow">
+          ↗
+        </span>
+
+      </button>
+
+
+      <button class="feature" data-tool="timeline">
+
+        <span class="feature-icon">
+          ◷
+        </span>
+
+        <div>
+          <h3>
+            Хронология
+          </h3>
+
+          <p>
+            События дела в единой последовательности.
+          </p>
+        </div>
+
+        <span class="feature-arrow">
+          ↗
+        </span>
+
+      </button>
+
+
+      <button class="feature" data-tool="ai">
+
+        <span class="feature-icon">
+          ✦
+        </span>
+
+        <div>
+          <h3>
+            AI Workspace
+          </h3>
+
+          <p>
+            Вопросы по делу с опорой на источники.
+          </p>
+        </div>
+
+        <span class="feature-arrow">
+          ↗
+        </span>
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- WARNING -->
+
+  <div class="notice">
+
+    <span>ⓘ</span>
+
+    <p>
+      <strong>Важно:</strong>
+      Lexora является инструментом поддержки
+      профессиональной работы. Выводы AI требуют
+      проверки квалифицированным юристом.
+    </p>
+
   </div>
 
-  <script src="app.js"></script>
+</main>
+
+
+<!-- NEW CASE MODAL -->
+
+<div
+  class="modal hidden"
+  id="caseModal"
+>
+
+  <div
+    class="modal-backdrop"
+    data-close="modal"
+  ></div>
+
+
+  <div class="modal-box">
+
+    <button
+      class="close"
+      data-close="modal"
+    >
+      ×
+    </button>
+
+
+    <div class="eyebrow">
+      NEW CASE / 01
+    </div>
+
+    <h2>
+      Создать новое дело
+    </h2>
+
+    <p class="modal-subtitle">
+      Добавьте основную информацию.
+      Остальное можно заполнить позже.
+    </p>
+
+
+    <label>
+
+      Название дела
+
+      <input
+        id="caseName"
+        placeholder="Например, ООО «Альфа» v. ООО «Бета»"
+      >
+
+    </label>
+
+
+    <div class="form-grid">
+
+      <label>
+
+        Тип дела
+
+        <select id="caseType">
+
+          <option>
+            Гражданское дело
+          </option>
+
+          <option>
+            Коммерческий спор
+          </option>
+
+          <option>
+            Договорное право
+          </option>
+
+          <option>
+            Уголовное дело
+          </option>
+
+          <option>
+            Административное дело
+          </option>
+
+        </select>
+
+      </label>
+
+
+      <label>
+
+        Номер дела
+
+        <input
+          id="caseNumber"
+          placeholder="Необязательно"
+        >
+
+      </label>
+
+    </div>
+
+
+    <label>
+
+      Краткое описание
+
+      <textarea
+        id="caseDescription"
+        rows="4"
+        placeholder="Что важно знать о деле?"
+      ></textarea>
+
+    </label>
+
+
+    <div class="upload-box">
+
+      <span>
+        ＋
+      </span>
+
+      <div>
+
+        <strong>
+          Добавить документы
+        </strong>
+
+        <small>
+          PDF, DOCX, TXT
+        </small>
+
+      </div>
+
+      <input
+        id="fileInput"
+        type="file"
+        multiple
+      >
+
+    </div>
+
+
+    <div class="modal-actions">
+
+      <button
+        class="btn btn-secondary"
+        data-close="modal"
+      >
+        Отмена
+      </button>
+
+      <button
+        class="btn btn-primary"
+        id="createBtn"
+      >
+        Создать дело →
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- INFO MODAL -->
+
+<div
+  class="modal hidden"
+  id="infoModal"
+>
+
+  <div
+    class="modal-backdrop"
+    data-close="info"
+  ></div>
+
+
+  <div class="modal-box small">
+
+    <button
+      class="close"
+      data-close="info"
+    >
+      ×
+    </button>
+
+    <div class="analysis-orb small-orb">
+      ✦
+    </div>
+
+    <div
+      class="eyebrow"
+      id="infoEyebrow"
+    >
+      LEXORA
+    </div>
+
+    <h2 id="infoTitle">
+      AI Case Analysis
+    </h2>
+
+    <p
+      id="infoText"
+      class="modal-subtitle"
+    ></p>
+
+    <button
+      class="btn btn-primary full"
+      data-close="info"
+    >
+      Понятно
+    </button>
+
+  </div>
+
+</div>
+
+
+<script src="app.js"></script>
+
 </body>
 </html>
