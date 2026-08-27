@@ -2,3380 +2,1838 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
->
-
-<title>LEXA — Legal Assistant</title>
+<title>LexAI — v0.5</title>
 
 <style>
-
-/* =========================================================
-   LEXA v0.4
-   FULL INTERFACE
-========================================================= */
-
-:root {
-    --bg: #08090c;
-    --bg2: #0d0f13;
-    --panel: #111318;
-    --panel2: #15181e;
-
-    --border: rgba(255,255,255,.08);
-    --border2: rgba(255,255,255,.13);
-
-    --text: #f5f5f7;
-    --muted: #858b98;
-    --muted2: #626875;
-
-    --white: #ffffff;
-    --green: #61d6a4;
-    --green2: #35b982;
-
-    --danger: #ff6262;
-    --warning: #f0c66b;
-
-    --radius: 18px;
-    --radius2: 12px;
-
-    --sidebar: 265px;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+:root{
+    --bg:#080a0f;
+    --panel:#10131a;
+    --panel2:#151923;
+    --panel3:#1b202c;
+    --border:#252b38;
+    --text:#f4f5f7;
+    --muted:#8c94a4;
+    --accent:#8b7cff;
+    --accent2:#6c5ce7;
+    --green:#42d392;
+    --red:#ff6577;
+    --yellow:#f4c95d;
+    --shadow:0 20px 60px rgba(0,0,0,.35);
 }
 
-html,
-body {
-    width: 100%;
-    min-height: 100%;
-}
-
-body {
+body{
+    font-family:Inter,Arial,Helvetica,sans-serif;
     background:
-        radial-gradient(
-            circle at 70% 10%,
-            rgba(97,214,164,.055),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 20% 80%,
-            rgba(255,255,255,.025),
-            transparent 25%
-        ),
+        radial-gradient(circle at 80% 0%,rgba(103,88,255,.12),transparent 30%),
         var(--bg);
-
-    color: var(--text);
-
-    font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Arial,
-        sans-serif;
-
-    overflow-x: hidden;
+    color:var(--text);
+    min-height:100vh;
 }
 
-/* =========================================================
-   SVG
-========================================================= */
+/* ================= AUTH ================= */
 
-svg {
-    display: block;
+#authScreen{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:25px;
 }
 
-.icon {
-    width: 20px;
-    height: 20px;
-
-    fill: none;
-    stroke: currentColor;
-
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+.auth-box{
+    width:100%;
+    max-width:460px;
+    background:rgba(16,19,26,.94);
+    border:1px solid var(--border);
+    border-radius:28px;
+    padding:38px;
+    box-shadow:var(--shadow);
+    backdrop-filter:blur(20px);
 }
 
-/* =========================================================
-   APP
-========================================================= */
-
-.app {
-    display: flex;
-    width: 100%;
-    min-height: 100vh;
+.logo-wrap{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:25px;
 }
 
-/* =========================================================
-   SIDEBAR
-========================================================= */
+.logo{
+    width:64px;
+    height:64px;
+    border-radius:18px;
+    background:linear-gradient(135deg,#9184ff,#5948dc);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:31px;
+    font-weight:900;
+    box-shadow:0 15px 35px rgba(111,91,255,.3);
+}
 
-.sidebar {
-    position: fixed;
+.auth-title{
+    text-align:center;
+    font-size:29px;
+    font-weight:800;
+    margin-bottom:8px;
+}
 
-    left: 0;
-    top: 0;
-    bottom: 0;
+.auth-subtitle{
+    text-align:center;
+    color:var(--muted);
+    margin-bottom:28px;
+    line-height:1.5;
+}
 
-    width: var(--sidebar);
+.auth-tabs{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    padding:5px;
+    background:#0b0e14;
+    border-radius:14px;
+    margin-bottom:22px;
+}
 
-    padding: 24px 16px;
+.auth-tab{
+    border:0;
+    padding:12px;
+    border-radius:10px;
+    background:transparent;
+    color:var(--muted);
+    cursor:pointer;
+    font-size:14px;
+    font-weight:700;
+}
 
+.auth-tab.active{
+    background:var(--panel3);
+    color:white;
+}
+
+.form-group{
+    margin-bottom:16px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:8px;
+    color:#b6bdca;
+    font-size:13px;
+    font-weight:600;
+}
+
+.form-group input{
+    width:100%;
+    border:1px solid var(--border);
+    background:#0b0e14;
+    color:white;
+    padding:14px 15px;
+    border-radius:12px;
+    outline:none;
+    font-size:15px;
+    transition:.2s;
+}
+
+.form-group input:focus{
+    border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(139,124,255,.1);
+}
+
+.primary-btn{
+    width:100%;
+    border:0;
+    padding:15px;
+    border-radius:13px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:white;
+    font-weight:800;
+    cursor:pointer;
+    font-size:15px;
+    transition:.2s;
+}
+
+.primary-btn:hover{
+    transform:translateY(-1px);
+    filter:brightness(1.08);
+}
+
+.auth-message{
+    min-height:20px;
+    margin-top:14px;
+    text-align:center;
+    color:var(--red);
+    font-size:13px;
+}
+
+/* ================= APP ================= */
+
+#app{
+    display:none;
+    min-height:100vh;
+}
+
+.layout{
+    display:flex;
+    min-height:100vh;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    width:270px;
+    flex-shrink:0;
+    background:rgba(12,15,21,.96);
+    border-right:1px solid var(--border);
+    padding:22px 15px;
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    z-index:20;
+}
+
+.sidebar-logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:6px 10px 25px;
+}
+
+.sidebar-logo .logo{
+    width:42px;
+    height:42px;
+    border-radius:13px;
+    font-size:20px;
+}
+
+.logo-text{
+    font-size:20px;
+    font-weight:850;
+}
+
+.logo-version{
+    color:var(--muted);
+    font-size:10px;
+    margin-top:2px;
+}
+
+.nav-section{
+    margin-top:12px;
+}
+
+.nav-label{
+    color:#646d7d;
+    font-size:10px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    padding:0 12px;
+    margin:18px 0 8px;
+}
+
+.nav-item{
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    border:0;
+    background:transparent;
+    color:#939baa;
+    padding:12px;
+    border-radius:12px;
+    cursor:pointer;
+    text-align:left;
+    margin-bottom:4px;
+    transition:.18s;
+    font-size:14px;
+    font-weight:650;
+}
+
+.nav-item:hover{
+    background:#171b24;
+    color:white;
+}
+
+.nav-item.active{
+    color:white;
+    background:linear-gradient(90deg,rgba(139,124,255,.18),rgba(139,124,255,.05));
+    border:1px solid rgba(139,124,255,.12);
+}
+
+.nav-icon{
+    width:21px;
+    height:21px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
+}
+
+.sidebar-bottom{
+    position:absolute;
+    bottom:15px;
+    left:15px;
+    right:15px;
+}
+
+.user-mini{
+    border-top:1px solid var(--border);
+    padding:15px 10px 0;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.avatar{
+    width:37px;
+    height:37px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#8b7cff,#4b3dc3);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+}
+
+.user-info{
+    min-width:0;
+    flex:1;
+}
+
+.user-name{
+    font-size:13px;
+    font-weight:750;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.user-status{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:3px;
+}
+
+/* ================= MAIN ================= */
+
+.main{
+    margin-left:270px;
+    width:calc(100% - 270px);
+    min-height:100vh;
+}
+
+.topbar{
+    height:75px;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 35px;
+    background:rgba(8,10,15,.75);
+    backdrop-filter:blur(20px);
+    position:sticky;
+    top:0;
+    z-index:10;
+}
+
+.page-title{
+    font-size:19px;
+    font-weight:800;
+}
+
+.top-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.icon-button{
+    width:39px;
+    height:39px;
+    border:1px solid var(--border);
+    border-radius:11px;
+    background:var(--panel);
+    color:#b9bfcb;
+    cursor:pointer;
+    font-size:17px;
+}
+
+.content{
+    padding:32px;
+    max-width:1500px;
+    margin:auto;
+}
+
+/* ================= COMMON ================= */
+
+.screen{
+    display:none;
+    animation:fade .25s ease;
+}
+
+.screen.active{
+    display:block;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(4px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.hero{
     background:
-        linear-gradient(
-            180deg,
-            rgba(255,255,255,.025),
-            transparent 35%
-        ),
-        rgba(9,10,13,.94);
-
-    border-right: 1px solid var(--border);
-
-    backdrop-filter: blur(20px);
-
-    z-index: 100;
-
-    display: flex;
-    flex-direction: column;
+        radial-gradient(circle at 90% 10%,rgba(139,124,255,.2),transparent 35%),
+        var(--panel);
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:30px;
+    margin-bottom:22px;
 }
 
-/* =========================================================
-   LOGO
-========================================================= */
-
-.logo-area {
-    display: flex;
-    align-items: center;
-
-    gap: 12px;
-
-    padding: 4px 10px 30px;
+.hero h1{
+    font-size:31px;
+    margin-bottom:8px;
 }
 
-.logo-mark {
-    width: 42px;
-    height: 42px;
-
-    border-radius: 13px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #242831,
-            #0d0f13
-        );
-
-    border: 1px solid rgba(255,255,255,.13);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    box-shadow:
-        0 8px 30px rgba(0,0,0,.35),
-        inset 0 1px 0 rgba(255,255,255,.07);
+.hero p{
+    color:var(--muted);
+    line-height:1.6;
+    max-width:700px;
 }
 
-.logo-mark svg {
-    width: 25px;
-    height: 25px;
-
-    fill: none;
-    stroke: white;
-
-    stroke-width: 1.5;
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
 }
 
-.logo-text {
-    display: flex;
-    flex-direction: column;
+.card{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:21px;
 }
 
-.logo-name {
-    font-size: 17px;
-    font-weight: 700;
-    letter-spacing: .8px;
+.card-icon{
+    font-size:24px;
+    margin-bottom:17px;
 }
 
-.logo-sub {
-    color: var(--muted);
-    font-size: 10px;
-    margin-top: 2px;
-    letter-spacing: .5px;
+.card-title{
+    color:var(--muted);
+    font-size:12px;
+    margin-bottom:7px;
 }
 
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-.nav-title {
-    color: #515661;
-
-    font-size: 10px;
-    font-weight: 700;
-
-    letter-spacing: 1.4px;
-    text-transform: uppercase;
-
-    padding: 0 13px 10px;
+.card-number{
+    font-size:28px;
+    font-weight:850;
 }
 
-.nav {
-    display: flex;
-    flex-direction: column;
-
-    gap: 5px;
+.section-title{
+    font-size:20px;
+    font-weight:800;
+    margin:28px 0 15px;
 }
 
-.nav-item {
-    position: relative;
-
-    width: 100%;
-    min-height: 48px;
-
-    padding: 0 13px;
-
-    display: flex;
-    align-items: center;
-
-    gap: 13px;
-
-    border: 1px solid transparent;
-    border-radius: 13px;
-
-    background: transparent;
-
-    color: #8d929d;
-
-    cursor: pointer;
-
-    font-size: 13px;
-    font-weight: 500;
-
-    text-align: left;
-
-    transition:
-        .2s ease;
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
 }
 
-.nav-item:hover {
-    color: white;
-
-    background:
-        rgba(255,255,255,.045);
-
-    border-color:
-        rgba(255,255,255,.06);
-
-    transform: translateX(2px);
+.item{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:20px;
 }
 
-.nav-item.active {
-    color: white;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,.095),
-            rgba(255,255,255,.035)
-        );
-
-    border-color:
-        rgba(255,255,255,.09);
-
-    box-shadow:
-        0 8px 25px rgba(0,0,0,.18);
+.item h3{
+    font-size:15px;
+    margin-bottom:8px;
 }
 
-.nav-item.active::before {
-    content: "";
-
-    position: absolute;
-
-    left: -1px;
-    top: 12px;
-    bottom: 12px;
-
-    width: 3px;
-
-    border-radius: 10px;
-
-    background: var(--green);
-
-    box-shadow:
-        0 0 12px rgba(97,214,164,.55);
+.item p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.5;
 }
 
-.nav-icon {
-    width: 20px;
-    height: 20px;
-
-    flex-shrink: 0;
-
-    fill: none;
-
-    stroke: currentColor;
-
-    stroke-width: 1.7;
-
-    stroke-linecap: round;
-    stroke-linejoin: round;
-
-    transition: .2s ease;
+.badge{
+    display:inline-flex;
+    padding:5px 9px;
+    border-radius:8px;
+    background:rgba(139,124,255,.12);
+    color:#afa5ff;
+    font-size:10px;
+    font-weight:800;
+    margin-bottom:13px;
 }
 
-.nav-item:hover .nav-icon {
-    transform: scale(1.08);
+/* ================= AI ================= */
+
+.ai-layout{
+    display:grid;
+    grid-template-columns:1fr 290px;
+    gap:18px;
+    min-height:calc(100vh - 140px);
 }
 
-.nav-item.active .nav-icon {
-    color: var(--green);
-
-    filter:
-        drop-shadow(
-            0 0 6px rgba(97,214,164,.3)
-        );
+.chat{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:20px;
+    display:flex;
+    flex-direction:column;
+    min-height:650px;
+    overflow:hidden;
 }
 
-.nav-label {
-    flex: 1;
+.chat-header{
+    padding:18px 22px;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 }
 
-.nav-badge {
-    min-width: 20px;
-    height: 20px;
-
-    padding: 0 6px;
-
-    border-radius: 20px;
-
-    background: rgba(255,255,255,.07);
-
-    color: #a7abb4;
-
-    font-size: 10px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.ai-title{
+    display:flex;
+    align-items:center;
+    gap:12px;
 }
 
-.nav-divider {
-    height: 1px;
-
-    background: var(--border);
-
-    margin: 17px 7px;
+.ai-avatar{
+    width:42px;
+    height:42px;
+    border-radius:13px;
+    background:linear-gradient(135deg,#8b7cff,#5c4de0);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
 }
 
-/* =========================================================
-   SIDEBAR BOTTOM
-========================================================= */
-
-.sidebar-bottom {
-    margin-top: auto;
+.ai-name{
+    font-weight:800;
 }
 
-.profile {
-    display: flex;
-    align-items: center;
-
-    gap: 11px;
-
-    padding: 13px;
-
-    border-radius: 14px;
-
-    background:
-        rgba(255,255,255,.025);
-
-    border: 1px solid var(--border);
+.ai-online{
+    color:var(--green);
+    font-size:11px;
+    margin-top:3px;
 }
 
-.avatar {
-    width: 35px;
-    height: 35px;
-
-    border-radius: 11px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background:
-        linear-gradient(
-            145deg,
-            #313641,
-            #15171c
-        );
-
-    border: 1px solid rgba(255,255,255,.1);
-
-    color: white;
-
-    font-size: 12px;
-    font-weight: 700;
+.chat-messages{
+    flex:1;
+    overflow-y:auto;
+    padding:25px;
 }
 
-.profile-info {
-    min-width: 0;
-    flex: 1;
+.message{
+    display:flex;
+    gap:11px;
+    margin-bottom:20px;
+    max-width:850px;
 }
 
-.profile-name {
-    font-size: 12px;
-    font-weight: 600;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.message.user{
+    margin-left:auto;
+    flex-direction:row-reverse;
 }
 
-.profile-status {
-    color: var(--green);
-
-    font-size: 10px;
-
-    margin-top: 2px;
+.message-avatar{
+    width:34px;
+    height:34px;
+    flex-shrink:0;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#202532;
+    font-size:14px;
 }
 
-/* =========================================================
-   MAIN
-========================================================= */
-
-.main {
-    width: calc(100% - var(--sidebar));
-
-    margin-left: var(--sidebar);
-
-    min-height: 100vh;
-
-    padding: 0 40px 60px;
+.message.user .message-avatar{
+    background:#6254dc;
 }
 
-/* =========================================================
-   TOPBAR
-========================================================= */
-
-.topbar {
-    height: 78px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    border-bottom: 1px solid var(--border);
+.message-content{
+    background:#171c26;
+    border:1px solid var(--border);
+    padding:13px 15px;
+    border-radius:14px;
+    line-height:1.55;
+    font-size:14px;
+    color:#dfe2e8;
+    white-space:pre-wrap;
 }
 
-.breadcrumb {
-    color: var(--muted);
-
-    font-size: 12px;
+.message.user .message-content{
+    background:#29234e;
+    border-color:#443a80;
 }
 
-.breadcrumb strong {
-    color: white;
-    font-weight: 500;
+.chat-input-area{
+    border-top:1px solid var(--border);
+    padding:15px;
 }
 
-.top-actions {
-    display: flex;
-    align-items: center;
-
-    gap: 8px;
+.chat-input{
+    display:flex;
+    align-items:flex-end;
+    gap:9px;
 }
 
-.icon-button {
-    width: 38px;
-    height: 38px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 11px;
-
-    border: 1px solid var(--border);
-
-    background:
-        rgba(255,255,255,.025);
-
-    color: #8c919b;
-
-    cursor: pointer;
-
-    transition: .2s ease;
+.chat-input textarea{
+    flex:1;
+    resize:none;
+    min-height:48px;
+    max-height:150px;
+    border:1px solid var(--border);
+    background:#0b0e14;
+    color:white;
+    border-radius:13px;
+    padding:14px;
+    outline:none;
+    font-family:inherit;
+    font-size:14px;
 }
 
-.icon-button:hover {
-    color: white;
-
-    background:
-        rgba(255,255,255,.07);
-
-    border-color: var(--border2);
-
-    transform: translateY(-1px);
+.chat-input textarea:focus{
+    border-color:var(--accent);
 }
 
-/* =========================================================
-   SCREENS
-========================================================= */
-
-.screen {
-    display: none;
-
-    animation:
-        screenIn .3s ease;
+.send-btn{
+    width:50px;
+    height:48px;
+    border:0;
+    border-radius:13px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:white;
+    cursor:pointer;
+    font-size:19px;
 }
 
-.screen.active {
-    display: block;
+.quick-panel{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:18px;
+    height:max-content;
 }
 
-@keyframes screenIn {
+.quick-title{
+    font-size:14px;
+    font-weight:800;
+    margin-bottom:15px;
+}
 
-    from {
-        opacity: 0;
-        transform: translateY(8px);
+.quick-btn{
+    width:100%;
+    padding:12px;
+    margin-bottom:8px;
+    border:1px solid var(--border);
+    background:#141821;
+    color:#bfc5d0;
+    border-radius:11px;
+    cursor:pointer;
+    text-align:left;
+    font-size:12px;
+}
+
+.quick-btn:hover{
+    background:#1c2230;
+    color:white;
+    border-color:#363d4d;
+}
+
+.ai-warning{
+    margin-top:15px;
+    padding:12px;
+    border-radius:12px;
+    background:rgba(244,201,93,.06);
+    border:1px solid rgba(244,201,93,.15);
+    color:#aaa18b;
+    font-size:10px;
+    line-height:1.5;
+}
+
+/* ================= TABLE ================= */
+
+.table-wrap{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:700px;
+}
+
+th,td{
+    padding:16px;
+    border-bottom:1px solid var(--border);
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    color:#777f90;
+    font-size:11px;
+    text-transform:uppercase;
+}
+
+td{
+    color:#d8dce4;
+}
+
+tr:last-child td{
+    border-bottom:0;
+}
+
+/* ================= SETTINGS ================= */
+
+.settings-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+}
+
+.setting{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:21px;
+}
+
+.setting h3{
+    font-size:15px;
+    margin-bottom:8px;
+}
+
+.setting p{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.5;
+}
+
+.danger{
+    border-color:rgba(255,101,119,.2);
+}
+
+/* ================= MOBILE ================= */
+
+.mobile-menu{
+    display:none;
+}
+
+@media(max-width:1050px){
+    .cards{
+        grid-template-columns:repeat(2,1fr);
     }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    .grid{
+        grid-template-columns:repeat(2,1fr);
     }
 
-}
-
-/* =========================================================
-   HERO
-========================================================= */
-
-.hero {
-    padding: 48px 0 35px;
-}
-
-.hero-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-
-    color: var(--green);
-
-    font-size: 11px;
-    font-weight: 600;
-
-    margin-bottom: 13px;
-}
-
-.status-dot {
-    width: 6px;
-    height: 6px;
-
-    border-radius: 50%;
-
-    background: var(--green);
-
-    box-shadow:
-        0 0 9px rgba(97,214,164,.6);
-}
-
-.hero h1 {
-    font-size: clamp(30px, 4vw, 48px);
-
-    line-height: 1.08;
-
-    letter-spacing: -.8px;
-
-    max-width: 700px;
-}
-
-.hero h1 span {
-    color: #737984;
-}
-
-.hero p {
-    color: var(--muted);
-
-    font-size: 14px;
-
-    line-height: 1.7;
-
-    max-width: 620px;
-
-    margin-top: 17px;
-}
-
-.hero-buttons {
-    display: flex;
-    gap: 10px;
-
-    margin-top: 25px;
-}
-
-/* =========================================================
-   BUTTONS
-========================================================= */
-
-.btn {
-    min-height: 44px;
-
-    padding: 0 17px;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 9px;
-
-    border-radius: 12px;
-
-    border: 1px solid var(--border2);
-
-    background:
-        rgba(255,255,255,.045);
-
-    color: white;
-
-    font-size: 12px;
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition: .2s ease;
-}
-
-.btn:hover {
-    background:
-        rgba(255,255,255,.09);
-
-    transform: translateY(-1px);
-}
-
-.btn-primary {
-    color: #07100c;
-
-    background:
-        linear-gradient(
-            135deg,
-            #82e4ba,
-            #4ccf9a
-        );
-
-    border-color: transparent;
-
-    box-shadow:
-        0 8px 25px rgba(97,214,164,.14);
-}
-
-.btn-primary:hover {
-    background:
-        linear-gradient(
-            135deg,
-            #99ecc9,
-            #58d6a1
-        );
-}
-
-.btn-danger {
-    color: white;
-    background: rgba(255,98,98,.08);
-    border-color: rgba(255,98,98,.2);
-}
-
-.btn-small {
-    min-height: 35px;
-    padding: 0 12px;
-
-    font-size: 11px;
-}
-
-/* =========================================================
-   STATS
-========================================================= */
-
-.stats {
-    display: grid;
-
-    grid-template-columns:
-        repeat(4, minmax(0, 1fr));
-
-    gap: 13px;
-
-    margin-bottom: 15px;
-}
-
-.stat {
-    padding: 19px;
-
-    border-radius: var(--radius);
-
-    border: 1px solid var(--border);
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.035),
-            rgba(255,255,255,.012)
-        );
-
-    transition: .2s ease;
-}
-
-.stat:hover {
-    border-color: var(--border2);
-
-    transform: translateY(-2px);
-}
-
-.stat-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.stat-icon {
-    width: 34px;
-    height: 34px;
-
-    border-radius: 10px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background:
-        rgba(255,255,255,.05);
-
-    color: #aeb3bd;
-}
-
-.stat-number {
-    font-size: 25px;
-    font-weight: 700;
-
-    margin-top: 17px;
-}
-
-.stat-title {
-    color: var(--muted);
-
-    font-size: 11px;
-
-    margin-top: 4px;
-}
-
-.stat-change {
-    color: var(--green);
-
-    font-size: 10px;
-}
-
-/* =========================================================
-   GRID
-========================================================= */
-
-.content-grid {
-    display: grid;
-
-    grid-template-columns:
-        minmax(0, 1.4fr)
-        minmax(300px, .6fr);
-
-    gap: 15px;
-}
-
-/* =========================================================
-   CARD
-========================================================= */
-
-.card {
-    border: 1px solid var(--border);
-
-    border-radius: var(--radius);
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.035),
-            rgba(255,255,255,.012)
-        );
-
-    overflow: hidden;
-}
-
-.card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 20px;
-
-    border-bottom: 1px solid var(--border);
-}
-
-.card-title {
-    font-size: 13px;
-    font-weight: 600;
-}
-
-.card-subtitle {
-    color: var(--muted);
-
-    font-size: 10px;
-
-    margin-top: 4px;
-}
-
-/* =========================================================
-   CASES
-========================================================= */
-
-.case-list {
-    display: flex;
-    flex-direction: column;
-}
-
-.case {
-    display: flex;
-    align-items: center;
-
-    gap: 13px;
-
-    padding: 17px 20px;
-
-    border-bottom: 1px solid var(--border);
-
-    cursor: pointer;
-
-    transition: .2s ease;
-}
-
-.case:last-child {
-    border-bottom: none;
-}
-
-.case:hover {
-    background:
-        rgba(255,255,255,.025);
-}
-
-.case-icon {
-    width: 38px;
-    height: 38px;
-
-    border-radius: 11px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background:
-        rgba(255,255,255,.045);
-
-    color: #aeb4bf;
-
-    flex-shrink: 0;
-}
-
-.case-info {
-    flex: 1;
-    min-width: 0;
-}
-
-.case-name {
-    font-size: 12px;
-    font-weight: 600;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.case-meta {
-    color: var(--muted);
-
-    font-size: 10px;
-
-    margin-top: 5px;
-}
-
-.status {
-    padding: 5px 8px;
-
-    border-radius: 20px;
-
-    font-size: 9px;
-
-    white-space: nowrap;
-}
-
-.status-active {
-    color: var(--green);
-    background: rgba(97,214,164,.08);
-}
-
-.status-review {
-    color: var(--warning);
-    background: rgba(240,198,107,.08);
-}
-
-.status-closed {
-    color: #8d939e;
-    background: rgba(255,255,255,.05);
-}
-
-/* =========================================================
-   AI CARD
-========================================================= */
-
-.ai-card {
-    padding: 24px;
-
-    min-height: 260px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.ai-symbol {
-    width: 47px;
-    height: 47px;
-
-    border-radius: 14px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: var(--green);
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(97,214,164,.14),
-            rgba(97,214,164,.025)
-        );
-
-    border: 1px solid rgba(97,214,164,.13);
-
-    box-shadow:
-        0 0 30px rgba(97,214,164,.06);
-}
-
-.ai-symbol .icon {
-    width: 25px;
-    height: 25px;
-}
-
-.ai-title {
-    font-size: 19px;
-
-    margin-top: 22px;
-}
-
-.ai-text {
-    color: var(--muted);
-
-    font-size: 11px;
-
-    line-height: 1.7;
-
-    margin-top: 9px;
-}
-
-.ai-bottom {
-    margin-top: 22px;
-}
-
-/* =========================================================
-   PAGE HEADER
-========================================================= */
-
-.page-header {
-    padding: 42px 0 25px;
-}
-
-.page-header h2 {
-    font-size: 29px;
-
-    letter-spacing: -.4px;
-}
-
-.page-header p {
-    color: var(--muted);
-
-    font-size: 12px;
-
-    margin-top: 8px;
-}
-
-/* =========================================================
-   SEARCH
-========================================================= */
-
-.search-box {
-    display: flex;
-    align-items: center;
-
-    gap: 12px;
-
-    padding: 0 15px;
-
-    height: 50px;
-
-    border-radius: 14px;
-
-    border: 1px solid var(--border);
-
-    background:
-        rgba(255,255,255,.025);
-}
-
-.search-box:focus-within {
-    border-color:
-        rgba(97,214,164,.3);
-}
-
-.search-box .icon {
-    color: var(--muted);
-
-    flex-shrink: 0;
-}
-
-.search-box input {
-    flex: 1;
-
-    border: none;
-    outline: none;
-
-    background: transparent;
-
-    color: white;
-
-    font-size: 13px;
-}
-
-.search-box input::placeholder {
-    color: #555a64;
-}
-
-/* =========================================================
-   FORM
-========================================================= */
-
-.form-card {
-    max-width: 850px;
-
-    padding: 24px;
-}
-
-.form-grid {
-    display: grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap: 17px;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-
-    gap: 7px;
-}
-
-.form-group.full {
-    grid-column: 1 / -1;
-}
-
-.form-label {
-    color: #a5aab4;
-
-    font-size: 11px;
-    font-weight: 500;
-}
-
-.input,
-.textarea,
-.select {
-    width: 100%;
-
-    border: 1px solid var(--border);
-
-    outline: none;
-
-    background:
-        rgba(255,255,255,.025);
-
-    color: white;
-
-    border-radius: 11px;
-
-    padding: 13px;
-
-    font-family: inherit;
-
-    font-size: 12px;
-
-    transition: .2s ease;
-}
-
-.input {
-    height: 44px;
-}
-
-.textarea {
-    min-height: 120px;
-
-    resize: vertical;
-}
-
-.select {
-    height: 44px;
-}
-
-.input:focus,
-.textarea:focus,
-.select:focus {
-    border-color:
-        rgba(97,214,164,.35);
-
-    background:
-        rgba(255,255,255,.04);
-}
-
-.form-actions {
-    display: flex;
-    justify-content: flex-end;
-
-    gap: 9px;
-
-    margin-top: 22px;
-}
-
-/* =========================================================
-   DOCUMENTS
-========================================================= */
-
-.document-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
-    gap: 14px;
-}
-
-.document {
-    padding: 20px;
-
-    border: 1px solid var(--border);
-
-    border-radius: var(--radius);
-
-    background:
-        rgba(255,255,255,.025);
-
-    transition: .2s ease;
-}
-
-.document:hover {
-    border-color: var(--border2);
-
-    transform: translateY(-2px);
-}
-
-.document-icon {
-    width: 40px;
-    height: 40px;
-
-    border-radius: 11px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: #aeb3bd;
-
-    background:
-        rgba(255,255,255,.05);
-}
-
-.document-name {
-    font-size: 12px;
-    font-weight: 600;
-
-    margin-top: 15px;
-}
-
-.document-info {
-    color: var(--muted);
-
-    font-size: 10px;
-
-    margin-top: 6px;
-}
-
-/* =========================================================
-   AI PAGE
-========================================================= */
-
-.ai-main {
-    max-width: 900px;
-}
-
-.ai-large {
-    padding: 30px;
-
-    border-radius: 22px;
-
-    border: 1px solid rgba(97,214,164,.12);
-
-    background:
-        radial-gradient(
-            circle at 80% 20%,
-            rgba(97,214,164,.07),
-            transparent 35%
-        ),
-        rgba(255,255,255,.02);
-}
-
-.ai-large-top {
-    display: flex;
-    align-items: center;
-
-    gap: 16px;
-}
-
-.ai-large-icon {
-    width: 58px;
-    height: 58px;
-
-    border-radius: 17px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: var(--green);
-
-    border: 1px solid rgba(97,214,164,.15);
-
-    background:
-        rgba(97,214,164,.06);
-}
-
-.ai-large-icon .icon {
-    width: 30px;
-    height: 30px;
-}
-
-.ai-large h3 {
-    font-size: 19px;
-}
-
-.ai-large p {
-    color: var(--muted);
-
-    font-size: 11px;
-
-    line-height: 1.7;
-
-    margin-top: 5px;
-}
-
-.ai-features {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 10px;
-
-    margin-top: 25px;
-}
-
-.ai-feature {
-    padding: 15px;
-
-    border-radius: 13px;
-
-    background:
-        rgba(255,255,255,.025);
-
-    border: 1px solid var(--border);
-}
-
-.ai-feature .icon {
-    color: var(--green);
-
-    width: 18px;
-    height: 18px;
-}
-
-.ai-feature strong {
-    display: block;
-
-    font-size: 11px;
-
-    margin-top: 11px;
-}
-
-.ai-feature span {
-    display: block;
-
-    color: var(--muted);
-
-    font-size: 9px;
-
-    line-height: 1.5;
-
-    margin-top: 5px;
-}
-
-/* =========================================================
-   NOTIFICATIONS
-========================================================= */
-
-.notification-list {
-    display: flex;
-    flex-direction: column;
-
-    max-width: 850px;
-}
-
-.notification {
-    display: flex;
-
-    gap: 14px;
-
-    padding: 18px;
-
-    border-bottom: 1px solid var(--border);
-}
-
-.notification:first-child {
-    border-top: 1px solid var(--border);
-}
-
-.notification-icon {
-    width: 38px;
-    height: 38px;
-
-    border-radius: 11px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background:
-        rgba(255,255,255,.05);
-
-    color: #aeb3bd;
-
-    flex-shrink: 0;
-}
-
-.notification-title {
-    font-size: 12px;
-    font-weight: 600;
-}
-
-.notification-text {
-    color: var(--muted);
-
-    font-size: 10px;
-
-    line-height: 1.6;
-
-    margin-top: 4px;
-}
-
-.notification-time {
-    color: #555a64;
-
-    font-size: 9px;
-
-    margin-top: 5px;
-}
-
-/* =========================================================
-   SETTINGS
-========================================================= */
-
-.settings-list {
-    max-width: 850px;
-
-    display: flex;
-    flex-direction: column;
-
-    gap: 10px;
-}
-
-.setting {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 18px 20px;
-
-    border-radius: 15px;
-
-    border: 1px solid var(--border);
-
-    background:
-        rgba(255,255,255,.025);
-}
-
-.setting-left {
-    display: flex;
-    align-items: center;
-
-    gap: 13px;
-}
-
-.setting-icon {
-    width: 38px;
-    height: 38px;
-
-    border-radius: 11px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background:
-        rgba(255,255,255,.045);
-
-    color: #9ca2ad;
-}
-
-.setting-name {
-    font-size: 12px;
-    font-weight: 600;
-}
-
-.setting-description {
-    color: var(--muted);
-
-    font-size: 10px;
-
-    margin-top: 4px;
-}
-
-/* =========================================================
-   TOGGLE
-========================================================= */
-
-.toggle {
-    width: 43px;
-    height: 24px;
-
-    border-radius: 20px;
-
-    padding: 3px;
-
-    background: #292d34;
-
-    cursor: pointer;
-
-    transition: .2s ease;
-}
-
-.toggle.active {
-    background: var(--green);
-}
-
-.toggle-circle {
-    width: 18px;
-    height: 18px;
-
-    border-radius: 50%;
-
-    background: white;
-
-    transition: .2s ease;
-}
-
-.toggle.active .toggle-circle {
-    transform: translateX(19px);
-}
-
-/* =========================================================
-   EMPTY
-========================================================= */
-
-.empty {
-    text-align: center;
-
-    padding: 55px 20px;
-
-    color: var(--muted);
-}
-
-.empty-icon {
-    width: 55px;
-    height: 55px;
-
-    border-radius: 17px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    margin: auto;
-
-    background:
-        rgba(255,255,255,.04);
-
-    color: #737984;
-}
-
-.empty h3 {
-    color: white;
-
-    font-size: 14px;
-
-    margin-top: 15px;
-}
-
-.empty p {
-    font-size: 11px;
-
-    margin-top: 6px;
-}
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-.toast {
-    position: fixed;
-
-    right: 25px;
-    bottom: 25px;
-
-    min-width: 260px;
-
-    padding: 14px 16px;
-
-    border-radius: 13px;
-
-    background:
-        rgba(20,22,27,.96);
-
-    border: 1px solid var(--border2);
-
-    box-shadow:
-        0 15px 50px rgba(0,0,0,.45);
-
-    backdrop-filter: blur(20px);
-
-    transform:
-        translateY(20px);
-
-    opacity: 0;
-
-    pointer-events: none;
-
-    transition: .3s ease;
-
-    z-index: 999;
-}
-
-.toast.show {
-    opacity: 1;
-
-    transform:
-        translateY(0);
-}
-
-.toast-title {
-    font-size: 12px;
-    font-weight: 600;
-}
-
-.toast-text {
-    color: var(--muted);
-
-    font-size: 10px;
-
-    margin-top: 4px;
-}
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-.mobile-header {
-    display: none;
-}
-
-@media (max-width: 1000px) {
-
-    :root {
-        --sidebar: 220px;
+    .ai-layout{
+        grid-template-columns:1fr;
     }
 
-    .main {
-        padding-left: 25px;
-        padding-right: 25px;
+    .quick-panel{
+        display:none;
     }
-
-    .stats {
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
-
-    .content-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .document-grid {
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
-
 }
 
-@media (max-width: 700px) {
+@media(max-width:760px){
 
-    .sidebar {
-        width: 100%;
-        height: 68px;
-
-        top: auto;
-        bottom: 0;
-
-        padding: 7px 8px;
-
-        border-right: none;
-
-        border-top: 1px solid var(--border);
-
-        flex-direction: row;
-
-        overflow-x: auto;
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.25s;
+        width:280px;
+        box-shadow:20px 0 60px rgba(0,0,0,.5);
     }
 
-    .logo-area,
-    .nav-title,
-    .sidebar-bottom,
-    .nav-divider {
-        display: none;
+    .sidebar.open{
+        transform:translateX(0);
     }
 
-    .nav {
-        width: 100%;
-
-        flex-direction: row;
-
-        gap: 4px;
-
-        justify-content: space-between;
+    .main{
+        margin-left:0;
+        width:100%;
     }
 
-    .nav-item {
-        min-width: 62px;
-        height: 54px;
-
-        min-height: 54px;
-
-        padding: 5px;
-
-        flex-direction: column;
-
-        justify-content: center;
-
-        gap: 3px;
-
-        border-radius: 10px;
-
-        font-size: 8px;
+    .topbar{
+        padding:0 17px;
     }
 
-    .nav-item.active::before {
-        display: none;
+    .mobile-menu{
+        display:flex;
+        width:38px;
+        height:38px;
+        align-items:center;
+        justify-content:center;
+        border:1px solid var(--border);
+        background:var(--panel);
+        color:white;
+        border-radius:10px;
+        cursor:pointer;
+        margin-right:10px;
     }
 
-    .nav-icon {
-        width: 19px;
-        height: 19px;
+    .topbar-left{
+        display:flex;
+        align-items:center;
     }
 
-    .nav-label {
-        flex: initial;
+    .content{
+        padding:18px;
     }
 
-    .nav-badge {
-        display: none;
+    .hero{
+        padding:22px;
     }
 
-    .main {
-        width: 100%;
-
-        margin-left: 0;
-
-        padding:
-            0 15px 90px;
+    .hero h1{
+        font-size:25px;
     }
 
-    .topbar {
-        height: 62px;
+    .cards{
+        grid-template-columns:1fr 1fr;
     }
 
-    .breadcrumb {
-        font-size: 10px;
+    .grid{
+        grid-template-columns:1fr;
     }
 
-    .hero {
-        padding: 35px 0 25px;
+    .settings-grid{
+        grid-template-columns:1fr;
     }
 
-    .hero h1 {
-        font-size: 31px;
+    .chat{
+        min-height:calc(100vh - 120px);
     }
 
-    .hero p {
-        font-size: 12px;
+    .chat-messages{
+        padding:17px;
     }
 
-    .hero-buttons {
-        flex-direction: column;
+    .auth-box{
+        padding:27px 20px;
+        border-radius:20px;
     }
-
-    .btn {
-        width: 100%;
-    }
-
-    .stats {
-        grid-template-columns:
-            1fr 1fr;
-
-        gap: 8px;
-    }
-
-    .stat {
-        padding: 14px;
-    }
-
-    .stat-number {
-        font-size: 21px;
-    }
-
-    .stat-title {
-        font-size: 9px;
-    }
-
-    .content-grid {
-        gap: 10px;
-    }
-
-    .card-header {
-        padding: 16px;
-    }
-
-    .case {
-        padding: 14px 16px;
-    }
-
-    .status {
-        display: none;
-    }
-
-    .form-card {
-        padding: 16px;
-    }
-
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .form-group.full {
-        grid-column: auto;
-    }
-
-    .document-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .ai-features {
-        grid-template-columns: 1fr;
-    }
-
-    .page-header {
-        padding: 30px 0 20px;
-    }
-
-    .page-header h2 {
-        font-size: 25px;
-    }
-
-    .toast {
-        left: 15px;
-        right: 15px;
-        bottom: 82px;
-        min-width: 0;
-    }
-
 }
 
-/* =========================================================
-   SMALL PHONE
-========================================================= */
-
-@media (max-width: 390px) {
-
-    .nav-item {
-        min-width: 52px;
+@media(max-width:430px){
+    .cards{
+        grid-template-columns:1fr;
     }
 
-    .nav-label {
-        font-size: 7px;
+    .page-title{
+        font-size:16px;
     }
-
-    .hero h1 {
-        font-size: 27px;
-    }
-
 }
-
-/* =========================================================
-   SCROLLBAR
-========================================================= */
-
-::-webkit-scrollbar {
-    width: 7px;
-    height: 7px;
-}
-
-::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #292d34;
-
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #393e47;
-}
-
 </style>
 </head>
 
 <body>
 
-<!-- =======================================================
-     SVG ICON LIBRARY
-======================================================== -->
+<!-- =========================================================
+                         AUTH
+========================================================= -->
 
-<svg
-    xmlns="http://www.w3.org/2000/svg"
-    style="display:none"
->
+<section id="authScreen">
 
-    <symbol id="home" viewBox="0 0 24 24">
-        <path d="M3 10.5 12 3l9 7.5"/>
-        <path d="M5 9.5V21h14V9.5"/>
-        <path d="M9 21v-7h6v7"/>
-    </symbol>
+    <div class="auth-box">
 
-    <symbol id="folder" viewBox="0 0 24 24">
-        <path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-    </symbol>
+        <div class="logo-wrap">
+            <div class="logo">L</div>
+        </div>
 
-    <symbol id="plus" viewBox="0 0 24 24">
-        <path d="M12 5v14"/>
-        <path d="M5 12h14"/>
-    </symbol>
+        <div class="auth-title">Добро пожаловать</div>
 
-    <symbol id="document" viewBox="0 0 24 24">
-        <path d="M7 3h7l4 4v14H7z"/>
-        <path d="M14 3v5h5"/>
-        <path d="M10 13h5"/>
-        <path d="M10 17h5"/>
-    </symbol>
+        <div class="auth-subtitle">
+            LexAI — цифровая рабочая среда<br>
+            для юридической работы
+        </div>
 
-    <symbol id="search" viewBox="0 0 24 24">
-        <circle cx="10.8" cy="10.8" r="6.8"/>
-        <path d="m16 16 5 5"/>
-    </symbol>
+        <div class="auth-tabs">
 
-    <symbol id="ai" viewBox="0 0 24 24">
-        <path d="M12 3l1.6 5.4L19 10l-5.4 1.6L12 17l-1.6-5.4L5 10l5.4-1.6z"/>
-        <path d="m19 15 .7 2.3L22 18l-2.3.7L19 21l-.7-2.3L16 18l2.3-.7z"/>
-    </symbol>
+            <button
+                class="auth-tab active"
+                id="loginTab"
+                onclick="switchAuth('login')">
+                Войти
+            </button>
 
-    <symbol id="bell" viewBox="0 0 24 24">
-        <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-        <path d="M10 21h4"/>
-    </symbol>
-
-    <symbol id="settings" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="3"/>
-        <path d="M19 15.5a2 2 0 0 0 .4 2.2l.1.1-2 2-.1-.1a2 2 0 0 0-2.2-.4 2 2 0 0 0-1.2 1.8v.1h-3v-.1a2 2 0 0 0-1.2-1.8 2 2 0 0 0-2.2.4l-.1.1-2-2 .1-.1a2 2 0 0 0 .4-2.2A2 2 0 0 0 4.2 14H4v-3h.2a2 2 0 0 0 1.8-1.2 2 2 0 0 0-.4-2.2l-.1-.1 2-2 .1.1a2 2 0 0 0 2.2.4A2 2 0 0 0 11 4.2V4h3v.2a2 2 0 0 0 1.2 1.8 2 2 0 0 0 2.2-.4l.1-.1 2 2-.1.1a2 2 0 0 0-.4 2.2A2 2 0 0 0 19.8 11H20v3h-.2a2 2 0 0 0-1.8 1.5z"/>
-    </symbol>
-
-    <symbol id="user" viewBox="0 0 24 24">
-        <circle cx="12" cy="8" r="4"/>
-        <path d="M4 21c.8-4 3.5-6 8-6s7.2 2 8 6"/>
-    </symbol>
-
-    <symbol id="shield" viewBox="0 0 24 24">
-        <path d="M12 3 20 6v6c0 5-3.3 8-8 9-4.7-1-8-4-8-9V6z"/>
-        <path d="m8.5 12 2.3 2.3 4.8-5"/>
-    </symbol>
-
-    <symbol id="chart" viewBox="0 0 24 24">
-        <path d="M4 19V5"/>
-        <path d="M4 19h16"/>
-        <path d="m7 15 3-4 3 2 5-7"/>
-    </symbol>
-
-    <symbol id="clock" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="9"/>
-        <path d="M12 7v5l3 2"/>
-    </symbol>
-
-    <symbol id="upload" viewBox="0 0 24 24">
-        <path d="M12 16V4"/>
-        <path d="m7 9 5-5 5 5"/>
-        <path d="M5 20h14"/>
-    </symbol>
-
-    <symbol id="arrow" viewBox="0 0 24 24">
-        <path d="M5 12h14"/>
-        <path d="m13 6 6 6-6 6"/>
-    </symbol>
-
-    <symbol id="check" viewBox="0 0 24 24">
-        <path d="m5 12 4 4L19 6"/>
-    </symbol>
-
-</svg>
-
-
-<!-- =======================================================
-     APP
-======================================================== -->
-
-<div class="app">
-
-    <!-- ===================================================
-         SIDEBAR
-    ==================================================== -->
-
-    <aside class="sidebar">
-
-        <div class="logo-area">
-
-            <div class="logo-mark">
-
-                <svg>
-                    <use href="#shield"></use>
-                </svg>
-
-            </div>
-
-            <div class="logo-text">
-
-                <div class="logo-name">
-                    LEXA
-                </div>
-
-                <div class="logo-sub">
-                    LEGAL ASSISTANT
-                </div>
-
-            </div>
+            <button
+                class="auth-tab"
+                id="registerTab"
+                onclick="switchAuth('register')">
+                Регистрация
+            </button>
 
         </div>
 
+        <form id="authForm">
 
-        <div class="nav-title">
+            <div id="registerFields">
+
+                <div class="form-group">
+                    <label>Имя</label>
+                    <input
+                        id="firstName"
+                        type="text"
+                        placeholder="Введите имя">
+                </div>
+
+                <div class="form-group">
+                    <label>Фамилия</label>
+                    <input
+                        id="lastName"
+                        type="text"
+                        placeholder="Введите фамилию">
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label>Пароль</label>
+
+                <input
+                    id="password"
+                    type="password"
+                    placeholder="Введите пароль">
+            </div>
+
+            <button class="primary-btn" type="submit" id="authButton">
+                Войти в аккаунт
+            </button>
+
+            <div
+                class="auth-message"
+                id="authMessage">
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+                          APP
+========================================================= -->
+
+<div id="app">
+
+<div class="layout">
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-logo">
+
+        <div class="logo">L</div>
+
+        <div>
+            <div class="logo-text">LexAI</div>
+            <div class="logo-version">VERSION 0.5</div>
+        </div>
+
+    </div>
+
+
+    <div class="nav-section">
+
+        <div class="nav-label">
             Рабочая область
         </div>
 
+        <button
+            class="nav-item active"
+            data-screen="dashboard"
+            onclick="openScreen('dashboard')">
 
-        <nav class="nav">
+            <span class="nav-icon">⌂</span>
+            Главная
 
-            <button
-                class="nav-item active"
-                data-screen="home"
-            >
-
-                <svg class="nav-icon">
-                    <use href="#home"></use>
-                </svg>
-
-                <span class="nav-label">
-                    Главная
-                </span>
-
-            </button>
+        </button>
 
 
-            <button
-                class="nav-item"
-                data-screen="cases"
-            >
+        <button
+            class="nav-item"
+            data-screen="cases"
+            onclick="openScreen('cases')">
 
-                <svg class="nav-icon">
-                    <use href="#folder"></use>
-                </svg>
+            <span class="nav-icon">▣</span>
+            Мои дела
 
-                <span class="nav-label">
-                    Мои дела
-                </span>
-
-                <span
-                    class="nav-badge"
-                    id="caseCount"
-                >
-                    3
-                </span>
-
-            </button>
+        </button>
 
 
-            <button
-                class="nav-item"
-                data-screen="newcase"
-            >
+        <button
+            class="nav-item"
+            data-screen="documents"
+            onclick="openScreen('documents')">
 
-                <svg class="nav-icon">
-                    <use href="#plus"></use>
-                </svg>
+            <span class="nav-icon">▤</span>
+            Документы
 
-                <span class="nav-label">
-                    Новое дело
-                </span>
-
-            </button>
+        </button>
 
 
-            <button
-                class="nav-item"
-                data-screen="documents"
-            >
+        <button
+            class="nav-item"
+            data-screen="ai"
+            onclick="openScreen('ai')">
 
-                <svg class="nav-icon">
-                    <use href="#document"></use>
-                </svg>
+            <span class="nav-icon">✦</span>
+            AI-помощник
 
-                <span class="nav-label">
-                    Документы
-                </span>
-
-            </button>
+        </button>
 
 
-            <button
-                class="nav-item"
-                data-screen="search"
-            >
+        <button
+            class="nav-item"
+            data-screen="court"
+            onclick="openScreen('court')">
 
-                <svg class="nav-icon">
-                    <use href="#search"></use>
-                </svg>
+            <span class="nav-icon">⚖</span>
+            Судебные дела
 
-                <span class="nav-label">
-                    Поиск
-                </span>
-
-            </button>
+        </button>
 
 
-            <button
-                class="nav-item"
-                data-screen="ai"
-            >
-
-                <svg class="nav-icon">
-                    <use href="#ai"></use>
-                </svg>
-
-                <span class="nav-label">
-                    AI-помощник
-                </span>
-
-            </button>
+        <div class="nav-label">
+            Система
+        </div>
 
 
-            <div class="nav-divider"></div>
+        <button
+            class="nav-item"
+            data-screen="notifications"
+            onclick="openScreen('notifications')">
+
+            <span class="nav-icon">♢</span>
+            Уведомления
+
+        </button>
 
 
-            <button
-                class="nav-item"
-                data-screen="notifications"
-            >
+        <button
+            class="nav-item"
+            data-screen="settings"
+            onclick="openScreen('settings')">
 
-                <svg class="nav-icon">
-                    <use href="#bell"></use>
-                </svg>
+            <span class="nav-icon">⚙</span>
+            Настройки
 
-                <span class="nav-label">
-                    Уведомления
-                </span>
+        </button>
 
-                <span class="nav-badge">
-                    2
-                </span>
-
-            </button>
+    </div>
 
 
-            <button
-                class="nav-item"
-                data-screen="settings"
-            >
+    <div class="sidebar-bottom">
 
-                <svg class="nav-icon">
-                    <use href="#settings"></use>
-                </svg>
+        <button
+            class="nav-item"
+            onclick="logout()">
 
-                <span class="nav-label">
-                    Настройки
-                </span>
+            <span class="nav-icon">↪</span>
+            Выйти
 
-            </button>
-
-        </nav>
+        </button>
 
 
-        <div class="sidebar-bottom">
+        <div class="user-mini">
 
-            <div class="profile">
+            <div class="avatar" id="avatar">
+                U
+            </div>
 
-                <div class="avatar">
-                    LS
+            <div class="user-info">
+
+                <div
+                    class="user-name"
+                    id="sidebarUserName">
+                    Пользователь
                 </div>
 
-                <div class="profile-info">
-
-                    <div class="profile-name">
-                        Пользователь
-                    </div>
-
-                    <div class="profile-status">
-                        ● Система активна
-                    </div>
-
+                <div class="user-status">
+                    Личный аккаунт
                 </div>
 
             </div>
 
         </div>
 
-    </aside>
+    </div>
+
+</aside>
 
 
-    <!-- ===================================================
-         MAIN
-    ==================================================== -->
+<!-- ================= MAIN ================= -->
 
-    <main class="main">
+<main class="main">
 
-        <header class="topbar">
+<header class="topbar">
 
-            <div class="breadcrumb">
-                LEXA
-                <span> / </span>
-                <strong id="breadcrumb">
-                    Главная
-                </strong>
+    <div class="topbar-left">
+
+        <button
+            class="mobile-menu"
+            onclick="toggleSidebar()">
+            ☰
+        </button>
+
+        <div
+            class="page-title"
+            id="pageTitle">
+            Главная
+        </div>
+
+    </div>
+
+
+    <div class="top-actions">
+
+        <button
+            class="icon-button"
+            onclick="openScreen('notifications')">
+            ♢
+        </button>
+
+        <button
+            class="icon-button"
+            onclick="openScreen('settings')">
+            ⚙
+        </button>
+
+    </div>
+
+</header>
+
+
+<div class="content">
+
+
+<!-- =========================================================
+                         DASHBOARD
+========================================================= -->
+
+<section
+    class="screen active"
+    id="dashboard">
+
+    <div class="hero">
+
+        <h1 id="welcomeTitle">
+            Добро пожаловать
+        </h1>
+
+        <p>
+            Ваша юридическая рабочая среда.
+            Управляйте делами, документами и
+            используйте AI-помощника для анализа
+            юридических задач.
+        </p>
+
+    </div>
+
+
+    <div class="cards">
+
+        <div class="card">
+
+            <div class="card-icon">▣</div>
+
+            <div class="card-title">
+                Активные дела
             </div>
 
-            <div class="top-actions">
-
-                <button
-                    class="icon-button"
-                    onclick="openScreen('notifications')"
-                >
-
-                    <svg class="icon">
-                        <use href="#bell"></use>
-                    </svg>
-
-                </button>
-
-                <button
-                    class="icon-button"
-                    onclick="openScreen('settings')"
-                >
-
-                    <svg class="icon">
-                        <use href="#settings"></use>
-                    </svg>
-
-                </button>
-
+            <div class="card-number">
+                12
             </div>
 
-        </header>
+        </div>
 
 
-        <!-- =================================================
-             HOME
-        ================================================== -->
+        <div class="card">
 
-        <section
-            class="screen active"
-            id="screen-home"
-        >
+            <div class="card-icon">▤</div>
 
-            <div class="hero">
-
-                <div class="hero-label">
-
-                    <span class="status-dot"></span>
-
-                    СИСТЕМА ГОТОВА
-
-                </div>
-
-                <h1>
-                    Ваше юридическое
-                    <span>пространство.</span>
-                </h1>
-
-                <p>
-                    Управляйте делами, документами и юридическими
-                    материалами в одном защищённом рабочем пространстве.
-                </p>
-
-
-                <div class="hero-buttons">
-
-                    <button
-                        class="btn btn-primary"
-                        onclick="openScreen('newcase')"
-                    >
-
-                        <svg class="icon">
-                            <use href="#plus"></use>
-                        </svg>
-
-                        Новое дело
-
-                    </button>
-
-
-                    <button
-                        class="btn"
-                        onclick="openScreen('ai')"
-                    >
-
-                        <svg class="icon">
-                            <use href="#ai"></use>
-                        </svg>
-
-                        Открыть AI
-
-                    </button>
-
-                </div>
-
+            <div class="card-title">
+                Документы
             </div>
 
-
-            <div class="stats">
-
-                <div class="stat">
-
-                    <div class="stat-top">
-
-                        <div class="stat-icon">
-                            <svg class="icon">
-                                <use href="#folder"></use>
-                            </svg>
-                        </div>
-
-                        <span class="stat-change">
-                            +1
-                        </span>
-
-                    </div>
-
-                    <div
-                        class="stat-number"
-                        id="statCases"
-                    >
-                        3
-                    </div>
-
-                    <div class="stat-title">
-                        Активных дел
-                    </div>
-
-                </div>
-
-
-                <div class="stat">
-
-                    <div class="stat-top">
-
-                        <div class="stat-icon">
-                            <svg class="icon">
-                                <use href="#document"></use>
-                            </svg>
-                        </div>
-
-                        <span class="stat-change">
-                            +4
-                        </span>
-
-                    </div>
-
-                    <div class="stat-number">
-                        18
-                    </div>
-
-                    <div class="stat-title">
-                        Документов
-                    </div>
-
-                </div>
-
-
-                <div class="stat">
-
-                    <div class="stat-top">
-
-                        <div class="stat-icon">
-                            <svg class="icon">
-                                <use href="#clock"></use>
-                            </svg>
-                        </div>
-
-                        <span class="stat-change">
-                            2 сегодня
-                        </span>
-
-                    </div>
-
-                    <div class="stat-number">
-                        7
-                    </div>
-
-                    <div class="stat-title">
-                        Задач
-                    </div>
-
-                </div>
-
-
-                <div class="stat">
-
-                    <div class="stat-top">
-
-                        <div class="stat-icon">
-                            <svg class="icon">
-                                <use href="#chart"></use>
-                            </svg>
-                        </div>
-
-                        <span class="stat-change">
-                            98%
-                        </span>
-
-                    </div>
-
-                    <div class="stat-number">
-                        24
-                    </div>
-
-                    <div class="stat-title">
-                        Анализа AI
-                    </div>
-
-                </div>
-
+            <div class="card-number">
+                48
             </div>
 
+        </div>
 
-            <div class="content-grid">
 
-                <div class="card">
+        <div class="card">
 
-                    <div class="card-header">
+            <div class="card-icon">⚖</div>
 
-                        <div>
+            <div class="card-title">
+                Судебные дела
+            </div>
 
-                            <div class="card-title">
-                                Последние дела
-                            </div>
+            <div class="card-number">
+                7
+            </div>
 
-                            <div class="card-subtitle">
-                                Быстрый доступ
-                            </div>
+        </div>
 
-                        </div>
 
-                        <button
-                            class="btn btn-small"
-                            onclick="openScreen('cases')"
-                        >
-                            Все дела
-                        </button>
+        <div class="card">
 
+            <div class="card-icon">✦</div>
+
+            <div class="card-title">
+                AI-запросы
+            </div>
+
+            <div class="card-number">
+                34
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="section-title">
+        Последние дела
+    </div>
+
+
+    <div class="grid">
+
+        <div class="item">
+
+            <span class="badge">
+                В работе
+            </span>
+
+            <h3>
+                Договорное дело №1048
+            </h3>
+
+            <p>
+                Анализ условий договора и подготовка
+                замечаний.
+            </p>
+
+        </div>
+
+
+        <div class="item">
+
+            <span class="badge">
+                Суд
+            </span>
+
+            <h3>
+                Гражданское дело №2281
+            </h3>
+
+            <p>
+                Подготовка позиции стороны
+                и судебных документов.
+            </p>
+
+        </div>
+
+
+        <div class="item">
+
+            <span class="badge">
+                Новое
+            </span>
+
+            <h3>
+                Трудовой спор №391
+            </h3>
+
+            <p>
+                Первичный анализ обстоятельств дела.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+                           CASES
+========================================================= -->
+
+<section
+    class="screen"
+    id="cases">
+
+    <div class="hero">
+
+        <h1>Мои дела</h1>
+
+        <p>
+            Все текущие юридические дела
+            в одном рабочем пространстве.
+        </p>
+
+    </div>
+
+
+    <div class="table-wrap">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Дело</th>
+                    <th>Категория</th>
+                    <th>Статус</th>
+                    <th>Дата</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Дело №1048</td>
+                    <td>Договорное</td>
+                    <td><span class="badge">В работе</span></td>
+                    <td>12.08.2026</td>
+                </tr>
+
+                <tr>
+                    <td>Дело №2281</td>
+                    <td>Гражданское</td>
+                    <td><span class="badge">Суд</span></td>
+                    <td>08.08.2026</td>
+                </tr>
+
+                <tr>
+                    <td>Дело №391</td>
+                    <td>Трудовое</td>
+                    <td><span class="badge">Новое</span></td>
+                    <td>05.08.2026</td>
+                </tr>
+
+                <tr>
+                    <td>Дело №772</td>
+                    <td>Административное</td>
+                    <td><span class="badge">В работе</span></td>
+                    <td>01.08.2026</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+                        DOCUMENTS
+========================================================= -->
+
+<section
+    class="screen"
+    id="documents">
+
+    <div class="hero">
+
+        <h1>Документы</h1>
+
+        <p>
+            Управление юридическими документами
+            и подготовленными материалами.
+        </p>
+
+    </div>
+
+
+    <div class="grid">
+
+        <div class="item">
+
+            <span class="badge">
+                DOCX
+            </span>
+
+            <h3>
+                Исковое заявление
+            </h3>
+
+            <p>
+                Последнее изменение сегодня.
+            </p>
+
+        </div>
+
+
+        <div class="item">
+
+            <span class="badge">
+                PDF
+            </span>
+
+            <h3>
+                Договор поставки
+            </h3>
+
+            <p>
+                Подготовлен для анализа.
+            </p>
+
+        </div>
+
+
+        <div class="item">
+
+            <span class="badge">
+                DOCX
+            </span>
+
+            <h3>
+                Возражения
+            </h3>
+
+            <p>
+                Черновик документа.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+                           AI CHAT
+========================================================= -->
+
+<section
+    class="screen"
+    id="ai">
+
+    <div class="ai-layout">
+
+
+        <div class="chat">
+
+            <div class="chat-header">
+
+                <div class="ai-title">
+
+                    <div class="ai-avatar">
+                        ✦
                     </div>
-
-
-                    <div
-                        class="case-list"
-                        id="homeCases"
-                    >
-
-                        <div class="case">
-
-                            <div class="case-icon">
-
-                                <svg class="icon">
-                                    <use href="#folder"></use>
-                                </svg>
-
-                            </div>
-
-                            <div class="case-info">
-
-                                <div class="case-name">
-                                    Договор аренды
-                                </div>
-
-                                <div class="case-meta">
-                                    Обновлено сегодня · № LX-001
-                                </div>
-
-                            </div>
-
-                            <span class="status status-active">
-                                В работе
-                            </span>
-
-                        </div>
-
-
-                        <div class="case">
-
-                            <div class="case-icon">
-
-                                <svg class="icon">
-                                    <use href="#document"></use>
-                                </svg>
-
-                            </div>
-
-                            <div class="case-info">
-
-                                <div class="case-name">
-                                    Трудовой спор
-                                </div>
-
-                                <div class="case-meta">
-                                    Обновлено вчера · № LX-002
-                                </div>
-
-                            </div>
-
-                            <span class="status status-review">
-                                Анализ
-                            </span>
-
-                        </div>
-
-
-                        <div class="case">
-
-                            <div class="case-icon">
-
-                                <svg class="icon">
-                                    <use href="#shield"></use>
-                                </svg>
-
-                            </div>
-
-                            <div class="case-info">
-
-                                <div class="case-name">
-                                    Защита интересов клиента
-                                </div>
-
-                                <div class="case-meta">
-                                    12 августа · № LX-003
-                                </div>
-
-                            </div>
-
-                            <span class="status status-closed">
-                                Архив
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="card ai-card">
 
                     <div>
 
-                        <div class="ai-symbol">
-
-                            <svg class="icon">
-                                <use href="#ai"></use>
-                            </svg>
-
+                        <div class="ai-name">
+                            LexAI Assistant
                         </div>
 
-                        <div class="ai-title">
-                            AI-помощник
+                        <div class="ai-online">
+                            ● AI-помощник
                         </div>
-
-                        <div class="ai-text">
-                            Анализируйте документы, находите
-                            важные пункты и структурируйте
-                            юридическую информацию.
-                        </div>
-
-                    </div>
-
-
-                    <div class="ai-bottom">
-
-                        <button
-                            class="btn btn-primary"
-                            style="width:100%"
-                            onclick="openScreen('ai')"
-                        >
-
-                            Запустить анализ
-
-                            <svg class="icon">
-                                <use href="#arrow"></use>
-                            </svg>
-
-                        </button>
 
                     </div>
 
                 </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             CASES
-        ================================================== -->
-
-        <section
-            class="screen"
-            id="screen-cases"
-        >
-
-            <div class="page-header">
-
-                <h2>
-                    Мои дела
-                </h2>
-
-                <p>
-                    Все ваши юридические дела в одном месте.
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="card-header">
-
-                    <div>
-                        <div class="card-title">
-                            Все дела
-                        </div>
-
-                        <div class="card-subtitle">
-                            Управление рабочими материалами
-                        </div>
-                    </div>
-
-                    <button
-                        class="btn btn-primary btn-small"
-                        onclick="openScreen('newcase')"
-                    >
-
-                        <svg class="icon">
-                            <use href="#plus"></use>
-                        </svg>
-
-                        Новое дело
-
-                    </button>
-
-                </div>
-
-
-                <div
-                    class="case-list"
-                    id="allCases"
-                ></div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             NEW CASE
-        ================================================== -->
-
-        <section
-            class="screen"
-            id="screen-newcase"
-        >
-
-            <div class="page-header">
-
-                <h2>
-                    Новое дело
-                </h2>
-
-                <p>
-                    Создайте новое рабочее дело.
-                </p>
-
-            </div>
-
-
-            <div class="card form-card">
-
-                <form id="caseForm">
-
-                    <div class="form-grid">
-
-                        <div class="form-group">
-
-                            <label class="form-label">
-                                Название дела
-                            </label>
-
-                            <input
-                                class="input"
-                                id="caseName"
-                                placeholder="Например: Договор аренды"
-                                required
-                            >
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label class="form-label">
-                                Номер дела
-                            </label>
-
-                            <input
-                                class="input"
-                                id="caseNumber"
-                                placeholder="Например: LX-004"
-                            >
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label class="form-label">
-                                Статус
-                            </label>
-
-                            <select
-                                class="select"
-                                id="caseStatus"
-                            >
-
-                                <option value="active">
-                                    В работе
-                                </option>
-
-                                <option value="review">
-                                    На анализе
-                                </option>
-
-                                <option value="closed">
-                                    Архив
-                                </option>
-
-                            </select>
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label class="form-label">
-                                Клиент
-                            </label>
-
-                            <input
-                                class="input"
-                                id="caseClient"
-                                placeholder="Имя клиента"
-                            >
-
-                        </div>
-
-
-                        <div class="form-group full">
-
-                            <label class="form-label">
-                                Описание
-                            </label>
-
-                            <textarea
-                                class="textarea"
-                                id="caseDescription"
-                                placeholder="Кратко опишите дело..."
-                            ></textarea>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="form-actions">
-
-                        <button
-                            type="button"
-                            class="btn"
-                            onclick="openScreen('cases')"
-                        >
-                            Отмена
-                        </button>
-
-                        <button
-                            type="submit"
-                            class="btn btn-primary"
-                        >
-
-                            <svg class="icon">
-                                <use href="#check"></use>
-                            </svg>
-
-                            Создать дело
-
-                        </button>
-
-                    </div>
-
-                </form>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             DOCUMENTS
-        ================================================== -->
-
-        <section
-            class="screen"
-            id="screen-documents"
-        >
-
-            <div class="page-header">
-
-                <h2>
-                    Документы
-                </h2>
-
-                <p>
-                    Рабочие документы и материалы ваших дел.
-                </p>
-
-            </div>
-
-
-            <div class="document-grid">
-
-                <div class="document">
-
-                    <div class="document-icon">
-                        <svg class="icon">
-                            <use href="#document"></use>
-                        </svg>
-                    </div>
-
-                    <div class="document-name">
-                        Договор_аренды.pdf
-                    </div>
-
-                    <div class="document-info">
-                        PDF · 2.4 MB · Сегодня
-                    </div>
-
-                </div>
-
-
-                <div class="document">
-
-                    <div class="document-icon">
-                        <svg class="icon">
-                            <use href="#document"></use>
-                        </svg>
-                    </div>
-
-                    <div class="document-name">
-                        Исковое_заявление.docx
-                    </div>
-
-                    <div class="document-info">
-                        DOCX · 840 KB · Вчера
-                    </div>
-
-                </div>
-
-
-                <div class="document">
-
-                    <div class="document-icon">
-                        <svg class="icon">
-                            <use href="#document"></use>
-                        </svg>
-                    </div>
-
-                    <div class="document-name">
-                        Материалы_дела.pdf
-                    </div>
-
-                    <div class="document-info">
-                        PDF · 4.1 MB · 12 августа
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             SEARCH
-        ================================================== -->
-
-        <section
-            class="screen"
-            id="screen-search"
-        >
-
-            <div class="page-header">
-
-                <h2>
-                    Поиск
-                </h2>
-
-                <p>
-                    Найдите дело или документ.
-                </p>
-
-            </div>
-
-
-            <div class="search-box">
-
-                <svg class="icon">
-                    <use href="#search"></use>
-                </svg>
-
-                <input
-                    id="searchInput"
-                    placeholder="Поиск по делам и документам..."
-                >
 
             </div>
 
 
             <div
-                class="card"
-                style="margin-top:15px"
-            >
+                class="chat-messages"
+                id="chatMessages">
 
-                <div
-                    class="case-list"
-                    id="searchResults"
-                >
+                <div class="message">
 
-                    <div class="empty">
+                    <div class="message-avatar">
+                        ✦
+                    </div>
 
-                        <div class="empty-icon">
+                    <div class="message-content">
+                        Здравствуйте! Я AI-помощник LexAI.
 
-                            <svg class="icon">
-                                <use href="#search"></use>
-                            </svg>
+                        Я могу помочь вам структурировать юридическую задачу, разобрать обстоятельства дела, подготовить список вопросов, предложить структуру документа или объяснить правовой вопрос.
 
-                        </div>
-
-                        <h3>
-                            Начните поиск
-                        </h3>
-
-                        <p>
-                            Введите название дела или документа.
-                        </p>
-
+                        Опишите вашу ситуацию или воспользуйтесь одним из быстрых запросов справа.
                     </div>
 
                 </div>
 
             </div>
 
-        </section>
 
+            <div class="chat-input-area">
 
-        <!-- =================================================
-             AI
-        ================================================== -->
+                <div class="chat-input">
 
-        <section
-            class="screen"
-            id="screen-ai"
-        >
-
-            <div class="page-header">
-
-                <h2>
-                    AI-помощник
-                </h2>
-
-                <p>
-                    Интеллектуальный анализ юридических материалов.
-                </p>
-
-            </div>
-
-
-            <div class="ai-main">
-
-                <div class="ai-large">
-
-                    <div class="ai-large-top">
-
-                        <div class="ai-large-icon">
-
-                            <svg class="icon">
-                                <use href="#ai"></use>
-                            </svg>
-
-                        </div>
-
-                        <div>
-
-                            <h3>
-                                Юридический AI
-                            </h3>
-
-                            <p>
-                                Помощник для анализа и структурирования
-                                ваших материалов.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="ai-features">
-
-                        <div class="ai-feature">
-
-                            <svg class="icon">
-                                <use href="#document"></use>
-                            </svg>
-
-                            <strong>
-                                Анализ документов
-                            </strong>
-
-                            <span>
-                                Найти ключевые положения,
-                                риски и важные пункты.
-                            </span>
-
-                        </div>
-
-
-                        <div class="ai-feature">
-
-                            <svg class="icon">
-                                <use href="#shield"></use>
-                            </svg>
-
-                            <strong>
-                                Проверка рисков
-                            </strong>
-
-                            <span>
-                                Выявить потенциальные
-                                проблемные места.
-                            </span>
-
-                        </div>
-
-
-                        <div class="ai-feature">
-
-                            <svg class="icon">
-                                <use href="#chart"></use>
-                            </svg>
-
-                            <strong>
-                                Структурирование
-                            </strong>
-
-                            <span>
-                                Систематизировать информацию
-                                по делу.
-                            </span>
-
-                        </div>
-
-                    </div>
-
+                    <textarea
+                        id="chatInput"
+                        placeholder="Опишите юридическую ситуацию..."
+                        onkeydown="handleChatKey(event)">
+                    </textarea>
 
                     <button
-                        class="btn btn-primary"
-                        style="margin-top:25px"
-                        onclick="showToast(
-                            'AI готов',
-                            'Выберите документ для анализа.'
-                        )"
-                    >
-
-                        <svg class="icon">
-                            <use href="#ai"></use>
-                        </svg>
-
-                        Начать анализ
-
+                        class="send-btn"
+                        onclick="sendMessage()">
+                        ➤
                     </button>
 
                 </div>
 
             </div>
 
-        </section>
+        </div>
 
 
-        <!-- =================================================
-             NOTIFICATIONS
-        ================================================== -->
+        <aside class="quick-panel">
 
-        <section
-            class="screen"
-            id="screen-notifications"
-        >
-
-            <div class="page-header">
-
-                <h2>
-                    Уведомления
-                </h2>
-
-                <p>
-                    Последние события вашего рабочего пространства.
-                </p>
-
+            <div class="quick-title">
+                Быстрые действия
             </div>
 
 
-            <div class="notification-list">
-
-                <div class="notification">
-
-                    <div class="notification-icon">
-
-                        <svg class="icon">
-                            <use href="#document"></use>
-                        </svg>
-
-                    </div>
-
-                    <div>
-
-                        <div class="notification-title">
-                            Документ готов
-                        </div>
-
-                        <div class="notification-text">
-                            Анализ договора аренды завершён.
-                        </div>
-
-                        <div class="notification-time">
-                            10 минут назад
-                        </div>
-
-                    </div>
-
-                </div>
+            <button
+                class="quick-btn"
+                onclick="quickPrompt('Проанализируй моё юридическое дело и выдели основные риски.')">
+                ⚖ Разобрать дело
+            </button>
 
 
-                <div class="notification">
+            <button
+                class="quick-btn"
+                onclick="quickPrompt('Помоги составить структуру юридического документа.')">
+                ▤ Составить документ
+            </button>
 
-                    <div class="notification-icon">
 
-                        <svg class="icon">
-                            <use href="#clock"></use>
-                        </svg>
+            <button
+                class="quick-btn"
+                onclick="quickPrompt('Проанализируй описанную ситуацию и выдели возможные правовые проблемы.')">
+                ◈ Анализ ситуации
+            </button>
 
-                    </div>
 
-                    <div>
+            <button
+                class="quick-btn"
+                onclick="quickPrompt('Составь список вопросов, которые нужно задать клиенту по этому делу.')">
+                ? Вопросы клиенту
+            </button>
 
-                        <div class="notification-title">
-                            Напоминание
-                        </div>
 
-                        <div class="notification-text">
-                            Проверьте материалы дела.
-                        </div>
+            <button
+                class="quick-btn"
+                onclick="quickPrompt('Помоги подготовиться к судебному заседанию: составь чек-лист подготовки.')">
+                ⚖ Подготовка к суду
+            </button>
 
-                        <div class="notification-time">
-                            1 час назад
-                        </div>
 
-                    </div>
+            <button
+                class="quick-btn"
+                onclick="quickPrompt('Объясни юридический термин простым языком.')">
+                ✦ Объяснить термин
+            </button>
 
-                </div>
 
+            <div class="ai-warning">
+                AI-помощник предоставляет информационную
+                и аналитическую поддержку. Ответы необходимо
+                проверять по действующему законодательству
+                и конкретным материалам дела.
             </div>
 
-        </section>
+        </aside>
 
+    </div>
 
-        <!-- =================================================
-             SETTINGS
-        ================================================== -->
+</section>
 
-        <section
-            class="screen"
-            id="screen-settings"
-        >
 
-            <div class="page-header">
+<!-- =========================================================
+                       COURT
+========================================================= -->
 
-                <h2>
-                    Настройки
-                </h2>
+<section
+    class="screen"
+    id="court">
 
-                <p>
-                    Управление параметрами LEXA.
-                </p>
+    <div class="hero">
 
-            </div>
+        <h1>Судебные дела</h1>
 
+        <p>
+            Контроль судебных процессов,
+            заседаний и ключевых этапов.
+        </p>
 
-            <div class="settings-list">
+    </div>
 
-                <div class="setting">
 
-                    <div class="setting-left">
+    <div class="grid">
 
-                        <div class="setting-icon">
+        <div class="item">
 
-                            <svg class="icon">
-                                <use href="#user"></use>
-                            </svg>
+            <span class="badge">
+                Ближайшее
+            </span>
 
-                        </div>
+            <h3>
+                Дело №2281
+            </h3>
 
-                        <div>
+            <p>
+                Судебное заседание —
+                29 августа 2026.
+            </p>
 
-                            <div class="setting-name">
-                                Профиль
-                            </div>
+        </div>
 
-                            <div class="setting-description">
-                                Управление данными пользователя.
-                            </div>
 
-                        </div>
+        <div class="item">
 
-                    </div>
+            <span class="badge">
+                Подготовка
+            </span>
 
-                    <button
-                        class="btn btn-small"
-                        onclick="showToast(
-                            'Профиль',
-                            'Раздел профиля будет доступен далее.'
-                        )"
-                    >
-                        Открыть
-                    </button>
+            <h3>
+                Дело №391
+            </h3>
 
-                </div>
+            <p>
+                Необходимо подготовить
+                документы и позицию.
+            </p>
 
+        </div>
 
-                <div class="setting">
 
-                    <div class="setting-left">
+        <div class="item">
 
-                        <div class="setting-icon">
+            <span class="badge">
+                Завершение
+            </span>
 
-                            <svg class="icon">
-                                <use href="#bell"></use>
-                            </svg>
+            <h3>
+                Дело №772
+            </h3>
 
-                        </div>
+            <p>
+                Ожидается решение суда.
+            </p>
 
-                        <div>
+        </div>
 
-                            <div class="setting-name">
-                                Уведомления
-                            </div>
+    </div>
 
-                            <div class="setting-description">
-                                Получать уведомления о событиях.
-                            </div>
+</section>
 
-                        </div>
 
-                    </div>
+<!-- =========================================================
+                    NOTIFICATIONS
+========================================================= -->
 
-                    <div
-                        class="toggle active"
-                        onclick="toggleSetting(this)"
-                    >
+<section
+    class="screen"
+    id="notifications">
 
-                        <div class="toggle-circle"></div>
+    <div class="hero">
 
-                    </div>
+        <h1>Уведомления</h1>
 
-                </div>
+        <p>
+            Здесь будут отображаться важные
+            события по вашим делам.
+        </p>
 
+    </div>
 
-                <div class="setting">
 
-                    <div class="setting-left">
+    <div class="grid">
 
-                        <div class="setting-icon">
+        <div class="item">
 
-                            <svg class="icon">
-                                <use href="#ai"></use>
-                            </svg>
+            <span class="badge">
+                Сегодня
+            </span>
 
-                        </div>
+            <h3>
+                Новое уведомление
+            </h3>
 
-                        <div>
+            <p>
+                Приближается судебное заседание
+                по делу №2281.
+            </p>
 
-                            <div class="setting-name">
-                                AI-помощник
-                            </div>
+        </div>
 
-                            <div class="setting-description">
-                                Разрешить использование AI-функций.
-                            </div>
 
-                        </div>
+        <div class="item">
 
-                    </div>
+            <span class="badge">
+                Документы
+            </span>
 
-                    <div
-                        class="toggle active"
-                        onclick="toggleSetting(this)"
-                    >
+            <h3>
+                Документ изменён
+            </h3>
 
-                        <div class="toggle-circle"></div>
+            <p>
+                Исковое заявление было обновлено.
+            </p>
 
-                    </div>
+        </div>
 
-                </div>
 
+        <div class="item">
 
-                <div class="setting">
+            <span class="badge">
+                AI
+            </span>
 
-                    <div class="setting-left">
+            <h3>
+                Анализ завершён
+            </h3>
 
-                        <div class="setting-icon">
+            <p>
+                AI завершил предварительный анализ.
+            </p>
 
-                            <svg class="icon">
-                                <use href="#shield"></use>
-                            </svg>
+        </div>
 
-                        </div>
+    </div>
 
-                        <div>
+</section>
 
-                            <div class="setting-name">
-                                Защита данных
-                            </div>
 
-                            <div class="setting-description">
-                                Локальное хранение рабочих данных.
-                            </div>
+<!-- =========================================================
+                        SETTINGS
+========================================================= -->
 
-                        </div>
+<section
+    class="screen"
+    id="settings">
 
-                    </div>
+    <div class="hero">
 
-                    <div class="toggle active">
+        <h1>Настройки</h1>
 
-                        <div class="toggle-circle"></div>
+        <p>
+            Управление вашим профилем
+            и рабочей средой.
+        </p>
 
-                    </div>
+    </div>
 
-                </div>
 
-            </div>
+    <div class="settings-grid">
 
-        </section>
+        <div class="setting">
 
-    </main>
+            <h3>
+                Профиль
+            </h3>
+
+            <p id="settingsUser">
+                Пользователь
+            </p>
+
+        </div>
+
+
+        <div class="setting">
+
+            <h3>
+                Версия приложения
+            </h3>
+
+            <p>
+                LexAI v0.5
+            </p>
+
+        </div>
+
+
+        <div class="setting">
+
+            <h3>
+                AI-помощник
+            </h3>
+
+            <p>
+                Аналитическая помощь,
+                подготовка структуры документов
+                и работа с юридическими задачами.
+            </p>
+
+        </div>
+
+
+        <div class="setting danger">
+
+            <h3>
+                Безопасность
+            </h3>
+
+            <p>
+                Никогда не вводите в демонстрационную
+                версию реальные конфиденциальные
+                данные клиентов.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
 
 </div>
 
+</main>
 
-<!-- =======================================================
-     TOAST
-======================================================== -->
-
-<div
-    class="toast"
-    id="toast"
->
-
-    <div
-        class="toast-title"
-        id="toastTitle"
-    >
-        Готово
-    </div>
-
-    <div
-        class="toast-text"
-        id="toastText"
-    >
-        Операция выполнена.
-    </div>
+</div>
 
 </div>
 
@@ -3383,802 +1841,700 @@ svg {
 <script>
 
 /* =========================================================
-   LEXA v0.4 JAVASCRIPT
+                     AUTH SYSTEM
 ========================================================= */
+
+let authMode = "login";
+
+
+const authScreen =
+    document.getElementById("authScreen");
+
+const app =
+    document.getElementById("app");
+
+const authForm =
+    document.getElementById("authForm");
+
+const registerFields =
+    document.getElementById("registerFields");
+
+const authButton =
+    document.getElementById("authButton");
+
+const authMessage =
+    document.getElementById("authMessage");
+
+
+function switchAuth(mode){
+
+    authMode = mode;
+
+    authMessage.textContent = "";
+
+    const loginTab =
+        document.getElementById("loginTab");
+
+    const registerTab =
+        document.getElementById("registerTab");
+
+    if(mode === "login"){
+
+        loginTab.classList.add("active");
+        registerTab.classList.remove("active");
+
+        registerFields.style.display = "none";
+
+        authButton.textContent =
+            "Войти в аккаунт";
+
+    }else{
+
+        registerTab.classList.add("active");
+        loginTab.classList.remove("active");
+
+        registerFields.style.display = "block";
+
+        authButton.textContent =
+            "Создать аккаунт";
+    }
+
+}
+
+
+authForm.addEventListener("submit",function(event){
+
+    event.preventDefault();
+
+    const password =
+        document.getElementById("password").value.trim();
+
+
+    if(!password){
+
+        authMessage.textContent =
+            "Введите пароль.";
+
+        return;
+    }
+
+
+    if(password.length < 4){
+
+        authMessage.textContent =
+            "Пароль должен содержать минимум 4 символа.";
+
+        return;
+    }
+
+
+    if(authMode === "register"){
+
+        const firstName =
+            document.getElementById("firstName").value.trim();
+
+        const lastName =
+            document.getElementById("lastName").value.trim();
+
+
+        if(!firstName || !lastName){
+
+            authMessage.textContent =
+                "Введите имя и фамилию.";
+
+            return;
+        }
+
+
+        const account = {
+
+            firstName:firstName,
+            lastName:lastName,
+            password:password
+
+        };
+
+
+        localStorage.setItem(
+            "lexai_account",
+            JSON.stringify(account)
+        );
+
+
+        localStorage.setItem(
+            "lexai_logged",
+            "true"
+        );
+
+
+        showApp(account);
+
+    }else{
+
+        const saved =
+            localStorage.getItem("lexai_account");
+
+
+        if(!saved){
+
+            authMessage.textContent =
+                "Аккаунт не найден. Сначала зарегистрируйтесь.";
+
+            return;
+        }
+
+
+        const account =
+            JSON.parse(saved);
+
+
+        if(account.password !== password){
+
+            authMessage.textContent =
+                "Неверный пароль.";
+
+            return;
+        }
+
+
+        localStorage.setItem(
+            "lexai_logged",
+            "true"
+        );
+
+
+        showApp(account);
+
+    }
+
+});
+
+
+function showApp(account){
+
+    authScreen.style.display = "none";
+
+    app.style.display = "block";
+
+
+    const fullName =
+        account.firstName +
+        " " +
+        account.lastName;
+
+
+    document.getElementById(
+        "sidebarUserName"
+    ).textContent = fullName;
+
+
+    document.getElementById(
+        "settingsUser"
+    ).textContent =
+        fullName;
+
+
+    document.getElementById(
+        "welcomeTitle"
+    ).textContent =
+        "Добро пожаловать, " +
+        account.firstName;
+
+
+    document.getElementById(
+        "avatar"
+    ).textContent =
+        account.firstName
+            .charAt(0)
+            .toUpperCase();
+
+}
+
+
+function logout(){
+
+    localStorage.removeItem(
+        "lexai_logged"
+    );
+
+    app.style.display = "none";
+
+    authScreen.style.display = "flex";
+
+    document.getElementById("password").value = "";
+
+    switchAuth("login");
+
+}
 
 
 /* =========================================================
-   SCREEN NAMES
+                    AUTO LOGIN
 ========================================================= */
 
-const screenNames = {
+window.addEventListener("load",function(){
 
-    home: "Главная",
+    const logged =
+        localStorage.getItem("lexai_logged");
 
-    cases: "Мои дела",
+    const saved =
+        localStorage.getItem("lexai_account");
 
-    newcase: "Новое дело",
 
-    documents: "Документы",
+    if(logged === "true" && saved){
 
-    search: "Поиск",
+        try{
 
-    ai: "AI-помощник",
+            const account =
+                JSON.parse(saved);
 
-    notifications: "Уведомления",
+            showApp(account);
 
-    settings: "Настройки"
+        }catch(error){
+
+            localStorage.removeItem(
+                "lexai_logged"
+            );
+
+        }
+
+    }else{
+
+        switchAuth("login");
+
+    }
+
+});
+
+
+/* =========================================================
+                    NAVIGATION
+========================================================= */
+
+const screenTitles = {
+
+    dashboard:"Главная",
+    cases:"Мои дела",
+    documents:"Документы",
+    ai:"AI-помощник",
+    court:"Судебные дела",
+    notifications:"Уведомления",
+    settings:"Настройки"
 
 };
 
 
-/* =========================================================
-   NAVIGATION
-========================================================= */
+function openScreen(screenName){
 
-const navItems =
-    document.querySelectorAll(".nav-item");
+    document
+        .querySelectorAll(".screen")
+        .forEach(function(screen){
 
-const screens =
-    document.querySelectorAll(".screen");
+            screen.classList.remove("active");
 
-const breadcrumb =
-    document.getElementById("breadcrumb");
-
-
-function openScreen(name) {
-
-    screens.forEach(screen => {
-
-        screen.classList.remove("active");
-
-    });
-
-
-    navItems.forEach(item => {
-
-        item.classList.remove("active");
-
-    });
+        });
 
 
     const target =
-        document.getElementById(
-            "screen-" + name
-        );
+        document.getElementById(screenName);
 
 
-    if (target) {
+    if(target){
 
         target.classList.add("active");
 
     }
 
 
-    const activeButton =
-        document.querySelector(
-            `.nav-item[data-screen="${name}"]`
-        );
-
-
-    if (activeButton) {
-
-        activeButton.classList.add("active");
-
-    }
-
-
-    breadcrumb.textContent =
-        screenNames[name] || "Главная";
-
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-
-    if (name === "cases") {
-
-        renderCases();
-
-    }
-
-}
-
-
-/* =========================================================
-   NAV CLICK
-========================================================= */
-
-navItems.forEach(item => {
-
-    item.addEventListener(
-        "click",
-        () => {
-
-            const screen =
-                item.dataset.screen;
-
-            openScreen(screen);
-
-        }
-    );
-
-});
-
-
-/* =========================================================
-   CASE DATA
-========================================================= */
-
-const defaultCases = [
-
-    {
-        name: "Договор аренды",
-        number: "LX-001",
-        client: "Клиент 01",
-        status: "active",
-        description: "Работа с договором аренды."
-    },
-
-    {
-        name: "Трудовой спор",
-        number: "LX-002",
-        client: "Клиент 02",
-        status: "review",
-        description: "Анализ материалов трудового спора."
-    },
-
-    {
-        name: "Защита интересов клиента",
-        number: "LX-003",
-        client: "Клиент 03",
-        status: "closed",
-        description: "Архивное дело."
-    }
-
-];
-
-
-let cases =
-    JSON.parse(
-        localStorage.getItem("lexaCases")
-    ) || defaultCases;
-
-
-/* =========================================================
-   SAVE CASES
-========================================================= */
-
-function saveCases() {
-
-    localStorage.setItem(
-        "lexaCases",
-        JSON.stringify(cases)
-    );
-
-}
-
-
-/* =========================================================
-   STATUS
-========================================================= */
-
-function getStatus(status) {
-
-    if (status === "active") {
-
-        return `
-            <span class="status status-active">
-                В работе
-            </span>
-        `;
-
-    }
-
-    if (status === "review") {
-
-        return `
-            <span class="status status-review">
-                Анализ
-            </span>
-        `;
-
-    }
-
-    return `
-        <span class="status status-closed">
-            Архив
-        </span>
-    `;
-
-}
-
-
-/* =========================================================
-   RENDER CASES
-========================================================= */
-
-function renderCases() {
-
-    const container =
-        document.getElementById(
-            "allCases"
-        );
-
-
-    const homeContainer =
-        document.getElementById(
-            "homeCases"
-        );
-
-
-    if (!container) return;
-
-
-    if (cases.length === 0) {
-
-        container.innerHTML = `
-
-            <div class="empty">
-
-                <div class="empty-icon">
-
-                    <svg class="icon">
-                        <use href="#folder"></use>
-                    </svg>
-
-                </div>
-
-                <h3>
-                    Делов пока нет
-                </h3>
-
-                <p>
-                    Создайте первое дело.
-                </p>
-
-            </div>
-
-        `;
-
-    } else {
-
-        container.innerHTML =
-            cases.map(
-                (item, index) => `
-
-                <div
-                    class="case"
-                    onclick="openCase(${index})"
-                >
-
-                    <div class="case-icon">
-
-                        <svg class="icon">
-                            <use href="#folder"></use>
-                        </svg>
-
-                    </div>
-
-                    <div class="case-info">
-
-                        <div class="case-name">
-                            ${escapeHtml(item.name)}
-                        </div>
-
-                        <div class="case-meta">
-                            ${escapeHtml(item.client || "Без клиента")}
-                            · ${escapeHtml(item.number || "Без номера")}
-                        </div>
-
-                    </div>
-
-                    ${getStatus(item.status)}
-
-                </div>
-
-            `
-            ).join("");
-
-    }
-
-
-    if (homeContainer) {
-
-        homeContainer.innerHTML =
-            cases
-                .slice(0, 3)
-                .map(
-                    (item, index) => `
-
-                    <div
-                        class="case"
-                        onclick="openCase(${index})"
-                    >
-
-                        <div class="case-icon">
-
-                            <svg class="icon">
-                                <use href="#folder"></use>
-                            </svg>
-
-                        </div>
-
-                        <div class="case-info">
-
-                            <div class="case-name">
-                                ${escapeHtml(item.name)}
-                            </div>
-
-                            <div class="case-meta">
-                                ${escapeHtml(item.number || "Без номера")}
-                            </div>
-
-                        </div>
-
-                        ${getStatus(item.status)}
-
-                    </div>
-
-                `
-                ).join("");
-
-    }
-
-
-    updateCounts();
-
-}
-
-
-/* =========================================================
-   UPDATE COUNTS
-========================================================= */
-
-function updateCounts() {
-
-    const count =
-        document.getElementById(
-            "caseCount"
-        );
-
-    const stat =
-        document.getElementById(
-            "statCases"
-        );
-
-
-    if (count) {
-
-        count.textContent =
-            cases.length;
-
-    }
-
-
-    if (stat) {
-
-        stat.textContent =
-            cases.length;
-
-    }
-
-}
-
-
-/* =========================================================
-   CREATE CASE
-========================================================= */
-
-const caseForm =
-    document.getElementById(
-        "caseForm"
-    );
-
-
-caseForm.addEventListener(
-    "submit",
-    function(event) {
-
-        event.preventDefault();
-
-
-        const name =
-            document
-                .getElementById("caseName")
-                .value
-                .trim();
-
-
-        const number =
-            document
-                .getElementById("caseNumber")
-                .value
-                .trim();
-
-
-        const status =
-            document
-                .getElementById("caseStatus")
-                .value;
-
-
-        const client =
-            document
-                .getElementById("caseClient")
-                .value
-                .trim();
-
-
-        const description =
-            document
-                .getElementById("caseDescription")
-                .value
-                .trim();
-
-
-        if (!name) {
-
-            showToast(
-                "Ошибка",
-                "Введите название дела."
-            );
-
-            return;
-
-        }
-
-
-        cases.unshift({
-
-            name,
-
-            number:
-                number ||
-                "LX-" +
-                String(
-                    cases.length + 1
-                ).padStart(3, "0"),
-
-            status,
-
-            client,
-
-            description
+    document
+        .querySelectorAll(".nav-item")
+        .forEach(function(item){
+
+            item.classList.remove("active");
 
         });
 
 
-        saveCases();
-
-        renderCases();
-
-        caseForm.reset();
-
-
-        showToast(
-            "Дело создано",
-            "Новое дело добавлено в рабочую область."
+    const activeNav =
+        document.querySelector(
+            '[data-screen="' +
+            screenName +
+            '"]'
         );
 
 
-        openScreen("cases");
+    if(activeNav){
+
+        activeNav.classList.add("active");
 
     }
-);
 
 
-/* =========================================================
-   OPEN CASE
-========================================================= */
-
-function openCase(index) {
-
-    const item =
-        cases[index];
-
-    if (!item) return;
-
-
-    showToast(
-        item.name,
-        item.description ||
-        "Дело открыто."
-    );
-
-}
-
-
-/* =========================================================
-   SEARCH
-========================================================= */
-
-const searchInput =
     document.getElementById(
-        "searchInput"
-    );
+        "pageTitle"
+    ).textContent =
+        screenTitles[screenName] || "LexAI";
 
 
-searchInput.addEventListener(
-    "input",
-    function() {
-
-        const query =
-            this.value
-                .trim()
-                .toLowerCase();
-
-
-        const results =
-            document.getElementById(
-                "searchResults"
-            );
-
-
-        if (!query) {
-
-            results.innerHTML = `
-
-                <div class="empty">
-
-                    <div class="empty-icon">
-
-                        <svg class="icon">
-                            <use href="#search"></use>
-                        </svg>
-
-                    </div>
-
-                    <h3>
-                        Начните поиск
-                    </h3>
-
-                    <p>
-                        Введите название дела или документа.
-                    </p>
-
-                </div>
-
-            `;
-
-            return;
-
-        }
-
-
-        const found =
-            cases.filter(item =>
-
-                (
-                    item.name +
-                    " " +
-                    item.number +
-                    " " +
-                    item.client
-                )
-                .toLowerCase()
-                .includes(query)
-
-            );
-
-
-        if (found.length === 0) {
-
-            results.innerHTML = `
-
-                <div class="empty">
-
-                    <div class="empty-icon">
-
-                        <svg class="icon">
-                            <use href="#search"></use>
-                        </svg>
-
-                    </div>
-
-                    <h3>
-                        Ничего не найдено
-                    </h3>
-
-                    <p>
-                        Попробуйте изменить запрос.
-                    </p>
-
-                </div>
-
-            `;
-
-            return;
-
-        }
-
-
-        results.innerHTML =
-            found.map(item => `
-
-                <div class="case">
-
-                    <div class="case-icon">
-
-                        <svg class="icon">
-                            <use href="#folder"></use>
-                        </svg>
-
-                    </div>
-
-                    <div class="case-info">
-
-                        <div class="case-name">
-                            ${escapeHtml(item.name)}
-                        </div>
-
-                        <div class="case-meta">
-                            ${escapeHtml(item.number)}
-                            ·
-                            ${escapeHtml(item.client || "Без клиента")}
-                        </div>
-
-                    </div>
-
-                    ${getStatus(item.status)}
-
-                </div>
-
-            `).join("");
-
-    }
-);
-
-
-/* =========================================================
-   TOGGLE
-========================================================= */
-
-function toggleSetting(element) {
-
-    element.classList.toggle(
-        "active"
-    );
-
-
-    const enabled =
-        element.classList.contains(
-            "active"
-        );
-
-
-    showToast(
-        "Настройка изменена",
-        enabled
-            ? "Функция включена."
-            : "Функция выключена."
-    );
+    document
+        .getElementById("sidebar")
+        .classList.remove("open");
 
 }
 
 
 /* =========================================================
-   TOAST
+                     MOBILE SIDEBAR
 ========================================================= */
 
-let toastTimer;
+function toggleSidebar(){
+
+    document
+        .getElementById("sidebar")
+        .classList.toggle("open");
+
+}
 
 
-function showToast(title, text) {
+/* =========================================================
+                         AI CHAT
+========================================================= */
 
-    const toast =
-        document.getElementById(
-            "toast"
-        );
+const chatInput =
+    document.getElementById("chatInput");
 
-    const toastTitle =
-        document.getElementById(
-            "toastTitle"
-        );
-
-    const toastText =
-        document.getElementById(
-            "toastText"
-        );
+const chatMessages =
+    document.getElementById("chatMessages");
 
 
-    toastTitle.textContent =
-        title;
+let chatHistory = [];
 
-    toastText.textContent =
+
+function addMessage(text,type){
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        "message " + type;
+
+
+    const avatar =
+        document.createElement("div");
+
+    avatar.className =
+        "message-avatar";
+
+    avatar.textContent =
+        type === "user" ? "Я" : "✦";
+
+
+    const content =
+        document.createElement("div");
+
+    content.className =
+        "message-content";
+
+    content.textContent =
         text;
 
 
-    toast.classList.add(
-        "show"
-    );
+    message.appendChild(avatar);
+
+    message.appendChild(content);
+
+    chatMessages.appendChild(message);
 
 
-    clearTimeout(
-        toastTimer
-    );
-
-
-    toastTimer =
-        setTimeout(
-            () => {
-
-                toast.classList.remove(
-                    "show"
-                );
-
-            },
-            3000
-        );
+    chatMessages.scrollTop =
+        chatMessages.scrollHeight;
 
 }
 
 
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
+function sendMessage(){
 
-function escapeHtml(value) {
-
-    return String(value || "")
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
+    const text =
+        chatInput.value.trim();
 
 
-/* =========================================================
-   INITIALIZE
-========================================================= */
+    if(!text){
 
-renderCases();
-
-updateCounts();
-
-
-/* =========================================================
-   KEYBOARD SHORTCUT
-========================================================= */
-
-document.addEventListener(
-    "keydown",
-    function(event) {
-
-        if (
-            event.ctrlKey &&
-            event.key.toLowerCase() === "k"
-        ) {
-
-            event.preventDefault();
-
-            openScreen("search");
-
-            searchInput.focus();
-
-        }
+        return;
 
     }
-);
+
+
+    addMessage(text,"user");
+
+
+    chatHistory.push({
+
+        role:"user",
+        content:text
+
+    });
+
+
+    chatInput.value = "";
+
+
+    setTimeout(function(){
+
+        const response =
+            generateAIResponse(text);
+
+
+        addMessage(
+            response,
+            "assistant"
+        );
+
+
+        chatHistory.push({
+
+            role:"assistant",
+            content:response
+
+        });
+
+
+        saveChat();
+
+    },650);
+
+}
+
+
+function quickPrompt(text){
+
+    openScreen("ai");
+
+    chatInput.value = text;
+
+    sendMessage();
+
+}
+
+
+function handleChatKey(event){
+
+    if(event.key === "Enter" && !event.shiftKey){
+
+        event.preventDefault();
+
+        sendMessage();
+
+    }
+
+}
+
+
+/* =========================================================
+                DEMO AI RESPONSE ENGINE
+========================================================= */
+
+function generateAIResponse(text){
+
+    const lower =
+        text.toLowerCase();
+
+
+    if(
+        lower.includes("договор") ||
+        lower.includes("контракт")
+    ){
+
+        return `
+Предварительный анализ договорной ситуации:
+
+1. Определить стороны договора.
+2. Проверить предмет и существенные условия.
+3. Проверить сроки исполнения обязательств.
+4. Отдельно проверить ответственность сторон.
+5. Проверить порядок расторжения договора.
+6. Обратить внимание на штрафы, неустойки и ограничения ответственности.
+7. Проверить порядок разрешения споров.
+
+Для полноценного анализа необходимо изучить сам текст договора и применимое законодательство.
+
+Если пришлёте содержание договора, я могу структурировать его по пунктам и выделить потенциально спорные положения.
+`;
+
+    }
+
+
+    if(
+        lower.includes("суд") ||
+        lower.includes("судеб")
+    ){
+
+        return `
+Для подготовки к судебному делу предлагаю такой порядок:
+
+1. Определить требования и правовую позицию.
+2. Зафиксировать ключевые факты и доказательства.
+3. Определить спорные обстоятельства.
+4. Проверить процессуальные сроки.
+5. Подготовить документы и приложения.
+6. Сформировать вопросы для другой стороны.
+7. Подготовить краткий план выступления.
+
+Я также могу помочь составить чек-лист документов и вопросов для подготовки к заседанию.
+
+Важно: конкретные процессуальные действия необходимо проверять по законодательству вашей юрисдикции и материалам дела.
+`;
+
+    }
+
+
+    if(
+        lower.includes("иск") ||
+        lower.includes("заявлен")
+    ){
+
+        return `
+Для подготовки искового заявления обычно необходимо структурировать:
+
+• суд и участников дела;
+• обстоятельства дела;
+• требования заявителя;
+• правовое обоснование;
+• доказательства;
+• расчёт заявленных требований;
+• приложения;
+• сведения о соблюдении обязательного досудебного порядка, если он применяется.
+
+Я могу помочь подготовить черновую структуру заявления на основе фактов вашего дела.
+`;
+
+    }
+
+
+    if(
+        lower.includes("клиент") ||
+        lower.includes("вопрос")
+    ){
+
+        return `
+Для первичного интервью с клиентом полезно выяснить:
+
+1. Что произошло и когда?
+2. Кто участвовал в ситуации?
+3. Какие документы существуют?
+4. Какие действия уже предпринимались?
+5. Были ли обращения в суд или государственные органы?
+6. Какие сроки имеют значение?
+7. Какие требования клиент хочет получить?
+8. Какие доказательства уже имеются?
+
+После получения ответов можно сформировать карту дела и определить следующие шаги.
+`;
+
+    }
+
+
+    if(
+        lower.includes("анализ") ||
+        lower.includes("проанализ")
+    ){
+
+        return `
+Предлагаю провести анализ в пяти блоках:
+
+1. Факты — что произошло.
+2. Участники — кто является сторонами.
+3. Документы — какие доказательства имеются.
+4. Правовые вопросы — какие нормы могут иметь значение.
+5. Риски — какие обстоятельства могут повлиять на результат.
+
+Опишите ситуацию максимально подробно, и я помогу разложить её по этой структуре.
+`;
+
+    }
+
+
+    return `
+Я понял вашу задачу.
+
+Для юридического анализа предлагаю сначала определить:
+
+1. Фактические обстоятельства.
+2. Участников и их роли.
+3. Документы и доказательства.
+4. Требования вашей стороны.
+5. Возможные правовые вопросы.
+6. Процессуальные сроки.
+7. Основные риски.
+
+Опишите подробнее ситуацию, документы или вопрос — я помогу структурировать информацию и подготовить следующий шаг.
+
+Важно: мой ответ является информационной поддержкой и не заменяет проверку квалифицированным юристом по конкретному делу.
+`;
+
+}
+
+
+/* =========================================================
+                       CHAT STORAGE
+========================================================= */
+
+function saveChat(){
+
+    localStorage.setItem(
+        "lexai_chat",
+        JSON.stringify(chatHistory)
+    );
+
+}
+
+
+function loadChat(){
+
+    const saved =
+        localStorage.getItem("lexai_chat");
+
+
+    if(!saved){
+
+        return;
+
+    }
+
+
+    try{
+
+        const history =
+            JSON.parse(saved);
+
+
+        history.forEach(function(item){
+
+            addMessage(
+                item.content,
+                item.role === "user"
+                    ? "user"
+                    : "assistant"
+            );
+
+        });
+
+
+        chatHistory =
+            history;
+
+    }catch(error){
+
+        console.log(
+            "История чата не загружена"
+        );
+
+    }
+
+}
+
+
+loadChat();
 
 </script>
 
