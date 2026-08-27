@@ -1,701 +1,255 @@
-// ===============================
-// LEXORA v0.2
-// Application Logic
-// ===============================
+const toast = document.getElementById("toast");
 
-const defaultCases = [
-  {
-    id: 1,
-    name: "Smith v. ABC Ltd",
-    type: "Гражданское дело",
-    number: "",
-    description: "Демонстрационное дело Lexora.",
-    docs: 24,
-    status: "ready",
-    created: "Сегодня"
-  }
-];
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
 
-
-// ===============================
-// STATE
-// ===============================
-
-let cases =
-  JSON.parse(localStorage.getItem("lexoraCases")) ||
-  defaultCases;
-
-let activeFilter = "all";
-
-
-// ===============================
-// HELPERS
-// ===============================
-
-function $(selector) {
-  return document.querySelector(selector);
-}
-
-function $$(selector) {
-  return [...document.querySelectorAll(selector)];
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3000);
 }
 
 
-// Защита текста от HTML
-function escapeHTML(value) {
+/* =========================
+   SIDEBAR
+========================= */
 
-  return String(value).replace(
-    /[&<>"']/g,
-    function (char) {
+document.querySelectorAll(".nav-item").forEach(item => {
 
-      const entities = {
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-      };
+  item.addEventListener("click", () => {
 
-      return entities[char];
+    document.querySelectorAll(".nav-item")
+      .forEach(x => x.classList.remove("active"));
+
+    item.classList.add("active");
+
+    const name = item.querySelector("span:not(.nav-icon)")?.textContent;
+
+    if (name) {
+      showToast(`Раздел «${name}» открыт`);
     }
-  );
-}
 
-
-// Сохраняем дела
-function saveCases() {
-
-  localStorage.setItem(
-    "lexoraCases",
-    JSON.stringify(cases)
-  );
-}
-
-
-// ===============================
-// RENDER CASES
-// ===============================
-
-function renderCases() {
-
-  const container = $("#cases");
-
-  if (!container) return;
-
-  const search =
-    ($("#caseSearch")?.value || "")
-      .trim()
-      .toLowerCase();
-
-
-  const filteredCases = cases.filter((caseItem) => {
-
-    const filterMatch =
-      activeFilter === "all" ||
-
-      (
-        activeFilter === "ready" &&
-        caseItem.status === "ready"
-      ) ||
-
-      (
-        activeFilter === "active" &&
-        caseItem.status !== "ready"
-      );
-
-
-    const searchText = `
-      ${caseItem.name}
-      ${caseItem.type}
-      ${caseItem.number || ""}
-    `.toLowerCase();
-
-
-    return (
-      filterMatch &&
-      searchText.includes(search)
-    );
   });
 
-
-  container.innerHTML =
-    filteredCases
-      .map((caseItem) => {
-
-        const statusText =
-          caseItem.status === "ready"
-            ? "Анализ готов"
-            : "Новое дело";
-
-
-        return `
-
-          <article class="case-card">
-
-            <div class="case-icon">
-              ⚖
-            </div>
-
-
-            <div class="case-info">
-
-              <h3>
-                ${escapeHTML(caseItem.name)}
-              </h3>
-
-              <p>
-                ${caseItem.docs || 0}
-                документов ·
-                ${escapeHTML(caseItem.type)}
-
-                ${
-                  caseItem.number
-                    ? ` · № ${escapeHTML(caseItem.number)}`
-                    : ""
-                }
-              </p>
-
-
-              <span class="status">
-
-                ${statusText}
-
-              </span>
-
-            </div>
-
-
-            <button
-              class="open-btn"
-              data-open-case="${caseItem.id}"
-            >
-
-              Открыть →
-
-            </button>
-
-          </article>
-
-        `;
-      })
-      .join("");
-
-
-  $("#emptyState")?.classList.toggle(
-    "hidden",
-    filteredCases.length !== 0
-  );
-
-
-  $("#allCount").textContent =
-    cases.length;
-}
-
-
-// ===============================
-// MODALS
-// ===============================
-
-function openModal(selector) {
-
-  const modal = $(selector);
-
-  if (!modal) return;
-
-  modal.classList.remove("hidden");
-
-  modal.setAttribute(
-    "aria-hidden",
-    "false"
-  );
-
-  document.body.style.overflow =
-    "hidden";
-}
-
-
-function closeModal(selector) {
-
-  const modal = $(selector);
-
-  if (!modal) return;
-
-  modal.classList.add("hidden");
-
-  modal.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-
-  const opened =
-    $$(".modal:not(.hidden)");
-
-  if (opened.length === 0) {
-
-    document.body.style.overflow =
-      "";
-  }
-}
-
-
-// ===============================
-// INFO MODAL
-// ===============================
-
-function showInfo(
-  title,
-  text,
-  eyebrow = "LEXORA"
-) {
-
-  $("#infoTitle").textContent =
-    title;
-
-  $("#infoText").textContent =
-    text;
-
-  $("#infoEyebrow").textContent =
-    eyebrow;
-
-  openModal("#infoModal");
-}
-
-
-// ===============================
-// NEW CASE BUTTONS
-// ===============================
-
-[
-  "#newCaseBtn",
-  "#newCaseBtn2",
-  "#emptyNewBtn"
-]
-.forEach((selector) => {
-
-  const button = $(selector);
-
-  if (!button) return;
-
-  button.addEventListener(
-    "click",
-    () => {
-
-      openModal("#caseModal");
-
-      setTimeout(() => {
-
-        $("#caseName")?.focus();
-
-      }, 100);
-    }
-  );
 });
 
 
-// ===============================
-// CLOSE MODALS
-// ===============================
+/* =========================
+   SEARCH
+========================= */
 
-$$("[data-close='modal']")
-.forEach((button) => {
+const searchInput = document.getElementById("searchInput");
 
-  button.addEventListener(
-    "click",
-    () => {
+searchInput.addEventListener("keydown", event => {
 
-      closeModal("#caseModal");
+  if (event.key === "Enter") {
 
-    }
-  );
+    const query = searchInput.value.trim();
 
-});
-
-
-$$("[data-close='info']")
-.forEach((button) => {
-
-  button.addEventListener(
-    "click",
-    () => {
-
-      closeModal("#infoModal");
-
-    }
-  );
-
-});
-
-
-// ===============================
-// CREATE CASE
-// ===============================
-
-$("#createBtn")?.addEventListener(
-  "click",
-  () => {
-
-    const name =
-      $("#caseName").value.trim();
-
-
-    if (!name) {
-
-      $("#caseName").focus();
-
-      $("#caseName").style.borderColor =
-        "#ff6f82";
-
+    if (!query) {
+      showToast("Введите запрос для поиска");
       return;
     }
 
-
-    const newCase = {
-
-      id: Date.now(),
-
-      name: name,
-
-      type:
-        $("#caseType").value,
-
-      number:
-        $("#caseNumber").value.trim(),
-
-      description:
-        $("#caseDescription").value.trim(),
-
-      docs: 0,
-
-      status: "active",
-
-      created: "Только что"
-    };
-
-
-    cases.unshift(newCase);
-
-    saveCases();
-
-    renderCases();
-
-    closeModal("#caseModal");
-
-
-    // Очищаем форму
-
-    $("#caseName").value = "";
-
-    $("#caseNumber").value = "";
-
-    $("#caseDescription").value = "";
-
-    $("#fileInput").value = "";
-
-
-    showInfo(
-      "Дело создано",
-      `${name} добавлено в ваше рабочее пространство. Следующим шагом можно добавить документы и запустить AI-анализ.`,
-      "NEW CASE / READY"
-    );
+    showToast(`Поиск: ${query}`);
 
   }
-);
-
-
-// ===============================
-// FILE UPLOAD
-// ===============================
-
-$("#fileInput")?.addEventListener(
-  "change",
-  (event) => {
-
-    const files =
-      event.target.files;
-
-
-    if (!files.length) return;
-
-
-    const uploadTitle =
-      document.querySelector(
-        ".upload-box strong"
-      );
-
-
-    if (uploadTitle) {
-
-      uploadTitle.textContent =
-        `Выбрано файлов: ${files.length}`;
-
-    }
-
-  }
-);
-
-
-// ===============================
-// SEARCH
-// ===============================
-
-$("#caseSearch")?.addEventListener(
-  "input",
-  () => {
-
-    renderCases();
-
-  }
-);
-
-
-// ===============================
-// FILTERS
-// ===============================
-
-$$(".filter")
-.forEach((button) => {
-
-  button.addEventListener(
-    "click",
-    () => {
-
-      $$(".filter")
-        .forEach((item) => {
-
-          item.classList.remove(
-            "active"
-          );
-
-        });
-
-
-      button.classList.add(
-        "active"
-      );
-
-
-      activeFilter =
-        button.dataset.filter;
-
-
-      renderCases();
-
-    }
-  );
 
 });
 
 
-// ===============================
-// OPEN CASE
-// ===============================
+/* =========================
+   NOTIFICATIONS
+========================= */
 
-$("#cases")?.addEventListener(
-  "click",
-  (event) => {
+document
+  .getElementById("notificationButton")
+  .addEventListener("click", () => {
 
-    const button =
-      event.target.closest(
-        "[data-open-case]"
-      );
+    showToast("У вас 3 новых уведомления");
 
-
-    if (!button) return;
+  });
 
 
-    const id =
-      button.dataset.openCase;
+/* =========================
+   HERO GENERATE
+========================= */
+
+document
+  .getElementById("generateButton")
+  .addEventListener("click", startDefense);
 
 
-    const caseItem =
-      cases.find(
-        (item) =>
-          String(item.id) ===
-          String(id)
-      );
+/* =========================
+   AI BUTTON
+========================= */
+
+document
+  .getElementById("startAI")
+  .addEventListener("click", startDefense);
 
 
-    if (!caseItem) return;
+function startDefense() {
+
+  const button = document.getElementById("startAI");
+  const heroButton = document.getElementById("generateButton");
+
+  button.disabled = true;
+  heroButton.disabled = true;
+
+  button.textContent = "⟳  Анализ материалов...";
+
+  showToast("Lexora AI начал анализ дела");
+
+  const steps = document.querySelectorAll(".progress-step");
+
+  steps.forEach(step => {
+    step.classList.remove("active");
+  });
+
+  steps[0].classList.add("active");
 
 
-    showInfo(
-      caseItem.name,
+  setTimeout(() => {
 
-      `${caseItem.type}. ${
-        caseItem.docs
-          ? caseItem.docs +
-            " документов уже в деле."
-          : "Документы пока не добавлены."
-      } Здесь следующим этапом появятся документы, хронология, риски и AI Case Analysis.`,
+    steps[0].classList.remove("active");
+    steps[1].classList.add("active");
 
-      "CASE / WORKSPACE"
+    button.textContent = "⟳  Формирование стратегии...";
+
+  }, 1800);
+
+
+  setTimeout(() => {
+
+    steps[1].classList.remove("active");
+    steps[2].classList.add("active");
+
+    button.textContent = "⟳  Подготовка документов...";
+
+  }, 3600);
+
+
+  setTimeout(() => {
+
+    steps[2].classList.remove("active");
+    steps[3].classList.add("active");
+
+    button.disabled = false;
+    heroButton.disabled = false;
+
+    button.textContent = "✓  AI-защита подготовлена";
+
+    showToast(
+      "Подготовлен проект комплекта материалов"
     );
 
+  }, 5400);
+
+}
+
+
+/* =========================
+   FILE UPLOAD
+========================= */
+
+const uploadButton = document.getElementById("uploadButton");
+const fileInput = document.getElementById("fileInput");
+
+uploadButton.addEventListener("click", () => {
+  fileInput.click();
+});
+
+
+fileInput.addEventListener("change", () => {
+
+  const files = [...fileInput.files];
+
+  if (!files.length) {
+    return;
   }
-);
+
+  const names = files.map(file => file.name);
+
+  showToast(
+    `Загружено документов: ${names.length}`
+  );
+
+  uploadButton.textContent =
+    `Документы загружены (${names.length}) ✓`;
+
+});
 
 
-// ===============================
-// DEMO AI
-// ===============================
+/* =========================
+   SELECTS
+========================= */
 
-$("#demoBtn")?.addEventListener(
-  "click",
-  () => {
+document
+  .getElementById("defenseType")
+  .addEventListener("change", event => {
 
-    showInfo(
-      "Демо-анализ",
-
-      "Lexora сможет собирать ключевые факты, отмечать потенциальные риски, строить хронологию и отвечать на вопросы по материалам дела.",
-
-      "AI CASE ANALYSIS"
+    showToast(
+      `Тип защиты: ${event.target.value}`
     );
 
-  }
-);
+  });
 
 
-// ===============================
-// HERO AI BUTTON
-// ===============================
+document
+  .getElementById("instance")
+  .addEventListener("change", event => {
 
-$("#heroAnalysisBtn")
-?.addEventListener(
-  "click",
-  () => {
-
-    showInfo(
-      "AI Case Analysis",
-
-      "Модуль готов для следующего этапа. Здесь появится полноценный экран анализа конкретного дела.",
-
-      "CASE INTELLIGENCE"
+    showToast(
+      `Инстанция: ${event.target.value}`
     );
 
-  }
-);
+  });
 
 
-// ===============================
-// SEARCH BUTTON
-// ===============================
+/* =========================
+   PRO BUTTON
+========================= */
 
-$("#searchBtn")
-?.addEventListener(
-  "click",
-  () => {
+document
+  .querySelector(".pro-button")
+  .addEventListener("click", () => {
 
-    const search =
-      $("#caseSearch");
+    showToast("Lexora PRO скоро будет доступен");
 
-    if (!search) return;
+  });
 
-    search.focus();
 
-    search.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
+/* =========================
+   CASE BUTTONS
+========================= */
+
+document
+  .querySelectorAll(".open-button")
+  .forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      const row = button.closest(".case-row");
+
+      const title =
+        row.querySelector(".case-info strong").textContent;
+
+      showToast(`Открываем ${title}`);
+
     });
 
-  }
-);
+  });
 
 
-// ===============================
-// TOOLS
-// ===============================
+/* =========================
+   ALL CASES
+========================= */
 
-const tools = {
+document
+  .querySelector(".secondary-button")
+  .addEventListener("click", () => {
 
-  docs: {
-    title: "Документы",
+    showToast("Открыт список всех защит");
 
-    text:
-      "Здесь будет загрузка, просмотр и структурирование материалов дела."
-  },
-
-
-  risks: {
-    title: "Поиск рисков",
-
-    text:
-      "Здесь Lexora сможет находить потенциальные проблемы, противоречия и пробелы в материалах."
-  },
-
-
-  timeline: {
-    title: "Хронология",
-
-    text:
-      "Здесь появится интерактивная последовательность событий дела."
-  },
-
-
-  ai: {
-    title: "AI Workspace",
-
-    text:
-      "Здесь юрист сможет задавать вопросы по делу и получать ответы с указанием источников."
-  }
-
-};
-
-
-$$("[data-tool]")
-.forEach((button) => {
-
-  button.addEventListener(
-    "click",
-    () => {
-
-      const tool =
-        tools[
-          button.dataset.tool
-        ];
-
-
-      if (!tool) return;
-
-
-      showInfo(
-        tool.title,
-        tool.text,
-        "LEXORA TOOLS"
-      );
-
-    }
-  );
-
-});
-
-
-// ===============================
-// ESCAPE KEY
-// ===============================
-
-document.addEventListener(
-  "keydown",
-  (event) => {
-
-    if (event.key !== "Escape") return;
-
-
-    $$(".modal:not(.hidden)")
-      .forEach((modal) => {
-
-        closeModal(
-          "#" + modal.id
-        );
-
-      });
-
-  }
-);
-
-
-// ===============================
-// START APP
-// ===============================
-
-renderCases();
+  });
