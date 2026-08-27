@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lexora — AI for Legal Professionals</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="logo">⚖</span> Lexora</div>
+    <button class="avatar">JD</button>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">AI LEGAL WORKSPACE</p>
+        <h1>Работайте с делами<br>быстрее.</h1>
+        <p class="subtitle">Анализ документов, хронология, потенциальные проблемы и поиск по материалам дела — в одном рабочем пространстве.</p>
+        <button class="primary" id="newCaseBtn">＋ Новое дело</button>
+      </div>
+      <div class="hero-card">
+        <div class="scan-icon">✦</div>
+        <strong>AI Case Analysis</strong>
+        <span>Готов к работе</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Мои дела</h2>
+        <button class="ghost" id="demoBtn">Демо-анализ</button>
+      </div>
+      <div id="cases" class="cases">
+        <article class="case-card">
+          <div class="case-icon">⚖</div>
+          <div class="case-info">
+            <h3>Smith v. ABC Ltd</h3>
+            <p>24 документа · Гражданское дело</p>
+            <span class="status ready">Анализ готов</span>
+          </div>
+          <button class="open-btn">Открыть →</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Что умеет Lexora</h2>
+      <div class="features">
+        <div class="feature"><b>📄</b><h3>Документы</h3><p>Загрузка и структурирование материалов дела.</p></div>
+        <div class="feature"><b>🔎</b><h3>Поиск проблем</h3><p>Выделение противоречий и вопросов для проверки.</p></div>
+        <div class="feature"><b>🧠</b><h3>AI Workspace</h3><p>Вопросы по делу с указанием источников.</p></div>
+      </div>
+    </section>
+
+    <p class="notice">Lexora — инструмент поддержки профессиональной работы. Выводы AI требуют проверки квалифицированным юристом.</p>
+  </main>
+
+  <div class="modal hidden" id="modal">
+    <div class="modal-box">
+      <button class="close" id="closeBtn">×</button>
+      <p class="eyebrow">NEW CASE</p>
+      <h2>Создать новое дело</h2>
+      <input id="caseName" placeholder="Название дела">
+      <select id="caseType">
+        <option>Гражданское дело</option>
+        <option>Уголовное дело</option>
+        <option>Коммерческий спор</option>
+        <option>Договорное право</option>
+      </select>
+      <button class="primary" id="createBtn">Создать дело</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
