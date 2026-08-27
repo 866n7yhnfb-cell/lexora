@@ -1,567 +1,1076 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#08080c">
-  <title>Lexora — AI Legal Workspace</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>LEXORA — AI Legal Workspace</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 75% 15%, #251044 0%, transparent 32%),
+        radial-gradient(circle at 20% 80%, #17082d 0%, transparent 30%),
+        #07070d;
+    color: #f7f4ff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+    width: 260px;
+    min-height: 100vh;
+    padding: 24px 16px;
+    border-right: 1px solid rgba(150, 100, 255, .2);
+    background: rgba(7, 6, 16, .92);
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.logo {
+    width: 105px;
+    height: 105px;
+    margin: auto;
+    display: block;
+    filter:
+        drop-shadow(0 0 8px #8d45ff)
+        drop-shadow(0 0 25px rgba(130, 55, 255, .55));
+}
+
+.brand-title {
+    margin-top: 8px;
+    font-family: Georgia, serif;
+    font-size: 30px;
+    letter-spacing: 5px;
+    font-weight: bold;
+}
+
+.brand-subtitle {
+    margin-top: 5px;
+    color: #9e91bd;
+    font-size: 9px;
+    letter-spacing: 3px;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.nav-item {
+    padding: 14px 16px;
+    border-radius: 14px;
+    color: #aaa1c5;
+    text-decoration: none;
+    transition: .2s;
+    cursor: pointer;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    color: white;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(124, 42, 255, .5),
+            rgba(75, 20, 150, .25)
+        );
+    box-shadow:
+        inset 0 0 20px rgba(160, 70, 255, .15),
+        0 0 20px rgba(120, 40, 255, .15);
+}
+
+.nav-icon {
+    display: inline-block;
+    width: 25px;
+    margin-right: 8px;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.main {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    padding: 28px 30px 60px;
+}
+
+.topbar {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.search {
+    flex: 1;
+    height: 48px;
+    border: 1px solid rgba(160, 100, 255, .25);
+    border-radius: 14px;
+    background: rgba(20, 15, 35, .75);
+    color: white;
+    padding: 0 20px;
+    font-size: 14px;
+    outline: none;
+}
+
+.search:focus {
+    border-color: #934dff;
+    box-shadow: 0 0 20px rgba(140, 50, 255, .15);
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #6932b8, #171020);
+    border: 1px solid #8050c9;
+}
+
+/* =========================
+   BREADCRUMBS
+========================= */
+
+.breadcrumbs {
+    margin: 28px 0;
+    color: #84799f;
+    font-size: 14px;
+}
+
+.breadcrumbs span {
+    color: #e9e2f8;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(155, 70, 255, .65);
+    border-radius: 22px;
+    padding: 42px;
+    min-height: 370px;
+
+    background:
+        radial-gradient(
+            circle at 85% 45%,
+            rgba(115, 40, 220, .38),
+            transparent 32%
+        ),
+        linear-gradient(
+            135deg,
+            rgba(37, 15, 70, .9),
+            rgba(9, 7, 17, .96)
+        );
+
+    box-shadow:
+        0 0 40px rgba(120, 40, 255, .12),
+        inset 0 0 50px rgba(100, 30, 200, .08);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 570px;
+}
+
+.eyebrow {
+    color: #b59aff;
+    font-size: 12px;
+    letter-spacing: 4px;
+    margin-bottom: 12px;
+}
+
+h1 {
+    font-size: 42px;
+    margin: 0 0 18px;
+}
+
+.hero p {
+    color: #aaa1bd;
+    line-height: 1.7;
+    font-size: 16px;
+}
+
+.checks {
+    margin: 24px 0;
+}
+
+.check {
+    margin: 10px 0;
+    color: #c9bfdc;
+}
+
+.check b {
+    color: #a967ff;
+    margin-right: 8px;
+}
+
+.hero-logo {
+    position: absolute;
+    width: 390px;
+    height: 390px;
+    right: 15px;
+    top: -5px;
+    opacity: .95;
+    filter:
+        drop-shadow(0 0 20px rgba(140, 50, 255, .45));
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn {
+    border: 0;
+    border-radius: 13px;
+    padding: 15px 25px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+
+    background:
+        linear-gradient(
+            135deg,
+            #9d43ff,
+            #5c18d6
+        );
+
+    box-shadow:
+        0 8px 25px rgba(110, 30, 220, .3);
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow:
+        0 10px 30px rgba(130, 50, 255, .5);
+}
+
+/* =========================
+   STEPS
+========================= */
+
+.steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    margin-top: 18px;
+    border: 1px solid rgba(140, 90, 200, .2);
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+.step {
+    padding: 20px;
+    background: rgba(14, 11, 25, .8);
+}
+
+.step-number {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    border: 1px solid #9b4cff;
+    color: #c7a1ff;
+    margin-bottom: 10px;
+}
+
+.step-title {
+    font-weight: bold;
+}
+
+.step-text {
+    color: #777087;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 18px;
+}
+
+.card {
+    border: 1px solid rgba(145, 100, 200, .2);
+    border-radius: 18px;
+    padding: 25px;
+    background: rgba(12, 10, 22, .82);
+}
+
+.card h2 {
+    margin-top: 0;
+}
+
+.field {
+    margin: 18px 0;
+}
+
+.field label {
+    display: block;
+    color: #aaa0bd;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+select,
+textarea {
+    width: 100%;
+    background: #0c0a15;
+    border: 1px solid #2b2140;
+    border-radius: 12px;
+    color: white;
+    padding: 13px;
+    outline: none;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.result-item {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(150, 100, 200, .1);
+}
+
+.result-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    background: rgba(110, 40, 190, .2);
+    border: 1px solid rgba(150, 70, 255, .35);
+}
+
+.result-text small {
+    color: #777087;
+    display: block;
+    margin-top: 4px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width: 900px) {
+
+    .sidebar {
+        width: 75px;
+        padding: 15px 8px;
+    }
+
+    .brand-title,
+    .brand-subtitle,
+    .nav-item span {
+        display: none;
+    }
+
+    .logo {
+        width: 55px;
+        height: 55px;
+    }
+
+    .nav-item {
+        text-align: center;
+        padding: 14px 5px;
+    }
+
+    .nav-icon {
+        margin: 0;
+    }
+
+    .main {
+        margin-left: 75px;
+        width: calc(100% - 75px);
+        padding: 15px;
+    }
+
+    .hero {
+        padding: 25px;
+    }
+
+    .hero-logo {
+        opacity: .18;
+        right: -80px;
+    }
+
+    .steps,
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-<header class="topbar">
-  <a class="brand" href="#">
-    <div class="brand-mark">⚖</div>
-    <div>
-      <strong>LEXORA</strong>
-      <small>AI LEGAL WORKSPACE</small>
+<div class="app">
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside class="sidebar">
+
+    <div class="brand">
+
+        <!-- ВСТРОЕННЫЙ ЛОГОТИП -->
+        <svg class="logo"
+             viewBox="0 0 500 500"
+             xmlns="http://www.w3.org/2000/svg">
+
+            <defs>
+                <linearGradient id="metal"
+                    x1="0" y1="0"
+                    x2="1" y2="1">
+                    <stop offset="0" stop-color="#ffffff"/>
+                    <stop offset=".35" stop-color="#bcb5d1"/>
+                    <stop offset=".65" stop-color="#7e3cff"/>
+                    <stop offset="1" stop-color="#eeeaff"/>
+                </linearGradient>
+
+                <filter id="glow">
+                    <feGaussianBlur stdDeviation="5"
+                                    result="blur"/>
+                    <feMerge>
+                        <feMergeNode in="blur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
+
+            <!-- круг -->
+            <circle cx="250"
+                    cy="250"
+                    r="210"
+                    fill="none"
+                    stroke="#8b42ff"
+                    stroke-width="2"
+                    opacity=".7"/>
+
+            <circle cx="250"
+                    cy="250"
+                    r="185"
+                    fill="none"
+                    stroke="#b28aff"
+                    stroke-width="1"
+                    opacity=".3"/>
+
+            <!-- центральный драгоценный камень -->
+            <path d="M250 75 L275 115 L250 155 L225 115 Z"
+                  fill="url(#metal)"
+                  filter="url(#glow)"/>
+
+            <!-- перекладина -->
+            <path d="M135 160 Q250 125 365 160"
+                  fill="none"
+                  stroke="url(#metal)"
+                  stroke-width="14"
+                  stroke-linecap="round"/>
+
+            <!-- центральная стойка -->
+            <path d="M242 145
+                     L258 145
+                     L268 335
+                     L232 335 Z"
+                  fill="url(#metal)"
+                  filter="url(#glow)"/>
+
+            <!-- левая цепь -->
+            <line x1="135"
+                  y1="165"
+                  x2="100"
+                  y2="275"
+                  stroke="#eeeaff"
+                  stroke-width="5"/>
+
+            <line x1="135"
+                  y1="165"
+                  x2="200"
+                  y2="275"
+                  stroke="#eeeaff"
+                  stroke-width="5"/>
+
+            <!-- правая цепь -->
+            <line x1="365"
+                  y1="165"
+                  x2="300"
+                  y2="275"
+                  stroke="#eeeaff"
+                  stroke-width="5"/>
+
+            <line x1="365"
+                  y1="165"
+                  x2="400"
+                  y2="275"
+                  stroke="#eeeaff"
+                  stroke-width="5"/>
+
+            <!-- левая чаша -->
+            <path d="M82 275
+                     Q150 330 218 275
+                     Z"
+                  fill="url(#metal)"
+                  stroke="#9c62ff"
+                  stroke-width="3"/>
+
+            <!-- правая чаша -->
+            <path d="M282 275
+                     Q350 330 418 275
+                     Z"
+                  fill="url(#metal)"
+                  stroke="#9c62ff"
+                  stroke-width="3"/>
+
+            <!-- основание -->
+            <path d="M205 335
+                     L295 335
+                     L325 365
+                     L175 365 Z"
+                  fill="url(#metal)"
+                  stroke="#8e4bff"
+                  stroke-width="3"/>
+
+            <path d="M155 370
+                     L345 370
+                     L370 390
+                     L130 390 Z"
+                  fill="url(#metal)"
+                  stroke="#8e4bff"
+                  stroke-width="3"/>
+
+            <!-- листья -->
+            <g fill="none"
+               stroke="#b58aff"
+               stroke-width="5">
+
+                <path d="M105 350
+                         Q45 300 80 190"/>
+
+                <path d="M395 350
+                         Q455 300 420 190"/>
+
+                <path d="M80 245 Q50 230 65 205"/>
+                <path d="M70 280 Q40 265 55 240"/>
+                <path d="M82 315 Q55 300 70 275"/>
+
+                <path d="M420 245 Q450 230 435 205"/>
+                <path d="M430 280 Q460 265 445 240"/>
+                <path d="M418 315 Q445 300 430 275"/>
+            </g>
+
+            <!-- звёзды -->
+            <path d="M250 25
+                     L256 40
+                     L271 46
+                     L256 52
+                     L250 68
+                     L244 52
+                     L229 46
+                     L244 40 Z"
+                  fill="#ffffff"
+                  filter="url(#glow)"/>
+
+            <path d="M250 205
+                     L257 220
+                     L272 227
+                     L257 234
+                     L250 250
+                     L243 234
+                     L228 227
+                     L243 220 Z"
+                  fill="#9f51ff"
+                  filter="url(#glow)"/>
+
+        </svg>
+
+        <div class="brand-title">LEXORA</div>
+        <div class="brand-subtitle">
+            AI LEGAL WORKSPACE
+        </div>
+
     </div>
-  </a>
 
-  <div class="top-actions">
-    <button class="icon-btn" id="searchBtn">⌕</button>
-    <button class="avatar">JD</button>
-  </div>
-</header>
+    <nav class="nav">
 
+        <a class="nav-item">
+            <span class="nav-icon">⌂</span>
+            <span>Главная</span>
+        </a>
 
-<main class="container">
+        <a class="nav-item active">
+            <span class="nav-icon">▣</span>
+            <span>Мои дела</span>
+        </a>
 
-  <!-- HERO -->
+        <a class="nav-item">
+            <span class="nav-icon">▤</span>
+            <span>Документы</span>
+        </a>
 
-  <section class="hero">
+        <a class="nav-item">
+            <span class="nav-icon">◈</span>
+            <span>Анализ дела</span>
+        </a>
 
-    <div class="hero-copy">
+        <a class="nav-item">
+            <span class="nav-icon">◉</span>
+            <span>Поиск рисков</span>
+        </a>
 
-      <div class="eyebrow">
-        <span></span>
-        AI LEGAL WORKSPACE
-      </div>
+        <a class="nav-item">
+            <span class="nav-icon">◷</span>
+            <span>Хронология</span>
+        </a>
 
-      <h1>
-        Работайте с делами
-        <em>быстрее.</em>
-      </h1>
+        <a class="nav-item active">
+            <span class="nav-icon">♢</span>
+            <span>Полная защита</span>
+        </a>
 
-      <p class="subtitle">
-        Анализ документов, поиск рисков, хронология
-        и AI-помощник для юридической работы —
-        в одном рабочем пространстве.
-      </p>
+        <a class="nav-item">
+            <span class="nav-icon">✦</span>
+            <span>AI Workspace</span>
+        </a>
 
-      <div class="hero-actions">
+        <a class="nav-item">
+            <span class="nav-icon">▧</span>
+            <span>Шаблоны</span>
+        </a>
 
-        <button class="btn btn-primary" id="newCaseBtn">
-          ✦ Новое дело
-        </button>
+        <a class="nav-item">
+            <span class="nav-icon">⚖</span>
+            <span>Судебная практика</span>
+        </a>
 
-        <button class="btn btn-secondary" id="demoBtn">
-          Демо-анализ →
-        </button>
+        <a class="nav-item">
+            <span class="nav-icon">⚙</span>
+            <span>Настройки</span>
+        </a>
 
-      </div>
+    </nav>
 
-      <div class="trust-line">
-        <span class="dot"></span>
-        Ваши материалы остаются в вашем рабочем пространстве
-      </div>
-
-    </div>
-
-
-    <div class="hero-panel">
-
-      <div class="panel-top">
-        <span class="mini-label">
-          CASE INTELLIGENCE
-        </span>
-
-        <span class="live">
-          ● READY
-        </span>
-      </div>
-
-      <div class="analysis-orb">
-        ✦
-      </div>
-
-      <h2>
-        AI Case Analysis
-      </h2>
-
-      <p>
-        Соберите ключевые факты, риски и вопросы
-        для проверки материалов дела.
-      </p>
-
-      <div class="analysis-grid">
-
-        <div>
-          <b>24</b>
-          <span>документа</span>
-        </div>
-
-        <div>
-          <b>08</b>
-          <span>связей</span>
-        </div>
-
-        <div>
-          <b>03</b>
-          <span>риска</span>
-        </div>
-
-      </div>
-
-      <button class="panel-action" id="heroAnalysisBtn">
-        Открыть анализ →
-      </button>
-
-    </div>
-
-  </section>
+</aside>
 
 
-  <!-- CASES -->
+<!-- =========================
+     MAIN
+========================= -->
 
-  <section class="section">
+<main class="main">
 
-    <div class="section-head">
+    <header class="topbar">
 
-      <div>
-        <div class="eyebrow muted">
-          WORKSPACE
-        </div>
-
-        <h2>
-          Мои дела
-        </h2>
-      </div>
-
-
-      <div class="section-actions">
-
-        <div class="search-wrap">
-          <span>⌕</span>
-
-          <input
-            id="caseSearch"
-            type="search"
-            placeholder="Поиск по делам"
-          >
-        </div>
-
-        <button
-          class="btn btn-small"
-          id="newCaseBtn2"
+        <input
+            class="search"
+            placeholder="Поиск по делам, документам, вопросам..."
         >
-          ＋ Новое
-        </button>
 
-      </div>
-
-    </div>
-
-
-    <div class="filters">
-
-      <button
-        class="filter active"
-        data-filter="all"
-      >
-        Все <span id="allCount">1</span>
-      </button>
-
-      <button
-        class="filter"
-        data-filter="active"
-      >
-        Активные
-      </button>
-
-      <button
-        class="filter"
-        data-filter="ready"
-      >
-        Анализ готов
-      </button>
-
-    </div>
-
-
-    <div id="cases" class="cases"></div>
-
-
-    <div id="emptyState" class="empty hidden">
-
-      <div class="empty-icon">
-        ⌁
-      </div>
-
-      <h3>
-        Дел пока нет
-      </h3>
-
-      <p>
-        Создайте первое дело, чтобы начать работу.
-      </p>
-
-      <button
-        class="btn btn-primary"
-        id="emptyNewBtn"
-      >
-        ✦ Создать дело
-      </button>
-
-    </div>
-
-  </section>
-
-
-  <!-- TOOLS -->
-
-  <section class="section">
-
-    <div class="eyebrow muted">
-      LEXORA TOOLS
-    </div>
-
-    <h2>
-      Инструменты
-    </h2>
-
-
-    <div class="features">
-
-      <button class="feature" data-tool="docs">
-
-        <span class="feature-icon">
-          ▱
-        </span>
-
-        <div>
-          <h3>
-            Документы
-          </h3>
-
-          <p>
-            Загрузка и структурирование материалов дела.
-          </p>
+        <div class="profile">
+            <div>🔔</div>
+            <div class="avatar">JD</div>
+            <div>
+                <b>John Doe</b><br>
+                <small style="color:#777087">Юрист</small>
+            </div>
         </div>
 
-        <span class="feature-arrow">
-          ↗
-        </span>
-
-      </button>
+    </header>
 
 
-      <button class="feature" data-tool="risks">
-
-        <span class="feature-icon">
-          ◇
-        </span>
-
-        <div>
-          <h3>
-            Поиск рисков
-          </h3>
-
-          <p>
-            Противоречия, пробелы и вопросы для проверки.
-          </p>
-        </div>
-
-        <span class="feature-arrow">
-          ↗
-        </span>
-
-      </button>
-
-
-      <button class="feature" data-tool="timeline">
-
-        <span class="feature-icon">
-          ◷
-        </span>
-
-        <div>
-          <h3>
-            Хронология
-          </h3>
-
-          <p>
-            События дела в единой последовательности.
-          </p>
-        </div>
-
-        <span class="feature-arrow">
-          ↗
-        </span>
-
-      </button>
-
-
-      <button class="feature" data-tool="ai">
-
-        <span class="feature-icon">
-          ✦
-        </span>
-
-        <div>
-          <h3>
-            AI Workspace
-          </h3>
-
-          <p>
-            Вопросы по делу с опорой на источники.
-          </p>
-        </div>
-
-        <span class="feature-arrow">
-          ↗
-        </span>
-
-      </button>
-
+    <div class="breadcrumbs">
+        Мои дела　›　Дело № А40-12345/2024　›　
+        <span>Полная защита</span>
     </div>
 
-  </section>
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="eyebrow">
+                AI LEGAL DEFENSE
+            </div>
+
+            <h1>Полная защита</h1>
+
+            <p>
+                Полный комплект процессуальных документов
+                и стратегии защиты, подготовленный на основе
+                материалов дела.
+            </p>
+
+            <div class="checks">
+
+                <div class="check">
+                    <b>✓</b>
+                    Анализ всех материалов дела
+                </div>
+
+                <div class="check">
+                    <b>✓</b>
+                    Правовая позиция и аргументы
+                </div>
+
+                <div class="check">
+                    <b>✓</b>
+                    Процессуальные документы
+                </div>
+
+                <div class="check">
+                    <b>✓</b>
+                    Речь для выступления в суде
+                </div>
+
+            </div>
+
+            <button class="btn"
+                    onclick="startDefense()">
+                Сгенерировать полную защиту →
+            </button>
+
+        </div>
 
 
-  <!-- WARNING -->
+        <!-- Второй встроенный логотип -->
+        <svg class="hero-logo"
+             viewBox="0 0 500 500"
+             xmlns="http://www.w3.org/2000/svg">
 
-  <div class="notice">
+            <circle cx="250"
+                    cy="250"
+                    r="210"
+                    fill="none"
+                    stroke="#8844ff"
+                    stroke-width="2"/>
 
-    <span>ⓘ</span>
+            <path d="M250 70 L275 110 L250 150 L225 110 Z"
+                  fill="#b784ff"/>
 
-    <p>
-      <strong>Важно:</strong>
-      Lexora является инструментом поддержки
-      профессиональной работы. Выводы AI требуют
-      проверки квалифицированным юристом.
-    </p>
+            <path d="M135 160 Q250 125 365 160"
+                  fill="none"
+                  stroke="#eeeaff"
+                  stroke-width="14"/>
 
-  </div>
+            <path d="M242 145 L258 145 L268 335 L232 335 Z"
+                  fill="#eeeaff"/>
+
+            <line x1="135" y1="165"
+                  x2="100" y2="275"
+                  stroke="#eeeaff"
+                  stroke-width="5"/>
+
+            <line x1="135" y1="165"
+                  x2="200" y2="275"
+                  stroke="#eeeaff"
+                  stroke-width="5"/>
+
+            <line x1="365" y1="165"
+                  x2="300" y2="275"
+                  stroke="#eeeaff"
+                  stroke-width="5"/>
+
+            <line x1="365" y1="165"
+                  x2="400" y2="275"
+                  stroke="#eeeaff"
+                  stroke-width="5"/>
+
+            <path d="M82 275 Q150 330 218 275 Z"
+                  fill="#291b42"
+                  stroke="#a75cff"
+                  stroke-width="4"/>
+
+            <path d="M282 275 Q350 330 418 275 Z"
+                  fill="#291b42"
+                  stroke="#a75cff"
+                  stroke-width="4"/>
+
+            <path d="M205 335 L295 335 L325 365 L175 365 Z"
+                  fill="#ddd8e9"/>
+
+            <path d="M155 370 L345 370 L370 390 L130 390 Z"
+                  fill="#8b55cc"/>
+
+            <path d="M105 350 Q45 300 80 190"
+                  fill="none"
+                  stroke="#a86cff"
+                  stroke-width="5"/>
+
+            <path d="M395 350 Q455 300 420 190"
+                  fill="none"
+                  stroke="#a86cff"
+                  stroke-width="5"/>
+
+        </svg>
+
+    </section>
+
+
+    <!-- STEPS -->
+
+    <section class="steps">
+
+        <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-title">Анализ дела</div>
+            <div class="step-text">
+                AI изучает материалы
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-title">Стратегия защиты</div>
+            <div class="step-text">
+                Формируется позиция
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-title">Документы</div>
+            <div class="step-text">
+                Создаётся комплект
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-number">4</div>
+            <div class="step-title">Готово</div>
+            <div class="step-text">
+                Полная защита
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- CARDS -->
+
+    <section class="grid">
+
+        <div class="card">
+
+            <h2>⚙ Параметры защиты</h2>
+
+            <div class="field">
+
+                <label>Тип защиты</label>
+
+                <select>
+                    <option>
+                        Полная защита в суде
+                    </option>
+                    <option>
+                        Частичное оспаривание
+                    </option>
+                    <option>
+                        Апелляционная защита
+                    </option>
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>Инстанция</label>
+
+                <select>
+                    <option>
+                        Первая инстанция
+                    </option>
+                    <option>
+                        Апелляция
+                    </option>
+                    <option>
+                        Кассация
+                    </option>
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>Цели защиты</label>
+
+                <div class="check">
+                    ☑ Полное оспаривание иска
+                </div>
+
+                <div class="check">
+                    ☐ Частичное удовлетворение
+                </div>
+
+                <div class="check">
+                    ☐ Мировое соглашение
+                </div>
+
+                <div class="check">
+                    ☐ Альтернативная позиция
+                </div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Дополнительные указания
+                </label>
+
+                <textarea
+                    placeholder="Например: сделать акцент на отсутствии доказательств...">
+                </textarea>
+
+            </div>
+
+
+            <button class="btn"
+                    onclick="startDefense()">
+                ⚡ Запустить AI-защиту
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>▤ Что будет создано</h2>
+
+            <div class="result-item">
+                <div class="result-icon">▤</div>
+                <div class="result-text">
+                    <b>Правовая позиция</b>
+                    <small>
+                        Чёткая и обоснованная позиция по делу
+                    </small>
+                </div>
+            </div>
+
+            <div class="result-item">
+                <div class="result-icon">▤</div>
+                <div class="result-text">
+                    <b>Возражения на иск</b>
+                    <small>
+                        Структурированные возражения
+                    </small>
+                </div>
+            </div>
+
+            <div class="result-item">
+                <div class="result-icon">▤</div>
+                <div class="result-text">
+                    <b>Процессуальные документы</b>
+                    <small>
+                        Ходатайства, заявления, письма
+                    </small>
+                </div>
+            </div>
+
+            <div class="result-item">
+                <div class="result-icon">▣</div>
+                <div class="result-text">
+                    <b>Речь для суда</b>
+                    <small>
+                        Структурированный текст выступления
+                    </small>
+                </div>
+            </div>
+
+            <div class="result-item">
+                <div class="result-icon">⚖</div>
+                <div class="result-text">
+                    <b>Судебная практика</b>
+                    <small>
+                        Релевантные судебные решения
+                    </small>
+                </div>
+            </div>
+
+            <div class="result-item">
+                <div class="result-icon">!</div>
+                <div class="result-text">
+                    <b>Риски и рекомендации</b>
+                    <small>
+                        Потенциальные риски и способы их снижения
+                    </small>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
 
 </main>
 
-
-<!-- NEW CASE MODAL -->
-
-<div
-  class="modal hidden"
-  id="caseModal"
->
-
-  <div
-    class="modal-backdrop"
-    data-close="modal"
-  ></div>
-
-
-  <div class="modal-box">
-
-    <button
-      class="close"
-      data-close="modal"
-    >
-      ×
-    </button>
-
-
-    <div class="eyebrow">
-      NEW CASE / 01
-    </div>
-
-    <h2>
-      Создать новое дело
-    </h2>
-
-    <p class="modal-subtitle">
-      Добавьте основную информацию.
-      Остальное можно заполнить позже.
-    </p>
-
-
-    <label>
-
-      Название дела
-
-      <input
-        id="caseName"
-        placeholder="Например, ООО «Альфа» v. ООО «Бета»"
-      >
-
-    </label>
-
-
-    <div class="form-grid">
-
-      <label>
-
-        Тип дела
-
-        <select id="caseType">
-
-          <option>
-            Гражданское дело
-          </option>
-
-          <option>
-            Коммерческий спор
-          </option>
-
-          <option>
-            Договорное право
-          </option>
-
-          <option>
-            Уголовное дело
-          </option>
-
-          <option>
-            Административное дело
-          </option>
-
-        </select>
-
-      </label>
-
-
-      <label>
-
-        Номер дела
-
-        <input
-          id="caseNumber"
-          placeholder="Необязательно"
-        >
-
-      </label>
-
-    </div>
-
-
-    <label>
-
-      Краткое описание
-
-      <textarea
-        id="caseDescription"
-        rows="4"
-        placeholder="Что важно знать о деле?"
-      ></textarea>
-
-    </label>
-
-
-    <div class="upload-box">
-
-      <span>
-        ＋
-      </span>
-
-      <div>
-
-        <strong>
-          Добавить документы
-        </strong>
-
-        <small>
-          PDF, DOCX, TXT
-        </small>
-
-      </div>
-
-      <input
-        id="fileInput"
-        type="file"
-        multiple
-      >
-
-    </div>
-
-
-    <div class="modal-actions">
-
-      <button
-        class="btn btn-secondary"
-        data-close="modal"
-      >
-        Отмена
-      </button>
-
-      <button
-        class="btn btn-primary"
-        id="createBtn"
-      >
-        Создать дело →
-      </button>
-
-    </div>
-
-  </div>
-
 </div>
 
 
-<!-- INFO MODAL -->
+<script>
 
-<div
-  class="modal hidden"
-  id="infoModal"
->
+function startDefense() {
 
-  <div
-    class="modal-backdrop"
-    data-close="info"
-  ></div>
+    alert(
+        "AI-защита запущена.\n\n" +
+        "Следующим этапом подключим загрузку материалов дела, " +
+        "анализ документов и генерацию комплекта."
+    );
 
+}
 
-  <div class="modal-box small">
-
-    <button
-      class="close"
-      data-close="info"
-    >
-      ×
-    </button>
-
-    <div class="analysis-orb small-orb">
-      ✦
-    </div>
-
-    <div
-      class="eyebrow"
-      id="infoEyebrow"
-    >
-      LEXORA
-    </div>
-
-    <h2 id="infoTitle">
-      AI Case Analysis
-    </h2>
-
-    <p
-      id="infoText"
-      class="modal-subtitle"
-    ></p>
-
-    <button
-      class="btn btn-primary full"
-      data-close="info"
-    >
-      Понятно
-    </button>
-
-  </div>
-
-</div>
-
-
-<script src="app.js"></script>
+</script>
 
 </body>
 </html>
